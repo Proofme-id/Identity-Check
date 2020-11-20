@@ -1,31 +1,30 @@
-# Didux.IO Boilerplate Frontend
+# HR Frontend
 
-# Make a private fork
+The HR tool build by Didux.io.
 
-First, create a new (private) repo through the github ui.
+# Installation
 
-## 1. Clone boilerplate
-```
-git clone --bare git@github.com:didux-io/Boilerplate-Frontend.git
-cd Boilerplate-Frontend.git
-git push --mirror git@github.com:didux-io/<new project>.git
-cd ..
-rm -rf Boilerplate-Frontend.git
-```
+To run this application you need to have npm installed.
 
-## 2. Clone new project
-```
-git clone git@github.com:didux-io/<new project>.git
-cd <new project>
-make some changes
-git commit
-git push origin main
-```
+## Copy example configuration
+```cp src/assets/config/config.example.ts src/assets/config/config.ts```
 
-## 3. Pull latest boilerplate changes
+## Running the application
+
+Install modules
+```npm i```
+
+Start database 
+```docker run --name DB_HOST --rm -h DB_HOST -e POSTGRES_PASSWORD=DB_PASSWORD -e POSTGRES_USER=DB_USER -e POSTGRES_DB=DB_NAME -p 5432:5432 -d postgres:9.6```
+
+Run the application:
+
+```npm run start```
+
+## Pull changes from Boilerplate
+
 ```
-cd <new project>
-git remote add public git@github.com:didux-io/Boilerplate-Frontend.git
+git remote add public git@github.com:didux-io/Boilerplate-Backend.git
 git pull public main # Creates a merge commit
 git push origin main
 ```
