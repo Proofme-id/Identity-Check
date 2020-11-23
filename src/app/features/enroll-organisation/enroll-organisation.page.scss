@@ -60,20 +60,6 @@
         }
     }
 
-    //.enroll-success-div {
-    //    background: var(--white);
-    //    color: var(--black);
-    //    padding: 20px;
-    //    border-radius: 25px;
-    //    display: flex;
-    //    flex-direction: column;
-    //    align-items: center;
-    //}
-
-    build-number-text {
-        text-align: inherit;
-    }
-
     .instructions p {
         color: #26abe3;
         text-align: center;
@@ -143,91 +129,4 @@
             transform: rotate(359deg);
         }
     }
-
-    //.qr-code {
-    //    text-align: center;
-    //    margin-bottom: 20px;
-    //    padding-right: 20px;
-    //
-    //    img {
-    //        max-width: 200px;
-    //    }
-    //}
-    //
-    //.qr-code-text {
-    //    font-weight: 600;
-    //}
-    //
-    //.fixed-width {
-    //    width: 350px;
-    //}
-    //
-    //.disconnect-overlay {
-    //    position: absolute;
-    //    z-index: 1;
-    //    height: 210px;
-    //    width: 210px;
-    //    margin-left: 40px;
-    //
-    //    &:hover {
-    //        cursor: pointer;
-    //    }
-    //
-    //    p {
-    //        padding-top: 85px;
-    //        margin-left: 40px;
-    //    }
-    //}
-    //
-
-    //
-    //.loginForm {
-    //    width: 400px;
-    //
-    //    button {
-    //        width: 100%;
-    //    }
-    //}
-    //
-    //.divider {
-    //    width: 1px;
-    //    background: var(--lightGrey);
-    //    height: 350px;
-    //    margin-left: 55px;
-    //}
-    //
-
-    //
-    //.loginForm-mobile {
-    //    width: 100%;
-    //}
-    //
-    //.main-view-div-mobile {
-    //    height: 100vh;
-    //    width: 100%;
-    //    overflow: hidden;
-    //    color: white;
-    //    display: flex;
-    //    flex-direction: column;
-    //    justify-content: center;
-    //    align-items: center;
-    //}
-    //
-    //.divider-mobile {
-    //    display: none;
-    //}
-    //
-    //.mobile-button-div {
-    //    // display: inherit;
-    //    // width: 80%;
-    //    flex-direction: column;
-    //    width: 100%;
-    //    margin-top: 20px;
-    //    justify-content: center;
-    //    align-items: center;
-    //}
-    //
-    //.mobile-button {
-    //    width: 100%;
-    //}
 }
