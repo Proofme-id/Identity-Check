@@ -5,11 +5,11 @@ import { HasJwtTokenDefinedGuard } from "./guards/has-jwt-token-defined.guard";
 const routes: Routes = [
     {
         path: "",
-        redirectTo: "/main",
+        redirectTo: "/",
         pathMatch: "full",
     },
     {
-        path: "main",
+        path: "",
         loadChildren: "./features/main/main.module#MainPageModule"
     },
     {
@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: "./features/login/login.module#LoginPageModule"
     },
     {
-        path: "registrate",
-        loadChildren: "./features/registrate/registrate.module#RegistratePageModule"
+        path: "enroll",
+        loadChildren: "./features/enroll-organisation/enroll-organisation.module#EnrollOrganisationPageModule"
     },
     {
         path: "terms",
@@ -29,16 +29,12 @@ const routes: Routes = [
         loadChildren: "./features/privacy/privacy.module#PrivacyPageModule"
     },
     {
-        path: "registrate-finish",
-        loadChildren: "./features/registrate-finish/registrate-finish.module#RegistrateFinishPageModule"
-    },
-    {
         path: "faq",
         loadChildren: "./features/test_faq/faq.module#FaqPageModule"
     },
     {
-        path: "home",
-        loadChildren: "./features/home/home.module#HomePageModule",
+        path: "dashboard",
+        loadChildren: "./features/dashboard/dashboard.module#DashboardPageModule",
         canActivate: [HasJwtTokenDefinedGuard]
     }
 ];

@@ -16,14 +16,14 @@
     --back-color: #455A64;
 
     //footer 
-    --footer-background: #262626;
-    --footer-title: #989c9e;
+    --footer-background: var(--app-primary-color);
+    --footer-title: #26abe3;
     --footer-text: #627482;
     // Menu variables
     --menu-width: 200px;
-    --menu-background-color: #221E2B;
+    --menu-background-color: #fff;
     --menu-border-color: #fff;
-    --menu-color:#2c3e50;
+    --menu-color:var(--app-primary-color);
     
     .background-img {
         left: 0;

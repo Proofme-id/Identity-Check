@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { RegistrateFinishPageComponent } from "./registrate-finish.page";
-import { Routes, RouterModule } from "@angular/router";
+import { EnrollOrganisationPageComponent } from "./enroll-organisation.page";
+import { RouterModule, Routes } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
@@ -9,11 +9,13 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentsModule } from "src/app/components/components.module";
 import { NgxSelectModule } from "ngx-select-ex";
 import { LanguageProvider } from "../../providers/language/languageProvider";
+import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
+import { SharedModule } from "../../components/shared-module/shared-module.module";
 
 const routes: Routes = [
     {
         path: "",
-        component: RegistrateFinishPageComponent
+        component: EnrollOrganisationPageComponent
     }
 ];
 
@@ -27,15 +29,18 @@ const routes: Routes = [
         FontAwesomeModule,
         NgbModule,
         ComponentsModule,
-        NgxSelectModule
+        NgxSelectModule,
+        ModalModule.forRoot(),
+        SharedModule
     ],
     declarations: [
-        RegistrateFinishPageComponent
+        EnrollOrganisationPageComponent
     ],
     providers: [
-        LanguageProvider
+        LanguageProvider,
+        BsModalService
     ]
 })
-export class RegistrateFinishPageModule {
+export class EnrollOrganisationPageModule {
 
 }

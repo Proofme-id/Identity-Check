@@ -29,12 +29,17 @@ export class MainHeaderComponent {
         this.router.navigate(["login"]);
     }
 
+    navigateToDashboard(): void {
+        this.isMenuCollapsed = true;
+        this.router.navigate(["dashboard/overview"]);
+    }
+
     navigateToRegistrate(): void {
-        this.router.navigate(["registrate"]);
+        this.router.navigate(["enroll"]);
     }
 
     navigateToMainPage(): void {
-        this.router.navigate(["main"]);
+        this.router.navigate([""]);
     }
 
     selectLanguage(language: string): void {

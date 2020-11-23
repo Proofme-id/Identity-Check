@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-sm sticky-top navbar-light bg-light">
+<nav class="navbar navbar-expand-sm sticky-top navbar-light shadow-sm">
 	<div class="container">
 		<a class="navbar-brand" (click)="navigateToMainPage()" (click)="toggleMobileHamburgerDown();"><img src="/assets/img/logo.png" class="image" alt="logo">
-			{{ 'HEADER.company' | translate }}</a>
+		</a>
 		<button class="navbar-toggler" type="button"
 			(click)="toggleMobileHamburger()">
 			<span class="navbar-toggler-icon"></span>
@@ -9,15 +9,6 @@
 
 		<div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<p class="nav-link active" (click)="navigateToLogin()">
-						{{ 'HEADER.login' | translate }}</p>
-				</li>
-				<li class="nav-item">
-					<p class="nav-link" (click)="navigateToRegistrate()">
-						{{ 'HEADER.registrate' | translate }}</p>
-				</li>
-
 				<li class="nav-item dropdown">
 					<p class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 						(click)="toggleAccountDropdown()" (click)="isLanguageCollapsed = true"
@@ -28,14 +19,14 @@
 							{{ 'HEADER.login' | translate }}</p>
 						<p class="dropdown-item" (click)="navigateToRegistrate()">
 							{{ 'HEADER.registrate' | translate }}</p>
-						<p class="dropdown-item" (click)="navigateToLogin()">
+						<p class="dropdown-item" (click)="navigateToDashboard()">
 							{{ 'HEADER.myaccount' | translate }}</p>
 						<div class="dropdown-divider"></div>
 						<p class="dropdown-item" (click)="navigateToMainPage()">{{ 'HEADER.logout' | translate }}</p>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
-					<p class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+					<p class="nav-link dropdown-toggle" id="navbarLangDropdown" role="button"
 						(click)="toggleLanguageDropdown()" (click)="isAccountCollapsed = true"
 						data-toggle="dropdown">
 						{{ 'HEADER.language' | translate }}</p>

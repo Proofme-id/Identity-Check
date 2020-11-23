@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { HomePageComponent } from "./home.page";
+import { DashboardPageComponent } from "./dashboard.page";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { TranslateModule } from "@ngx-translate/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -13,7 +13,7 @@ import { IsAdminGuard } from "src/app/guards/is-admin.guard";
 const routes: Routes = [
     {
         path: "",
-        component: HomePageComponent,
+        component: DashboardPageComponent,
         children: [
             {
                 path: "",
@@ -52,9 +52,9 @@ const routes: Routes = [
     ],
     declarations: [
         ...COMPONENTS,
-        HomePageComponent
+        DashboardPageComponent
     ]
 })
-export class HomePageModule {
+export class DashboardPageModule {
 
 }

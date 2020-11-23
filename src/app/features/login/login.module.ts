@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { LoginPageComponent } from "./login.page";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
@@ -9,9 +9,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentsModule } from "src/app/components/components.module";
 import { NgxSelectModule } from "ngx-select-ex";
 import { LanguageProvider } from "../../providers/language/languageProvider";
-import { SafeUrlPipe } from "src/app/pipes/safe-link-pipe";
-import { RecoveryModalComponent } from "src/app/modals/recoveryModal.component";
 import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
+import { SharedModule } from "../../components/shared-module/shared-module.module";
 
 const routes: Routes = [
     {
@@ -31,12 +30,11 @@ const routes: Routes = [
         NgbModule,
         ComponentsModule,
         NgxSelectModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        SharedModule
     ],
     declarations: [
-        LoginPageComponent,
-        SafeUrlPipe,
-        RecoveryModalComponent
+        LoginPageComponent
     ],
     providers: [
         LanguageProvider,

@@ -14,13 +14,21 @@
     "INSTRUCTION_OVERLAY": {
         "message": "Follow the instructions in the app"
     },
+    "ENROLL": {
+        "title": "Register your organisation",
+        "companyName": "Company name",
+        "userName": "User name",
+        "iaccept": "I accept the",
+        "continue": "Continue",
+        "login_button_app": "Open ProofMe App"
+    },
     "HEADER": {
         "OVERVIEW": "Dashboard",
         "USERS": "Users",
         "PROFILE": "Profile",
         "company": "Didux.io",
         "login": "Login",
-        "registrate": "Registrate",
+        "registrate": "Sign up",
         "account": "Account",
         "myaccount": "My account",
         "logout": "Log out",
@@ -36,9 +44,9 @@
         "role": "Role",
         "password": "Password",
         "login_button": "Login",
-        "login_button_app": "Login with app",
+        "login_button_app": "Login with ProofMe",
         "language": "Language",
-        "registrate_button": "Registrate",
+        "registrate_button": "Sign up",
         "update_button": "Update",
         "loginProofme":"Login with the ProofMe App",
         "clickhere":"Click here to login with the ",

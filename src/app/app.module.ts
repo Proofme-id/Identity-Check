@@ -33,6 +33,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
 import { UtilsProvider } from "./providers/utils/utils";
 import { IsAdminGuard } from "./guards/is-admin.guard";
 import { EmailStateModule } from "./state/email/email.module";
+import { RecoveryModalComponent } from "./modals/recoveryModal.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -73,7 +74,8 @@ const NGXS_PROVIDERS: Provider[] = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        RecoveryModalComponent
     ],
     imports: [
         HttpClientModule,

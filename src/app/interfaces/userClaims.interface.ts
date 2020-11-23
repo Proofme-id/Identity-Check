@@ -1,7 +1,7 @@
+import { ICustomClaims } from "./customClaims.interface";
+
 export interface IUserClaims {
     username: string;
-    addresss: string;
-    did: string;
-    role: string;
     email: string;
+    custom_claims: ICustomClaims[];
 }

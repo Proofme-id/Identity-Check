@@ -1,0 +1,233 @@
+:host {
+    flex: 1;
+    overflow-y: auto;
+    font-weight: 600;
+
+    .main-view-div {
+        left: 0;
+        top: 0;
+        background: url(/assets/img/background.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        min-height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        color: var(--white);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .disconnect-overlay {
+        position: absolute;
+        z-index: 1;
+        height: 210px;
+        width: 210px;
+        margin-left: 40px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        p {
+            padding-top: 85px;
+        }
+    }
+
+    .logo {
+        text-align: center;
+        padding-top: 150px;
+        margin-bottom: 20px;
+        padding-right: 20px;
+
+        img {
+            max-width: 200px;
+        }
+    }
+
+    .enrollForm {
+        width: 600px;
+        padding-right: 5%;
+        padding-left: 5%;
+
+        button {
+            width: 100%;
+            padding-right: 5%;
+            padding-left: 5%;
+        }
+    }
+
+    //.enroll-success-div {
+    //    background: var(--white);
+    //    color: var(--black);
+    //    padding: 20px;
+    //    border-radius: 25px;
+    //    display: flex;
+    //    flex-direction: column;
+    //    align-items: center;
+    //}
+
+    build-number-text {
+        text-align: inherit;
+    }
+
+    .instructions p {
+        color: #26abe3;
+        text-align: center;
+    }
+
+
+    .login-p {
+        margin-top: 16px;
+    }
+
+    .login-click {
+        color: #26abe3;
+        cursor: pointer;
+    }
+
+    .privacy_link {
+        color: #26abe3;
+        text-align: center;
+        margin-top: -10px;
+    }
+
+    .checkbox-div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        label {
+            margin-left: 8px;
+            margin-bottom: 0;
+        }
+    }
+
+    .btn-blue {
+        color: #fff;
+        background-color: #26abe3;
+        border-color: #26abe3;
+        margin-bottom: 40px;
+    }
+
+    .mobile-button-div {
+        // display: inherit;
+        // width: 80%;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mobile-button {
+        width: 100%;
+    }
+
+    .disconnected-qr {
+        opacity: 0.2;
+    }
+
+    .rotate {
+        animation: rotation 2s infinite linear;
+    }
+
+    @keyframes rotation {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(359deg);
+        }
+    }
+
+    //.qr-code {
+    //    text-align: center;
+    //    margin-bottom: 20px;
+    //    padding-right: 20px;
+    //
+    //    img {
+    //        max-width: 200px;
+    //    }
+    //}
+    //
+    //.qr-code-text {
+    //    font-weight: 600;
+    //}
+    //
+    //.fixed-width {
+    //    width: 350px;
+    //}
+    //
+    //.disconnect-overlay {
+    //    position: absolute;
+    //    z-index: 1;
+    //    height: 210px;
+    //    width: 210px;
+    //    margin-left: 40px;
+    //
+    //    &:hover {
+    //        cursor: pointer;
+    //    }
+    //
+    //    p {
+    //        padding-top: 85px;
+    //        margin-left: 40px;
+    //    }
+    //}
+    //
+
+    //
+    //.loginForm {
+    //    width: 400px;
+    //
+    //    button {
+    //        width: 100%;
+    //    }
+    //}
+    //
+    //.divider {
+    //    width: 1px;
+    //    background: var(--lightGrey);
+    //    height: 350px;
+    //    margin-left: 55px;
+    //}
+    //
+
+    //
+    //.loginForm-mobile {
+    //    width: 100%;
+    //}
+    //
+    //.main-view-div-mobile {
+    //    height: 100vh;
+    //    width: 100%;
+    //    overflow: hidden;
+    //    color: white;
+    //    display: flex;
+    //    flex-direction: column;
+    //    justify-content: center;
+    //    align-items: center;
+    //}
+    //
+    //.divider-mobile {
+    //    display: none;
+    //}
+    //
+    //.mobile-button-div {
+    //    // display: inherit;
+    //    // width: 80%;
+    //    flex-direction: column;
+    //    width: 100%;
+    //    margin-top: 20px;
+    //    justify-content: center;
+    //    align-items: center;
+    //}
+    //
+    //.mobile-button {
+    //    width: 100%;
+    //}
+}

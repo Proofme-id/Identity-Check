@@ -1,32 +1,42 @@
 :host {
+    .navbar {
+        background-color: var(--menu-background-color);
+    }
+
     .nav-link {
         color: var(--menu-color);
         margin-top: revert;
+
         &:hover {
             cursor: pointer;
         }
     }
-}
-.image {
-    width: 50px;
-}
-a:not([href]):not([tabindex]) {
-    font-size: 20px;
-    font-weight: 500;
-}
-.sticky-top {
-    position: fixed;
-    width: 100%;
-}
 
-.dropdown-item {
-    &:hover {
-        cursor: pointer;
+    .image {
+        width: 50px;
     }
-}
-.navbar-brand{
-    color: var(--menu-color);
-    &:hover {
-        cursor: pointer;
+
+    a:not([href]):not([tabindex]) {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .sticky-top {
+        position: fixed;
+        width: 100%;
+    }
+
+    .dropdown-item {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .navbar-brand {
+        color: var(--menu-color);
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 }

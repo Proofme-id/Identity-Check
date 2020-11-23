@@ -14,6 +14,8 @@ import { UpdateUserAction } from "./actions/update-account";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { UserLoginAction } from "./actions/user-login";
 import { UserState } from "./user.state";
+import { IEnroll } from "../../interfaces/enroll.interface";
+import { FinishEnrollAction } from "./actions/finish-enroll";
 
 @Injectable({
     providedIn: "root"
@@ -80,6 +82,10 @@ export class UserStateFacade {
 
     finishRegistration(username: string, termsAndPrivacyAccepted: string, newsLetter: string): Observable<void> {
         return this.store.dispatch(new FinishRegistrationAction(username, termsAndPrivacyAccepted, newsLetter));
+    }
+
+    finishEnroll(enroll: IEnroll): Observable<void> {
+        return  this.store.dispatch(new FinishEnrollAction(enroll));
     }
 
     setShowExternalInstruction(status: boolean): Observable<void> {

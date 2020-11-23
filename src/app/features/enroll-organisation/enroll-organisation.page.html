@@ -1,0 +1,68 @@
+<app-main-header></app-main-header>
+<instruction-overlay></instruction-overlay>
+<div class="main-container">
+
+    <div class="main-view-div">
+        <form [formGroup]=enrollForm class="enrollForm" *ngIf="showForm && !postEnrollment">
+            <div class="logo">
+                <img src="/assets/img/logo.png">
+            </div>
+            <div class="instructions">
+                <p>
+                    {{ 'ENROLL.title' | translate }}
+                </p>
+            </div>
+            <div class="form-group">
+                <label>
+                    {{ 'ENROLL.userName' | translate }}
+                </label>
+                <input type="text" class="form-control" formControlName="username">
+            </div>
+            <div class="form-group">
+                <label>
+                    {{ 'ENROLL.companyName' | translate }}
+                </label>
+                <input type="text" class="form-control" formControlName="companyName">
+            </div>
+            <div class="checkbox-div">
+                <input type="checkbox" id="privacy" name="privacy"
+                       formControlName="privacyAccepted">
+                <label for="privacy">{{ 'ENROLL.iaccept' | translate }} <a href="/privacy-policy" target="_blank" class="privacy_link"> {{ 'FOOTER.privacy' | translate }}</a></label>
+            </div>
+            <div class="checkbox-div">
+                <input type="checkbox" id="terms" name="terms"
+                       formControlName="termsAccepted">
+                <label for="terms">{{ 'ENROLL.iaccept' | translate }} <a href="/terms-and-conditions" target="_blank" class="privacy_link">{{ 'FOOTER.terms' | translate }}</a></label>
+            </div>
+            <div class="checkbox-div">
+                <input type="checkbox" id="newsLetter" name="newsLetter" formControlName="newsLetter">
+                <label for="newsLetter">{{ 'REGISTRATE.subscribe' | translate }}</label>
+            </div>
+            <button class="btn btn-blue" (click)="enroll()" [disabled]="!enrollForm.valid">
+                {{ 'ENROLL.continue' | translate }}
+            </button>
+        </form>
+
+        <div [hidden]="showForm || postEnrollment">
+            <div class="qr-code fixed-width" [hidden]="showMobileLogin">
+                <div>
+                    <div *ngIf="websocketDisconnected" class="disconnect-overlay" (click)="refreshWebsocketDisconnect()">
+                        <p>{{ 'PROFILE.disconnected' | translate }}</p>
+                    </div>
+                    <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''" #qrCodeCanvas></canvas>
+                </div>
+                <p *ngIf="!websocketDisconnected" class="qr-code-text">{{ 'PROFILE.loginProofme' | translate }}</p>
+            </div>
+            <div *ngIf="showMobileLogin" class="fixed-width mobile-button-div">
+                <p>{{ 'PROFILE.clickhere' | translate }}<strong> {{ 'PROFILE.proofmeAPP' | translate }}</strong></p>
+                <a [href]="mobileLoginUrl | safeUrl" class="btn btn-blue mobile-button" target="_blank">{{ 'ENROLL.login_button_app' | translate }}</a>
+            </div>
+        </div>
+
+        <div *ngIf="postEnrollment">
+            <div class="logo">
+                <img class="rotate" src="/assets/img/logo.png">
+            </div>
+        </div>
+    </div>
+</div>

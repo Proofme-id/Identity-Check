@@ -34,7 +34,7 @@ export class FooterComponent {
     }
 
     navigateToMainPage(): void {
-        this.router.navigate(["main"]);
+        this.router.navigate([""]);
     }
 
     navigateToTerms(): void {

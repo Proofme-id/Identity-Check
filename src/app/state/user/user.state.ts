@@ -19,6 +19,7 @@ import { SetUsersList } from "./actions/set-users-list";
 import { IUser } from "src/app/interfaces/user.interface";
 import { UtilsProvider } from "src/app/providers/utils/utils";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
+import { FinishEnrollAction } from "./actions/finish-enroll";
 
 
 export interface IUserState {
@@ -235,9 +236,6 @@ export class UserState {
         ctx.patchState({
             registrationError: false,
         });
-        ctx.patchState({
-
-        })
         return this.http.post(
             `${this.configProvider.config.backendUrl}/v1/user/finishRegistration`,
             {
@@ -261,6 +259,32 @@ export class UserState {
                 return throwError(error);
             })
         ); 
+    }
+
+    @Action(FinishEnrollAction)
+    finishEnroll(ctx: StateContext<IUserState>, payload: FinishEnrollAction): Observable<ITokenResponse> {
+        ctx.patchState({
+            registrationError: false,
+        });
+        return this.http.post(
+            `${this.configProvider.config.backendUrl}/v1/organisation`,
+                payload.enroll
+        ).pipe(
+            tap((response: ITokenResponse) => {
+                const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
+                ctx.patchState({
+                    updateUserError: false,
+                    access_token: response.token,
+                    jwtDecoded
+                });
+            }),
+            catchError((error) => {
+                ctx.patchState({
+                    registrationError: true
+                });
+                return throwError(error);
+            })
+        );
     }
 
     @Action(SetExternalInstructionStatus)

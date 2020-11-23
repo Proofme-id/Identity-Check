@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from "@angular/core";
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Params, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { filter, skip, takeUntil } from "rxjs/operators";
 import * as QRCode from "qrcode";
 import { ConfigProvider } from "src/app/providers/config/configProvider";
@@ -12,18 +12,19 @@ import { WebRtcProvider } from "@proofmeid/webrtc-web";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { RecoveryModalComponent } from "src/app/modals/recoveryModal.component";
 import { DeviceDetectorService } from "ngx-device-detector";
+import { IEnroll } from "../../interfaces/enroll.interface";
 
 @Component({
-    templateUrl: "login.page.html",
-    styleUrls: ["login.page.scss"]
+    templateUrl: "enroll-organisation.page.html",
+    styleUrls: ["enroll-organisation.page.scss"]
 })
-export class LoginPageComponent extends BaseComponent implements OnInit {
-    loginForm: FormGroup;
+export class EnrollOrganisationPageComponent extends BaseComponent implements OnInit {
+    enrollForm: FormGroup;
+    showForm: boolean;
     websocketDisconnected = false;
     mobileLoginUrl: string;
-    emailEnabled$ = this.appStateFacade.emailEnabled$;
-    webRtcEnabled$ = this.appStateFacade.webRtcEnabled$;
-    backendUrlDown$ = this.appStateFacade.backendUrlDown$;
+    postEnrollment = false;
+    enrollData: IEnroll;
 
     @ViewChild("qrCodeCanvas")
     qrCodeCanvas: ElementRef;
@@ -45,29 +46,14 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
     ) {
         super();
 
-        this.loginForm = this.formBuilder.group({
-            email: new FormControl("", Validators.required),
-            password: new FormControl("", Validators.required)
+        this.enrollForm = this.formBuilder.group({
+            username: new FormControl("", Validators.required),
+            companyName: new FormControl("", Validators.required),
+            termsAccepted: new FormControl(false, Validators.requiredTrue),
+            privacyAccepted: new FormControl(false, Validators.requiredTrue),
+            newsLetter: new FormControl(false)
         });
-
-        // These are for the email callback
-        this.activatedRoute.queryParams.subscribe((params: Params) => {
-            if (params.emailVerified && params.emailVerified === "true") {
-                this.toastr.success("Email verification success! Please login");
-            } else if (params.emailVerified && params.emailVerified === "false") {
-                this.toastr.error("Email verification failed!");
-            } else if (params.emailRecoveryExpired && params.emailRecoveryExpired === "true") {
-                this.toastr.error("Account recovery expired!");
-            } else if (params.emailRecovered && params.emailRecovered === "true") {
-                this.toastr.success("Account recovery success!");
-            } else if (params.emailRecovered && params.emailRecovered === "false") {
-                this.toastr.error("Account recovery failed!");
-            } else if (params.emailRecoverCancelled && params.emailRecoverCancelled === "true") {
-                this.toastr.success("Account recovery cancelled successfully!");
-            } else if (params.emailRecoverCancelled && params.emailRecoverCancelled === "false") {
-                this.toastr.error("Account recovery cancel failed!");
-            }
-        });
+        this.showForm = true;
 
         if (this.deviceService.isMobile() || this.deviceService.isTablet()) {
             this.showMobileLogin = true;
@@ -88,13 +74,13 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
                 this.toastr.error("Login failed");
             }
         });
-        this.userStateFacade.accessToken$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((token) => {
-            if (token) {
-                this.ngZone.run(() => {
-                    this.router.navigate(["dashboard/overview"]);
-                });
-            }
-        });
+        // this.userStateFacade.accessToken$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((token) => {
+        //     if (token) {
+        //         this.ngZone.run(() => {
+        //             this.createCompany();
+        //         });
+        //     }
+        // });
 
         this.appStateFacade.backendUrlDown$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((down) => {
             if (down) {
@@ -137,9 +123,12 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
                 }
             }
             if (data.token) {
-                this.userStateFacade.setShowExternalInstruction(false);
-                // Set the token
-                this.userStateFacade.setAccessToken(data.token);
+                this.ngZone.run(() => {
+                    this.userStateFacade.setShowExternalInstruction(false);
+                    // Set the token
+                    this.userStateFacade.setAccessToken(data.token);
+                    this.createCompany();
+                });
             }
             if (data.identify) {
                 // Identify with mobile
@@ -164,9 +153,23 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
         this.webRtcProvider.launchWebsocketClient();
     }
 
-    login(): void {
-        const email = this.loginForm.get("email").value;
-        const password = this.loginForm.get("password").value;
-        this.userStateFacade.userLogin(email, password);
+    enroll(): void {
+        this.enrollData = {
+            username: this.enrollForm.get("username").value,
+            companyName: this.enrollForm.get("companyName").value,
+            termsAccepted: this.enrollForm.get("termsAccepted").value,
+            privacyAccepted: this.enrollForm.get("privacyAccepted").value,
+            newsLetter: this.enrollForm.get("newsLetter").value
+        }
+        console.log(this.enrollData);
+        this.showForm = false;
+    }
+
+    createCompany(): void {
+        // this.router.navigate(["registrate-finish"]);
+        this.postEnrollment = true;
+        this.userStateFacade.finishEnroll(this.enrollData);
+        // this.router.navigate(["dashboard"]);
+
     }
 }
