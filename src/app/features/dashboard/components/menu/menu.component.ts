@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { UserStateFacade } from "src/app/state/user/user.facade";
+import { OrganisationStateFacade } from "../../../../state/organisation/organisation.facade";
 
 @Component({
     selector: "app-menu",
@@ -9,9 +10,11 @@ import { UserStateFacade } from "src/app/state/user/user.facade";
 export class MenuComponent {
 
     isAdmin$ = this.userStateFacade.isAdmin$;
+    isOrganisationAdmin$ = this.organisationStateFacade.isOrganisationAdmin$;
 
     constructor(
-        private userStateFacade: UserStateFacade
+        private userStateFacade: UserStateFacade,
+        private organisationStateFacade: OrganisationStateFacade
     ) {
 
     }

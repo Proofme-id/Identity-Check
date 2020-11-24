@@ -20,6 +20,7 @@ import { IUser } from "src/app/interfaces/user.interface";
 import { UtilsProvider } from "src/app/providers/utils/utils";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { FinishEnrollAction } from "./actions/finish-enroll";
+import { SetActiveOrganisation } from "../organisation/actions/set-active-organisation";
 
 
 export interface IUserState {
@@ -129,6 +130,7 @@ export class UserState {
     setAccessToken(ctx: StateContext<IUserState>, payload: SetAccessTokenAction): IUserState {
         const accessToken = payload.accessToken;
         const jwtDecoded: IJWTDecoded = jwt_decode(accessToken);
+        ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
         return ctx.patchState({
             access_token: accessToken,
             jwtDecoded,
@@ -137,6 +139,7 @@ export class UserState {
 
     @Action(LogoutAction)
     logoutAction(ctx: StateContext<IUserState>): IUserState {
+        ctx.dispatch(new SetActiveOrganisation([]))
         return ctx.patchState({
             refresh_token: null,
             access_token: null
@@ -159,6 +162,7 @@ export class UserState {
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
                 ctx.patchState({
                     userLoginError: false,
                     access_token: response.token,
@@ -189,6 +193,7 @@ export class UserState {
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
                 ctx.patchState({
                     updateUserError: false,
                     access_token: response.token,
@@ -246,6 +251,7 @@ export class UserState {
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
                 ctx.patchState({
                     updateUserError: false,
                     access_token: response.token,
@@ -272,6 +278,7 @@ export class UserState {
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
                 ctx.patchState({
                     updateUserError: false,
                     access_token: response.token,
@@ -333,6 +340,7 @@ export class UserState {
                     const accessToken = token.token;
                     if (accessToken) {
                         const jwtDecoded: IJWTDecoded = jwt_decode(accessToken);
+                        ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
                         return ctx.patchState({
                             access_token: accessToken,
                             jwtDecoded,

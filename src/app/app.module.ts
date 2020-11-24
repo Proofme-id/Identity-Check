@@ -5,12 +5,12 @@ import { NGXS_PLUGINS, NgxsModule } from "@ngxs/store";
 import { environment } from "src/environments/environment";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { FontAwesomeModule, FaIconLibrary } from "@fortawesome/angular-fontawesome";
-import { fas  } from "@fortawesome/free-solid-svg-icons";
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ToastrModule } from "ngx-toastr";
 import { HasJwtTokenDefinedGuard } from "./guards/has-jwt-token-defined.guard";
 import { RequestInterceptor } from "./interceptor/requests.interceptor";
@@ -22,7 +22,7 @@ import { NgxSelectModule } from "ngx-select-ex";
 import { LanguageProvider } from "./providers/language/languageProvider";
 import { ConfigProvider } from "./providers/config/configProvider";
 import { StoragePlugin } from "./ngxs-plugins/storage/storage.plugin";
-import { STORAGE_ENGINE, NGXS_STORAGE_PLUGIN_OPTIONS } from "@ngxs-labs/async-storage-plugin";
+import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
 import { PopoverModule } from "ngx-bootstrap/popover";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { StorageProvider } from "./providers/storage/capacitor-storage.provider";
@@ -34,6 +34,8 @@ import { UtilsProvider } from "./providers/utils/utils";
 import { IsAdminGuard } from "./guards/is-admin.guard";
 import { EmailStateModule } from "./state/email/email.module";
 import { RecoveryModalComponent } from "./modals/recoveryModal.component";
+import { OrganisationStateModule } from "./state/organisation/organisation.module";
+import { IsOrganisationAdminGuard } from "./guards/is-organisation-admin.guard";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -48,7 +50,8 @@ const NGXS_MODULES = [
     NgxSelectModule,
     AppStateModule,
     UserStateModule,
-    EmailStateModule
+    EmailStateModule,
+    OrganisationStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [
@@ -105,6 +108,7 @@ const NGXS_PROVIDERS: Provider[] = [
         ConfigProvider,
         HasJwtTokenDefinedGuard,
         IsAdminGuard,
+        IsOrganisationAdminGuard,
         WebRtcProvider,
         LanguageProvider,
         UtilsProvider,

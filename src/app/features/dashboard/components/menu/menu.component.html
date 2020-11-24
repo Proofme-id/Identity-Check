@@ -9,6 +9,36 @@
             </span>
         </div>
 
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['organisation']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'building']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.organisation' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['employees']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'users']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.employees' | translate }}
+            </span>
+        </div>
+
+        <!-- Put the super user admin things below this line! -->
+        <hr *ngIf="(isAdmin$ | async)">
+
+        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['organisations']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'city']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.organisations' | translate }}
+            </span>
+        </div>
+
         <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['users']" routerLinkActive="active-link">
             <div class="menu-icon-container">
                 <fa-icon [icon]="['fas', 'users-cog']"></fa-icon>
@@ -17,6 +47,8 @@
                 {{ 'MENU.users' | translate }}
             </span>
         </div>
+
+        <hr *ngIf="(isAdmin$ | async)">
 
         <div class="item" [routerLink]="['logout']" routerLinkActive="active-link">
             <div class="menu-icon-container">

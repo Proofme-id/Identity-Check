@@ -2,6 +2,8 @@ import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { AppStateFacade } from "src/app/state/app/app.facade";
+import { UserStateFacade } from "../../state/user/user.facade";
+import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
     selector: "app-main-header",
@@ -12,6 +14,8 @@ export class MainHeaderComponent {
     public isMenuCollapsed = true;
     public isAccountCollapsed = true;
     public isLanguageCollapsed = true;
+    public accessToken$ = this.userStateFacade.accessToken$;
+    public organisations$ = this.organisationStateFacade.customClaims$;
 
     @Input()
     type: string;
@@ -19,7 +23,9 @@ export class MainHeaderComponent {
     constructor(
         private router: Router,
         private appStateFacade: AppStateFacade,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private userStateFacade: UserStateFacade,
+        private organisationStateFacade: OrganisationStateFacade
     ) {
 
     }

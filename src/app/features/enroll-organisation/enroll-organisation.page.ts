@@ -166,10 +166,9 @@ export class EnrollOrganisationPageComponent extends BaseComponent implements On
     }
 
     createCompany(): void {
-        // this.router.navigate(["registrate-finish"]);
         this.postEnrollment = true;
         this.userStateFacade.finishEnroll(this.enrollData);
-        // this.router.navigate(["dashboard"]);
+        this.router.navigate(["dashboard"]);
 
     }
 }

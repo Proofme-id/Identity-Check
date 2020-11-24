@@ -9,6 +9,7 @@ import { CommonModule } from "@angular/common";
 import { COMPONENTS } from "./components";
 import { ComponentsModule } from "src/app/components/components.module";
 import { IsAdminGuard } from "src/app/guards/is-admin.guard";
+import { IsOrganisationAdminGuard } from "../../guards/is-organisation-admin.guard";
 
 const routes: Routes = [
     {
@@ -27,6 +28,16 @@ const routes: Routes = [
             {
                 path: "users",
                 loadChildren: "../users/users.module#UsersPageModule",
+                canActivate: [IsAdminGuard]
+            },
+            {
+                path: "employees",
+                loadChildren: "../employees/employees.module#EmployeesPageModule",
+                canActivate: [IsOrganisationAdminGuard]
+            },
+            {
+                path: "organisations",
+                loadChildren: "../organisations/organisations.module#OrganisationsPageModule",
                 canActivate: [IsAdminGuard]
             },
             {

@@ -15,14 +15,16 @@
 						data-toggle="dropdown">
 						{{ 'HEADER.account' | translate }}</p>
 					<div [ngbCollapse]="isAccountCollapsed" class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<p class="dropdown-item" (click)="navigateToLogin()">
+						<p *ngIf="!(accessToken$ | async)" class="dropdown-item" (click)="navigateToLogin()">
 							{{ 'HEADER.login' | translate }}</p>
-						<p class="dropdown-item" (click)="navigateToRegistrate()">
+						<p *ngIf="!(accessToken$ | async)" class="dropdown-item" (click)="navigateToRegistrate()">
 							{{ 'HEADER.registrate' | translate }}</p>
-						<p class="dropdown-item" (click)="navigateToDashboard()">
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToDashboard()">
 							{{ 'HEADER.myaccount' | translate }}</p>
-						<div class="dropdown-divider"></div>
-						<p class="dropdown-item" (click)="navigateToMainPage()">{{ 'HEADER.logout' | translate }}</p>
+						<div *ngIf="(accessToken$ | async)" class="dropdown-divider"></div>
+						<p *ngIf="(accessToken$ | async) && (organisations$ | async) >= 1" class="dropdown-item" (click)="navigateToDashboard()">
+							Switch organisation</p>
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" [routerLink]="['logout']">{{ 'HEADER.logout' | translate }}</p>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

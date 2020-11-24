@@ -1,0 +1,11 @@
+<div class="overlay-instruction" *ngIf="(showOrganisationSelector$ | async)">
+    <div class="overlay-instruction-background"></div>
+    <div class="overlay-instruction-popup">
+        <img src="/assets/img/mobile.png" class="mobile-logo" alt="mobile">
+        <p>Todo: Add some cards to select your organisation</p>
+        <p (click)="update(0)"> Organisatie 1 </p>
+        <p (click)="update(1)"> Organisatie 2 </p>
+        <p (click)="update(2)"> Organisatie 3 </p>
+        <p class="mobile-instructions-text">{{ 'INSTRUCTION_OVERLAY.message' | translate }}</p>
+    </div>
+</div>
