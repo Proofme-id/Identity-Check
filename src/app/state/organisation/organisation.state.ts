@@ -166,7 +166,7 @@ export class OrganisationState {
         ).pipe(
             tap((employeesList: IEmployee[]) => {
                 for (const employee of employeesList) {
-                    employee.userPower = this.utilsProvider.convertUserPowerToRoleName(employee.userPower);
+                    employee.userPowerName = this.utilsProvider.convertUserPowerToRoleName(employee.userPower);
                 }
                 ctx.patchState({
                     employeesList

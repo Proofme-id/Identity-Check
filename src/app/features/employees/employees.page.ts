@@ -2,12 +2,11 @@ import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from "@angular/
 import { FormGroup } from "@angular/forms";
 import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
-import { UtilsProvider } from "src/app/providers/utils/utils";
-import { UserStateFacade } from "src/app/state/user/user.facade";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, skip, takeUntil } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
+import { UtilsProvider } from "src/app/providers/utils/utils";
+import { UserStateFacade } from "src/app/state/user/user.facade";
 
 @Component({
     templateUrl: "employees.page.html",
@@ -23,7 +22,7 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
     @ViewChild("userPower") userPower: ElementRef;
     @ViewChild("active") active: ElementRef;
 
-    @ViewChild("emailTpl", { static: true }) emailTpl: TemplateRef<unknown>;
+    @ViewChild("nameTpl", { static: true }) nameTpl: TemplateRef<unknown>;
     @ViewChild("publicKeyTpl", { static: true }) publicKeyTpl: TemplateRef<unknown>;
     @ViewChild("usernameTpl", { static: true }) usernameTpl: TemplateRef<unknown>;
     @ViewChild("userPowerTpl", { static: true }) userPowerTpl: TemplateRef<unknown>;
@@ -32,9 +31,9 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
 
     constructor(
         private appStateFacade: AppStateFacade,
-        private utilsProvider: UtilsProvider,
         private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService
+        private utilsProvider: UtilsProvider,
+        private userStateFacade: UserStateFacade
     ) {
         super();
         this.appStateFacade.setPageTitleLanguageKey("HEADER.USERS");
@@ -42,15 +41,16 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
 
     ngOnInit(): void {
         this.organisationStateFacade.setEmployeesList();
-        this.organisationStateFacade.employeesList$.pipe(takeUntil(this.destroy$)).subscribe((employeesList) => {
+        this.organisationStateFacade.employeesList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((employeesList) => {
             this.data = employeesList;
+            console.log("employeesList:", employeesList);
         });
 
         this.configuration = { ...DefaultConfig };
         this.configuration.searchEnabled = false;
         this.columns = [
             { key: "id", title: "ID" },
-            { key: "email", title: "Email", cellTemplate: this.emailTpl },
+            { key: "name", title: "Name", cellTemplate: this.nameTpl },
             { key: "publicKey", title: "Publickey" },
             { key: "username", title: "Username", cellTemplate: this.usernameTpl },
             { key: "userPower", title: "User Power", cellTemplate: this.userPowerTpl },
@@ -81,34 +81,33 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
         this.editRow = rowIndex;
     }
 
-    // update(): void {
-    //     const user = this.data.find(x => x.email === this.email.nativeElement.value);
-    //     this.userStateFacade.updateUserAdmin({
-    //         id: user.id,
-    //         email: this.email.nativeElement.value,
-    //         username: this.username.nativeElement.value,
-    //         userPower: this.userPower.nativeElement.value,
-    //         active: this.active.nativeElement.value,
-    //     });
-    //     const sub = this.userStateFacade.updateUserAdminSuccess$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((success) => {
-    //         if (success) {
-    //             sub.unsubscribe();
-    //             this.data = [
-    //                 ...this.data.map((obj, index) => {
-    //                     if (index === this.editRow) {
-    //                         return {
-    //                             // id: user.id,
-    //                             email: this.email.nativeElement.value,
-    //                             username: this.username.nativeElement.value,
-    //                             userPower: this.utilsProvider.convertUserPowerToRoleName(this.userPower.nativeElement.value),
-    //                             active: this.active.nativeElement.value,
-    //                         };
-    //                     }
-    //                     return obj;
-    //                 }),
-    //             ];
-    //             this.editRow = -1;
-    //         }
-    //     });
-    // }
+    update(): void {
+        const user = this.data.find(x => x.email === this.email.nativeElement.value);
+        this.userStateFacade.updateUserAdmin({
+            id: user.id,
+            email: this.email.nativeElement.value,
+            username: this.username.nativeElement.value,
+            userPower: this.userPower.nativeElement.value,
+            active: this.active.nativeElement.value,
+        });
+        const sub = this.userStateFacade.updateUserAdminSuccess$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((success) => {
+            if (success) {
+                sub.unsubscribe();
+                this.data = [
+                    ...this.data.map((obj, index) => {
+                        if (index === this.editRow) {
+                            return {
+                                email: this.email.nativeElement.value,
+                                username: this.username.nativeElement.value,
+                                userPower: this.utilsProvider.convertUserPowerToRoleName(this.userPower.nativeElement.value),
+                                active: this.active.nativeElement.value,
+                            };
+                        }
+                        return obj;
+                    }),
+                ];
+                this.editRow = -1;
+            }
+        });
+    }
 }

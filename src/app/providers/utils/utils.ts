@@ -5,7 +5,9 @@ export class UtilsProvider {
 
     convertUserPowerToRoleName(userPower: number | string): string {
         if (userPower === 1 || userPower === "1") {
-            return "Admin";
+            return "Admin"
+        } else if (userPower === 10 || userPower === "10") {
+            return "Organisation Admin";
         } else if (userPower === 100 || userPower === "100") {
             return "User";
         }
