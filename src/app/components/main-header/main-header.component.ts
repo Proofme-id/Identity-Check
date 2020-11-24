@@ -40,6 +40,12 @@ export class MainHeaderComponent {
         this.router.navigate(["dashboard/overview"]);
     }
 
+    navigateToProfilePage(): void {
+        console.log("navigateToProfilePage");
+        this.isMenuCollapsed = true;
+        this.router.navigate(["dashboard/profile"]);
+    }
+
     navigateToRegistrate(): void {
         this.router.navigate(["enroll"]);
     }
@@ -56,9 +62,11 @@ export class MainHeaderComponent {
     toggleMobileHamburger(): void {
         this.isMenuCollapsed = !this.isMenuCollapsed;
     }
+    
     toggleMobileHamburgerDown(): void {
         this.isMenuCollapsed = true;
     }
+
     toggleAccountDropdown(): void {
         this.isAccountCollapsed = !this.isAccountCollapsed
     }

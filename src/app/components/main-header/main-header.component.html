@@ -19,7 +19,7 @@
 							{{ 'HEADER.login' | translate }}</p>
 						<p *ngIf="!(accessToken$ | async)" class="dropdown-item" (click)="navigateToRegistrate()">
 							{{ 'HEADER.registrate' | translate }}</p>
-						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToDashboard()">
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToProfilePage()">
 							{{ 'HEADER.myaccount' | translate }}</p>
 						<div *ngIf="(accessToken$ | async)" class="dropdown-divider"></div>
 						<p *ngIf="(accessToken$ | async) && (organisations$ | async) >= 1" class="dropdown-item" (click)="navigateToDashboard()">

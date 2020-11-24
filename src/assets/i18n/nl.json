@@ -6,6 +6,18 @@
     "MENU": {
         "home": "Home",
         "users": "Gebruikers",
+        "organisations": "Organisaties",
+        "organisation": "Organisatie",
+        "employees": "Medewerkers",
+        "hardware": "Hardware",
+        "software": "Software",
+        "projects": "Projecten",
+        "suppliers": "Leveranciers",
+        "roles": "Rollen",
+        "labels": "Etiketten",
+        "teams": "Teams",
+        "logbook": "Logboek",
+        "documents": "Documenten",
         "signout": "Uitloggen"
     },
     "HOME": {

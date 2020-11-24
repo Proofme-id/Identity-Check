@@ -6,6 +6,18 @@
     "MENU": {
         "home": "Home",
         "users": "Users",
+        "organisations": "Organisations",
+        "organisation": "Organisation",
+        "employees": "Employees",
+        "hardware": "Hardware",
+        "software": "Software",
+        "projects": "Projects",
+        "suppliers": "Suppliers",
+        "roles": "Roles",
+        "labels": "Labels",
+        "teams": "Teams",
+        "logbook": "Logbook",
+        "documents": "Documents",
         "signout": "Sign out"
     },
     "HOME": {

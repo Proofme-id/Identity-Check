@@ -16,6 +16,8 @@ export class MenuComponent {
         private userStateFacade: UserStateFacade,
         private organisationStateFacade: OrganisationStateFacade
     ) {
-
+        this.isOrganisationAdmin$.subscribe((admin) => {
+            console.log("admin:", admin);
+        })
     }
 }

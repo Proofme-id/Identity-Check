@@ -12,4 +12,9 @@ export const STORAGE_KEYS: (string | IStorageKey)[] = [
     "app.language",
     "user.access_token",
     "user.jwtDecoded",
+    "organisation.customClaims",
+    "organisation.activeOrganisation",
+    "organisation.activeEmployee",
+    "organisation.activeUserPower",
+    "organisation.showOrganisationSelector",
 ];

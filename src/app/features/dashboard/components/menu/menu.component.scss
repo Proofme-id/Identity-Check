@@ -7,9 +7,10 @@
     position: relative;
     padding-top: 80px;
 
+    overflow: scroll;
+
     /** Begin menu hidden **/
     width: 64px;
-    overflow: hidden;
 
     .menu-inner-div {
         width: 200px;
