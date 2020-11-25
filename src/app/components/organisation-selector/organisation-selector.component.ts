@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { UserStateFacade } from "src/app/state/user/user.facade";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
@@ -17,7 +16,7 @@ export class OrganisationSelectorComponent {
 
     }
 
-    update(selection: number) {
+    update(selection: number): void {
         this.organisationStateFacade.updateActiveOrganisation(selection);
     }
 
