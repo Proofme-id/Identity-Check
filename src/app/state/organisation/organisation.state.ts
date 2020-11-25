@@ -10,10 +10,10 @@ import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { IEmployee } from "../../interfaces/employee.interface";
 import { SetEmployeesList } from "./actions/set-employees-list";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
-import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
 import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
+import { IOrganisation } from "../../interfaces/organisation.interface";
 
 
 export interface IOrganisationState {
@@ -37,7 +37,7 @@ export interface IOrganisationState {
         customClaims: [],
         activeOrganisation: 1,
         activeEmployee: null,
-        activeUserPower: 100,
+        activeUserPower: null,
         updateUserError: false,
         updateEmployeeAdminError: false,
         updateEmployeeAdminSuccess: false,
@@ -81,7 +81,7 @@ export class OrganisationState {
 
     @Selector()
     static isOrganisationAdmin(state: IOrganisationState): boolean {
-        return state.activeUserPower === 10;
+        return state.activeUserPower === 1;
     }
 
     @Selector()
@@ -181,7 +181,7 @@ export class OrganisationState {
     @Action(SetOrganisationsList)
     setOrganisationsList(ctx: StateContext<IOrganisationState>): Observable<IOrganisation[]> {
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/organisation`,
+            `${this.configProvider.config.backendUrl}/v1/organisation/all`,
         ).pipe(
             tap((organisationsList: IOrganisation[]) => {
                 ctx.patchState({
@@ -193,90 +193,4 @@ export class OrganisationState {
             })
         );
     }
-
-
-
-    // @Action(UpdateUserAction)
-    // updateUser(ctx: StateContext<IOrganisationState>, payload: UpdateUserAction): Observable<ITokenResponse> {
-    //     const userId = ctx.getState().jwtDecoded.userId;
-    //     ctx.patchState({
-    //         updateUserError: false
-    //     });
-    //     return this.http.patch(
-    //         `${this.configProvider.config.backendUrl}/v1/user/${userId}`,
-    //         {
-    //             username: payload.username
-    //         }
-    //     ).pipe(
-    //         tap((response: ITokenResponse) => {
-    //             const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
-    //             ctx.patchState({
-    //                 updateUserError: false,
-    //                 access_token: response.token,
-    //                 jwtDecoded
-    //             });
-    //         }),
-    //         catchError((error) => {
-    //             ctx.patchState({
-    //                 updateUserError: true
-    //             });
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
-
-    // @Action(SetUsersList)
-    // setUsersList(ctx: StateContext<IOrganisationState>): Observable<IUser[]> {
-    //     return this.http.get(
-    //         `${this.configProvider.config.backendUrl}/v1/user/list`,
-    //     ).pipe(
-    //         tap((usersList: IUser[]) => {
-    //             for (const user of usersList) {
-    //                 user.userPower = this.utilsProvider.convertUserPowerToRoleName(user.userPower);
-    //             }
-    //             ctx.patchState({
-    //                 usersList
-    //             });
-    //         }),
-    //         catchError((error) => {
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
-
-    // @Action(UpdateUserAdminAction)
-    // updateUserAdminAction(ctx: StateContext<IOrganisationState>, payload: UpdateUserAdminAction): Observable<ITokenResponse> {
-    //     ctx.patchState({
-    //         updateUserAdminError: null,
-    //         updateUserAdminSuccess: null
-    //     });
-    //     return this.http.patch(
-    //         `${this.configProvider.config.backendUrl}/v1/user/admin/${payload.user.id}`,
-    //         {
-    //             ...payload.user
-    //         }
-    //     ).pipe(
-    //         tap((token: ITokenResponse) => {
-    //             ctx.patchState({
-    //                 updateUserAdminSuccess: true
-    //             });
-    //             if (token) {
-    //                 const accessToken = token.token;
-    //                 if (accessToken) {
-    //                     const jwtDecoded: IJWTDecoded = jwt_decode(accessToken);
-    //                     return ctx.patchState({
-    //                         access_token: accessToken,
-    //                         jwtDecoded,
-    //                     });
-    //                 }
-    //             }
-    //         }),
-    //         catchError((error) => {
-    //             ctx.patchState({
-    //                 updateUserAdminError: true
-    //             });
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
 }

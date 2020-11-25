@@ -27,6 +27,87 @@
             </span>
         </div>
 
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['hardware']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'microchip']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.hardware' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['software']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'compact-disc']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.software' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['projects']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'project-diagram']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.projects' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['suppliers']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'parachute-box']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.suppliers' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['roles']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'user-tag']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.roles' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['labels']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'tags']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.labels' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['teams']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'user-friends']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.teams' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['logbook']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'scroll']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.logbook' | translate }}
+            </span>
+        </div>
+
+        <div *ngIf="(isOrganisationAdmin$ | async)" class="item" [routerLink]="['documents']" routerLinkActive="active-link">
+            <div class="menu-icon-container">
+                <fa-icon [icon]="['fas', 'archive']"></fa-icon>
+            </div>
+            <span>
+                {{ 'MENU.documents' | translate }}
+            </span>
+        </div>
+
         <!-- Put the super user admin things below this line! -->
         <hr *ngIf="(isAdmin$ | async)">
 
@@ -48,98 +129,6 @@
             </span>
         </div>
 
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['hardware']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'microchip']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.hardware' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['software']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'compact-disc']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.software' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['projects']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'project-diagram']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.projects' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['suppliers']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'parachute-box']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.suppliers' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['roles']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'user-tag']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.roles' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['labels']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'tags']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.labels' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['teams']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'user-friends']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.teams' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['logbook']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'scroll']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.logbook' | translate }}
-            </span>
-        </div>
-
-        <div *ngIf="(isAdmin$ | async)" class="item" [routerLink]="['documents']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'archive']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.documents' | translate }}
-            </span>
-        </div>
-
-        <hr *ngIf="(isAdmin$ | async)">
-
-        <div class="item" [routerLink]="['logout']" routerLinkActive="active-link">
-            <div class="menu-icon-container">
-                <fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon>
-            </div>
-            <span>
-                {{ 'MENU.signout' | translate }}
-            </span>
-        </div>
-
-        <build-number-text class="build-number-text"></build-number-text>
+        <build-number-text *ngIf="(isAdmin$ | async)" class="build-number-text"></build-number-text>
     </div>
 </div>

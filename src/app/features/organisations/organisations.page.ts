@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
 import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { UtilsProvider } from "src/app/providers/utils/utils";
@@ -7,13 +6,13 @@ import { BaseComponent } from "../base-component/base-component";
 import { takeUntil } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
+import { IOrganisation } from "../../interfaces/organisation.interface";
 
 @Component({
     templateUrl: "organisations.page.html",
     styleUrls: ["organisations.page.scss"]
 })
 export class OrganisationsPageComponent extends BaseComponent implements OnInit {
-    overviewForm: FormGroup;
     editRow: number;
 
     @ViewChild("name") name: ElementRef;
@@ -35,8 +34,8 @@ export class OrganisationsPageComponent extends BaseComponent implements OnInit 
 
     ngOnInit(): void {
         this.organisationStateFacade.setOrganisationsList();
-        this.organisationStateFacade.organisationsList$.pipe(takeUntil(this.destroy$)).subscribe((organisationList) => {
-            this.data = organisationList;
+        this.organisationStateFacade.organisationsList$.pipe(takeUntil(this.destroy$)).subscribe((organisations) => {
+            this.data = organisations;
         });
 
         this.configuration = { ...DefaultConfig };
@@ -52,7 +51,7 @@ export class OrganisationsPageComponent extends BaseComponent implements OnInit 
     public configuration: Config;
     public columns: Columns[];
 
-    public data = []
+    public data: IOrganisation[];
 
     edit(rowIndex: number): void {
         this.editRow = rowIndex;

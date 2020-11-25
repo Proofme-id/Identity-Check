@@ -304,7 +304,7 @@ export class UserState {
     @Action(SetUsersList)
     setUsersList(ctx: StateContext<IUserState>): Observable<IUser[]> {
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/user/list`,
+            `${this.configProvider.config.backendUrl}/v1/user/all`,
         ).pipe(
             tap((usersList: IUser[]) => {
                 for (const user of usersList) {

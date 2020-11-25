@@ -7,6 +7,7 @@ import { IEmployee } from "../../interfaces/employee.interface";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
 import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
+import { IOrganisation } from "../../interfaces/organisation.interface";
 
 @Injectable({
     providedIn: "root"
@@ -22,7 +23,7 @@ export class OrganisationStateFacade {
     employeesList$: Observable<IEmployee[]>;
 
     @Select(OrganisationState.organisationsList)
-    organisationsList$: Observable<IEmployee[]>;
+    organisationsList$: Observable<IOrganisation[]>;
 
     @Select(OrganisationState.showOrganisationSelector)
     showOrganisationSelector$: Observable<boolean>;
