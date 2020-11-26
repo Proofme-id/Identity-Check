@@ -188,7 +188,8 @@ export class UserState {
         return this.http.patch(
             `${this.configProvider.config.backendUrl}/v1/user/${userId}`,
             {
-                username: payload.username
+                username: payload.username,
+                language: payload.language
             }
         ).pipe(
             tap((response: ITokenResponse) => {
@@ -219,7 +220,8 @@ export class UserState {
             `${this.configProvider.config.backendUrl}/v1/user/registrate`,
             {
                 email: payload.email,
-                password: payload.password
+                password: payload.password,
+                language: payload.currentLang
             }
         ).pipe(
             tap(() => {
@@ -246,7 +248,8 @@ export class UserState {
             {
                 username: payload.username,
                 termsAndPrivacyAccepted: payload.termsAndPrivacyAccepted,
-                newsLetterAccepted: payload.newsLetter
+                newsLetterAccepted: payload.newsLetter,
+                language: payload.lang
             }
         ).pipe(
             tap((response: ITokenResponse) => {

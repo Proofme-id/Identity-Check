@@ -9,4 +9,5 @@ export interface IJWTDecoded {
     userId: number;
     userPower: number;
     user_claims: IUserClaims;
+    lang: string;
 }

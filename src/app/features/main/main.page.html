@@ -32,7 +32,6 @@
                 <form [formGroup]=contactForm class="contact-form" *ngIf="!contactEmail">
                     <div class="row">
                         <div class="col-lg-6 mb-lg-0 margin-top-50">
-                            <input type="hidden" name="receiver" id="receiver" value="didux">
                             <input type="text" formControlName="name" class="border-radius" name="name" id="name"
                                 placeholder="{{ 'index.contact.name' | translate}}">
                             <input type="email"  formControlName="email" class="border-radius" name="email" email="true" id="emailaddress"

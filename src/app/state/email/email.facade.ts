@@ -17,7 +17,7 @@ export class EmailStateFacade {
         private store: Store
     ) {}
 
-    sendEmail(email: string, name: string, message: string, captchaToken: string): Observable<void> {
-        return this.store.dispatch(new SendEmailAction(email, name, message, captchaToken));
+    sendEmail(email: string, name: string, message: string, language: string, captchaToken: string): Observable<void> {
+        return this.store.dispatch(new SendEmailAction(email, name, message, language, captchaToken));
     }
 }
