@@ -162,7 +162,7 @@ export class OrganisationState {
     setEmployeeList(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
         const organisation: number = ctx.getState().activeOrganisation;
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/employee/${organisation}`,
+            `${this.configProvider.config.backendUrl}/v1/employee/${organisation}/all`,
         ).pipe(
             tap((employeesList: IEmployee[]) => {
                 for (const employee of employeesList) {

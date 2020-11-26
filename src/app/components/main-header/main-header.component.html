@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm sticky-top navbar-light shadow-sm">
 	<div class="container">
-		<a class="navbar-brand" (click)="navigateToMainPage()" (click)="toggleMobileHamburgerDown();"><img src="/assets/img/logo.png" class="image" alt="logo">
+		<a class="navbar-brand" (click)="navigateToMainPage()"><img src="/assets/img/logo.png" class="image" alt="logo">
 		</a>
 		<button class="navbar-toggler" type="button"
 			(click)="toggleMobileHamburger()">
@@ -11,7 +11,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
 					<p class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-						(click)="toggleAccountDropdown()" (click)="isLanguageCollapsed = true"
+						(click)="toggleAccountDropdown()"
 						data-toggle="dropdown">
 						{{ 'HEADER.account' | translate }}</p>
 					<div [ngbCollapse]="isAccountCollapsed" class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -19,6 +19,8 @@
 							{{ 'HEADER.login' | translate }}</p>
 						<p *ngIf="!(accessToken$ | async)" class="dropdown-item" (click)="navigateToRegistrate()">
 							{{ 'HEADER.registrate' | translate }}</p>
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToDashboard()">
+							{{ 'HEADER.mydashboard' | translate }}</p>
 						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToProfilePage()">
 							{{ 'HEADER.myaccount' | translate }}</p>
 						<div *ngIf="(accessToken$ | async)" class="dropdown-divider"></div>
@@ -29,13 +31,13 @@
 				</li>
 				<li class="nav-item dropdown">
 					<p class="nav-link dropdown-toggle" id="navbarLangDropdown" role="button"
-						(click)="toggleLanguageDropdown()" (click)="isAccountCollapsed = true"
+						(click)="toggleLanguageDropdown()"
 						data-toggle="dropdown">
 						{{ 'HEADER.language' | translate }}</p>
 					<div [ngbCollapse]="isLanguageCollapsed" class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<p class="dropdown-item" (click)="selectLanguage('nl')" (click)="isLanguageCollapsed = true">
+						<p class="dropdown-item" (click)="selectLanguage('nl')">
 							{{ 'HEADER.dutch' | translate }}</p>
-						<p class="dropdown-item" (click)="selectLanguage('en')" (click)="isLanguageCollapsed = true">
+						<p class="dropdown-item" (click)="selectLanguage('en')">
 							{{ 'HEADER.english' | translate }}</p>
 					</div>
 				</li>
