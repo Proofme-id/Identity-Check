@@ -17,4 +17,5 @@ export const STORAGE_KEYS: (string | IStorageKey)[] = [
     "organisation.activeEmployee",
     "organisation.activeUserPower",
     "organisation.showOrganisationSelector",
+    "organisation.myOrganisations"
 ];
