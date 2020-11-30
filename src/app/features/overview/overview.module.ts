@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import {ComponentsModule} from "../../components/components.module";
+import { TableModule } from "ngx-easy-table";
 
 const routes: Routes = [
     {
@@ -24,7 +25,8 @@ const routes: Routes = [
         FormsModule,
         FontAwesomeModule,
         NgbModule,
-        ComponentsModule
+        ComponentsModule,
+        TableModule
     ],
     declarations: [
         OverviewPageComponent,

@@ -1,17 +1,22 @@
+<ng-template #emailTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex">{{ row.email }}</div>
+    <div *ngIf="editRow === rowIndex">
+       <input type="text" #email placeholder="Email" class="form-label" [value]="row.email" />
+    </div>
+ </ng-template>
 <div class="main-container">
-    <div class="container">
-        <div class="main-title">
-            <h1>{{ 'MAIN.title' | translate }}</h1>
-        </div>
-        <div class="main-text">
-            <h5> {{ 'MAIN.subtitle' | translate }}</h5>
-        </div>
-
-        <section class="section-1">
-
-            <h2>{{ 'MAIN.title2' | translate }}</h2>
-            <h5>{{ 'MAIN.subtitle2' | translate }}</h5>
-
-        </section>
+    <div class="main-container">
+        <div>
+            <div class="table-div">
+               <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
+               </ngx-table>
+            </div>
+         </div>
     </div>
 </div>
+<ng-template #actionTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" class="btn btn-primary" (click)="edit(rowIndex)">Edit</div>
+    <div *ngIf="editRow === rowIndex" class="btn" (click)="update()">Save</div>
+ </ng-template>
+
+ 

@@ -20,13 +20,13 @@ export class UsersPageComponent extends BaseComponent implements OnInit {
     @ViewChild("publicKey") publicKey: ElementRef;
     @ViewChild("username") username: ElementRef;
     @ViewChild("userPower") userPower: ElementRef;
-    @ViewChild("active") active: ElementRef;
+    @ViewChild("createdAt") active: ElementRef;
 
     @ViewChild("emailTpl", { static: true }) emailTpl: TemplateRef<unknown>;
     @ViewChild("publicKeyTpl", { static: true }) publicKeyTpl: TemplateRef<unknown>;
     @ViewChild("usernameTpl", { static: true }) usernameTpl: TemplateRef<unknown>;
     @ViewChild("userPowerTpl", { static: true }) userPowerTpl: TemplateRef<unknown>;
-    @ViewChild("activeTpl", { static: true }) activeTpl: TemplateRef<unknown>;
+    @ViewChild("createdAtTpl", { static: true }) createdAtpl: TemplateRef<unknown>;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
 
     constructor(
@@ -52,7 +52,7 @@ export class UsersPageComponent extends BaseComponent implements OnInit {
             { key: "publicKey", title: "Publickey" },
             { key: "username", title: "Username", cellTemplate: this.usernameTpl },
             { key: "userPower", title: "User Power", cellTemplate: this.userPowerTpl },
-            { key: "active", title: "Active", cellTemplate: this.activeTpl },
+            { key: "createdAt", title: "createdAt", cellTemplate: this.createdAtpl },
             { key: "action", title: "Actions", cellTemplate: this.actionTpl }
         ];
 

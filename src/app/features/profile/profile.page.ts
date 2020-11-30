@@ -4,10 +4,10 @@ import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageProvider} from "../../providers/language/languageProvider";
 import { ToastrService } from "ngx-toastr";
-import { first, takeUntil } from "rxjs/operators";
+import { first } from "rxjs/operators";
 import { UserStateFacade } from "src/app/state/user/user.facade";
 import { UtilsProvider } from "src/app/providers/utils/utils";
-import { BaseComponent } from '../base-component/base-component';
+import { BaseComponent } from "../base-component/base-component";
 
 @Component({
     templateUrl: "profile.page.html",

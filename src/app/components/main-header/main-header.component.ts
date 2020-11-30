@@ -75,7 +75,7 @@ export class MainHeaderComponent {
         this.isLanguageCollapsed = !this.isLanguageCollapsed
     }
 
-    closeAllDropdowns() {
+    closeAllDropdowns(): void {
         this.isLanguageCollapsed = true;
         this.isMenuCollapsed = true;
         this.isAccountCollapsed = true;
