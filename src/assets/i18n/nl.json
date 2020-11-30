@@ -355,5 +355,8 @@
         "part3": "Als je vragen hebt over dit privacybeleid, neem dan contact met ons op via"
       }
     }
+  },
+  "ORG_SELECTOR": {
+    "title": "Kies jouw organisatie"
   }
 }

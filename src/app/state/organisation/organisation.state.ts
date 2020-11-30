@@ -14,10 +14,12 @@ import { SetShowOrganisationSelector } from "./actions/show-organisation-selecto
 import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
+import { SetMyOrganisations } from './actions/set-my-organisations';
 
 
 export interface IOrganisationState {
     customClaims: ICustomClaims[],
+    myOrganisations: IEmployee[];
     activeOrganisation: number;
     activeEmployee: number;
     activeUserPower: number;
@@ -35,7 +37,8 @@ export interface IOrganisationState {
     name: "organisation",
     defaults: {
         customClaims: [],
-        activeOrganisation: 1,
+        myOrganisations: [],
+        activeOrganisation: null,
         activeEmployee: null,
         activeUserPower: null,
         updateUserError: false,
@@ -95,6 +98,11 @@ export class OrganisationState {
     }
 
     @Selector()
+    static myOrganisations(state: IOrganisationState): IEmployee[] {
+        return state.myOrganisations;
+    }
+
+    @Selector()
     static showOrganisationSelector(state: IOrganisationState): boolean {
         return state.showOrganisationSelector;
     }
@@ -129,6 +137,7 @@ export class OrganisationState {
             })
         } else if (ctx.getState().customClaims != payload.customClaims || ctx.getState().activeOrganisation === null){
             console.log("Set active organisation selector")
+            ctx.dispatch(new SetMyOrganisations());
             return ctx.patchState( {
                 customClaims: payload.customClaims,
                 showOrganisationSelector: true
@@ -139,22 +148,45 @@ export class OrganisationState {
     @Action(UpdateActiveOrganisation)
     updateActiveOrganisation(ctx: StateContext<IOrganisationState>, payload: UpdateActiveOrganisation): IOrganisationState {
         const organisations = ctx.getState().customClaims;
-        console.log("Active organisation: " + organisations[payload.selection].organisation)
-        console.log("Active employee: " + organisations[payload.selection].employee)
-        console.log("Active userPower: " + organisations[payload.selection].userPower)
-        return ctx.patchState( {
-            activeOrganisation: organisations[payload.selection].organisation,
-            activeEmployee: organisations[payload.selection].employee,
-            activeUserPower: organisations[payload.selection].userPower,
-            showOrganisationSelector: false
+        const selection = organisations.find(obj => {
+            return obj.organisation === payload.selection
         })
+        if(selection) {
+            console.log("Active organisation: " + selection.organisation)
+            console.log("Active employee: " + selection.employee)
+            console.log("Active userPower: " + selection.userPower)
+            return ctx.patchState( {
+                activeOrganisation: selection.organisation,
+                activeEmployee: selection.employee,
+                activeUserPower: selection.userPower,
+                showOrganisationSelector: false
+            })
+        }
     }
 
     @Action(SetShowOrganisationSelector)
     setShowOrganisationSelector(ctx: StateContext<IOrganisationState>, payload: SetShowOrganisationSelector): IOrganisationState {
+        ctx.dispatch(new SetMyOrganisations());
         return ctx.patchState({
             showOrganisationSelector: payload.status
         });
+    }
+
+    @Action(SetMyOrganisations)
+    setMyOrganisations(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
+        return this.http.get(
+            `${this.configProvider.config.backendUrl}/v1/organisation`,
+        ).pipe(
+            tap((myOrganisations: IEmployee[]) => {
+                console.log("myOrganisations: ", myOrganisations)
+                ctx.patchState({
+                    myOrganisations
+                });
+            }),
+            catchError((error) => {
+                return throwError(error);
+            })
+        );
     }
 
 

@@ -8,6 +8,7 @@ import { SetOrganisationsList } from "./actions/set-organisations-list";
 import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
+import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
 
 @Injectable({
     providedIn: "root"
@@ -28,6 +29,9 @@ export class OrganisationStateFacade {
     @Select(OrganisationState.showOrganisationSelector)
     showOrganisationSelector$: Observable<boolean>;
 
+    @Select(OrganisationState.myOrganisations)
+    myOrganisations$: Observable<IEmployee[]>
+
     constructor(private store: Store) {}
 
     setEmployeesList(): Observable<void> {
@@ -40,5 +44,9 @@ export class OrganisationStateFacade {
 
     updateActiveOrganisation(selection: number): Observable<void> {
         return this.store.dispatch(new UpdateActiveOrganisation(selection));
+    }
+
+    showOrganisationSelector(show: boolean): Observable<void> {
+        return this.store.dispatch(new SetShowOrganisationSelector(show));
     }
 }

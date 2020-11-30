@@ -21,6 +21,7 @@ import { UtilsProvider } from "src/app/providers/utils/utils";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { FinishEnrollAction } from "./actions/finish-enroll";
 import { SetActiveOrganisation } from "../organisation/actions/set-active-organisation";
+import { SetMyOrganisations } from "../organisation/actions/set-my-organisations";
 
 
 export interface IUserState {
@@ -194,7 +195,7 @@ export class UserState {
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
-                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims));
                 ctx.patchState({
                     updateUserError: false,
                     access_token: response.token,

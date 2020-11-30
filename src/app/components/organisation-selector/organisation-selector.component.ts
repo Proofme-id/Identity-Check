@@ -9,11 +9,11 @@ import { OrganisationStateFacade } from "../../state/organisation/organisation.f
 })
 export class OrganisationSelectorComponent {
     showOrganisationSelector$ = this.organisationStateFacade.showOrganisationSelector$;
+    myOrganisations$ = this.organisationStateFacade.myOrganisations$;
 
     constructor(
         private organisationStateFacade: OrganisationStateFacade
     ) {
-
     }
 
     update(selection: number): void {
