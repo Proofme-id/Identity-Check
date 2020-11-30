@@ -21,8 +21,6 @@ import { UtilsProvider } from "src/app/providers/utils/utils";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { FinishEnrollAction } from "./actions/finish-enroll";
 import { SetActiveOrganisation } from "../organisation/actions/set-active-organisation";
-import { SetMyOrganisations } from "../organisation/actions/set-my-organisations";
-
 
 export interface IUserState {
     access_token: string;

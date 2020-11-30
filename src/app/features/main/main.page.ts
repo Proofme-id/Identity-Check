@@ -9,7 +9,7 @@ import { EmailStateFacade } from "src/app/state/email/email.facade";
 import { filter, take, takeUntil } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { AppStateFacade } from 'src/app/state/app/app.facade';
+import { AppStateFacade } from "src/app/state/app/app.facade";
 
 @Component({
     templateUrl: "main.page.html",
@@ -81,7 +81,7 @@ export class MainPageComponent extends BaseComponent implements OnInit {
             return result;
         });
     
-        console.log('Send mail in: ' + language);
+        console.log("Send mail in: " + language);
 
         this.emailStateFacade.sendEmail(email, name, message, language, token);
     }

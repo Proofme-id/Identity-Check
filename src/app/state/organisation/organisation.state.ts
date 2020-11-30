@@ -14,7 +14,7 @@ import { SetShowOrganisationSelector } from "./actions/show-organisation-selecto
 import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
-import { SetMyOrganisations } from './actions/set-my-organisations';
+import { SetMyOrganisations } from "./actions/set-my-organisations";
 
 
 export interface IOrganisationState {
