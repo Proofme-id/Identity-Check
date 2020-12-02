@@ -37,8 +37,8 @@ export class AppComponent extends BaseComponent implements OnInit  {
     async ngOnInit(): Promise<void> {
         await this.configProvider.getConfig();
         this.titleService.setTitle(this.configProvider.config.appName);
-        this.showOrganisationSelector$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((value) => {
-            this.modalService.show(OrganisationSelectModalComponent, { class: 'modal-md modal-dialog-centered', ignoreBackdropClick: true });
+        this.showOrganisationSelector$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
+            this.modalService.show(OrganisationSelectModalComponent, { class: "modal-md modal-dialog-centered", ignoreBackdropClick: true });
         })
     }
 

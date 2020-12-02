@@ -59,7 +59,7 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
 
     delete(name: string, id: number): void {
         const initialState = { name };
-        this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: 'modal-sm modal-dialog-centered', ignoreBackdropClick: true });
+        this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.subscribe((result) => {
             console.log("Delete record: ", result);
             console.log("Name: ", name);
@@ -70,9 +70,10 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
 
     view(name: string, id: number): void {
         console.log("Preview ", name);
+        console.log("Id: ", id);
     }
 
     invite(): void {
-        this.modalService.show(EmployeeInviteModalComponent, {class: 'modal-lg modal-dialog-centered', ignoreBackdropClick: true });
+        this.modalService.show(EmployeeInviteModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }

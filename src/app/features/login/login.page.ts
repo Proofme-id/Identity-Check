@@ -154,7 +154,7 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
                 this.webRtcProvider.sendData("identify", { request: credentials, type: "email", timestamp, url: config.backendUrl, login: true });
             }
             if (data.recover) {
-                this.modalService.show(RecoveryModalComponent, {class: 'modal-xl modal-dialog-centered', ignoreBackdropClick: true });
+                this.modalService.show(RecoveryModalComponent, {class: "modal-xl modal-dialog-centered", ignoreBackdropClick: true });
             }
         });
         this.webRtcProvider.launchWebsocketClient();

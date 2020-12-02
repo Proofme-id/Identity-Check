@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
+import { FormBuilder } from "@angular/forms";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
@@ -16,8 +15,7 @@ export class OrganisationSelectModalComponent {
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService
+        private organisationStateFacade: OrganisationStateFacade
     ) {
 
     }

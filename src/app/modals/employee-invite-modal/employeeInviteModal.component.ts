@@ -22,7 +22,7 @@ export class EmployeeInviteModalComponent {
         });
     }
 
-    invite() {
+    invite(): void {
         const inviteData = {
             name: this.inviteForm.get("name").value,
             email: this.inviteForm.get("email").value
