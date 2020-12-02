@@ -1,51 +1,38 @@
-<div>
-   <div class="table-div">
-      <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
-      </ngx-table>
-   </div>
-</div>
+<div class="main-container">
 
-<ng-template #nameTpl let-row let-rowIndex="rowIndex">
-   <div *ngIf="editRow !== rowIndex">{{ row.name }}</div>
-   <div *ngIf="editRow === rowIndex">
-      <input type="text" #name placeholder="Name" class="form-label" [value]="row.name" />
-   </div>
-</ng-template>
-<ng-template #usernameTpl let-row let-rowIndex="rowIndex">
-   <div *ngIf="editRow !== rowIndex">{{ row.username }}</div>
-   <div *ngIf="editRow === rowIndex">
-      <input type="text" #username placeholder="Username" class="form-label" [value]="row.username" />
-   </div>
-</ng-template>
-<ng-template #userPowerTpl let-row let-rowIndex="rowIndex">
-   <div *ngIf="editRow !== rowIndex">{{ row.userPowerName }}</div>
-   <div *ngIf="editRow === rowIndex">
-      <div class="form-group">
-         <select class="form-select" #userPower>
-           <option [value]="row.userPower">{{ row.userPowerName }}</option>
-           <option *ngIf="row.userPower !== 1 && row.userPower !== '1'" value="1">Admin</option>
-           <option *ngIf="row.userPower !== 10 && row.userPower !== '10'" value="10">Organisation Admin</option>
-           <option *ngIf="row.userPower !== 100 && row.userPower !== '100'" value="100">User</option>
-         </select>
-       </div>
-   </div>
-</ng-template>
-<ng-template #activeTpl let-row let-rowIndex="rowIndex">
-   <div *ngIf="editRow !== rowIndex">
-      <img *ngIf="row.active === true || row.active === 'true'" src="/assets/img/success-icon.png" class="table-icon" alt="user">
-      <img *ngIf="row.active === false || row.active === 'false'" src="/assets/img/failed-icon.png" class="table-icon" alt="user">
-   </div>
-   <div *ngIf="editRow === rowIndex">
-      <div class="form-group">
-         <select class="form-select" #active>
-           <option>{{ row.active }}</option>
-           <option *ngIf="row.active !== false && row.active !== 'false'" value="false">false</option>
-           <option *ngIf="row.active !== true && row.active !== 'true'" value="true">true</option>
-         </select>
-       </div>
-   </div>
-</ng-template>
-<ng-template #actionTpl let-row let-rowIndex="rowIndex">
-   <div *ngIf="editRow !== rowIndex" class="btn btn-primary" (click)="edit(rowIndex)">Edit</div>
-   <div *ngIf="editRow === rowIndex" class="btn" (click)="update()">Save</div>
-</ng-template>
+
+    <!-- innerpage-section -->
+    <div class="container">
+        <div class="inner-page-section card">
+            <section class="page-header">
+                <div class="page-header-content d-flex justify-content-between">
+                    <h2 class="title"> {{ 'EMPLOYEE.title' | translate }}</h2>
+                    <button class="btn btn-green" (click)="invite()"><fa-icon [icon]="['fas', 'plus']" class="white"></fa-icon> invite</button>
+                </div>
+            </section>
+            <div>
+                <div class="page-content">
+                    <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
+                    </ngx-table>
+                </div>
+            </div>
+            <ng-template #adminTpl let-row let-rowIndex="rowIndex">
+                <div>
+                    <fa-icon *ngIf="row.userPower === 1" [icon]="['fas', 'check-square']" size="2x" class="success"></fa-icon>
+                </div>
+            </ng-template>
+            <ng-template #activeTpl let-row let-rowIndex="rowIndex">
+                <div>
+                    <fa-icon *ngIf="row.active === true || row.active === 'true'" [icon]="['fas', 'check-square']" size="2x" class="success"></fa-icon>
+                    <fa-icon *ngIf="row.active === false || row.active === 'false'" [icon]="['fas', 'times']" size="2x" class="danger"></fa-icon>
+                </div>
+            </ng-template>
+            <ng-template #actionTpl let-row let-rowIndex="rowIndex">
+                <div class="menu-icon-container">
+                    <fa-icon [icon]="['fas', 'eye']" size="2x" class="primary" (click)="view(row.name, row.id)"></fa-icon>
+                    <fa-icon [icon]="['fas', 'trash-alt']" size="2x" class="danger" (click)="delete(row.name, row.id)"></fa-icon>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

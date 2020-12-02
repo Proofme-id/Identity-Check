@@ -10,7 +10,7 @@ import { AppStateFacade } from "src/app/state/app/app.facade";
 import { ToastrService } from "ngx-toastr";
 import { WebRtcProvider } from "@proofmeid/webrtc-web";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { RecoveryModalComponent } from "src/app/modals/recoveryModal.component";
+import { RecoveryModalComponent } from "src/app/modals/recovery-modal/recoveryModal.component";
 import { DeviceDetectorService } from "ngx-device-detector";
 import { IEnroll } from "../../interfaces/enroll.interface";
 

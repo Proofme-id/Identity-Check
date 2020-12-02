@@ -94,6 +94,13 @@
       "title": "E-mail bestaat al",
       "message": "Het opgegeven e-mail is al aanwezig. Je hebt een e-mail ontvangen om jouw account te herstellen.",
       "okay": "oke"
+    },
+    "DELETE": {
+      "delete": "Verwijder",
+      "cancel": "Annuleer",
+      "text1": "Weet u zeker dat u",
+      "text2": "wilt verwijderen?",
+      "title": "Verwijder"
     }
   },
   "TITLE": {
@@ -358,5 +365,12 @@
   },
   "ORG_SELECTOR": {
     "title": "Kies jouw organisatie"
+  },
+  "EMPLOYEE": {
+    "invite": "Medewerker uitnodigen",
+    "title": "Medewerkers",
+    "username": "Naam",
+    "email": "Email adres",
+    "button": "Uitnodigen"
   }
 }

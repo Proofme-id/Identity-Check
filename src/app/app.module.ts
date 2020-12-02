@@ -33,7 +33,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
 import { UtilsProvider } from "./providers/utils/utils";
 import { IsAdminGuard } from "./guards/is-admin.guard";
 import { EmailStateModule } from "./state/email/email.module";
-import { RecoveryModalComponent } from "./modals/recoveryModal.component";
+import { MODALS_COMPONENT } from "./modals/modals.module";
 import { OrganisationStateModule } from "./state/organisation/organisation.module";
 import { IsOrganisationAdminGuard } from "./guards/is-organisation-admin.guard";
 
@@ -78,7 +78,7 @@ const NGXS_PROVIDERS: Provider[] = [
 @NgModule({
     declarations: [
         AppComponent,
-        RecoveryModalComponent
+        ...MODALS_COMPONENT
     ],
     imports: [
         HttpClientModule,

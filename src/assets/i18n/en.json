@@ -94,6 +94,13 @@
       "title": "E-mail already existing",
       "message": "The e-mail provided is already existing. You have received an e-mail to recover your account.",
       "okay": "okay"
+    },
+    "DELETE": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "text1": "Are you sure you want to delete",
+      "text2": "?",
+      "title": "Delete"
     }
   },
   "TITLE": {
@@ -358,5 +365,12 @@
   },
   "ORG_SELECTOR": {
     "title": "Choose an organisation"
+  },
+  "EMPLOYEE": {
+    "invite": "Invite employee",
+    "title": "Employees",
+    "username": "Name",
+    "email": "Email address",
+    "button": "Invite"
   }
 }

@@ -10,7 +10,7 @@ import { AppStateFacade } from "src/app/state/app/app.facade";
 import { ToastrService } from "ngx-toastr";
 import { WebRtcProvider } from "@proofmeid/webrtc-web";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { RecoveryModalComponent } from "src/app/modals/recoveryModal.component";
+import { RecoveryModalComponent } from "src/app/modals/recovery-modal/recoveryModal.component";
 import { DeviceDetectorService } from "ngx-device-detector";
 
 @Component({
@@ -154,7 +154,7 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
                 this.webRtcProvider.sendData("identify", { request: credentials, type: "email", timestamp, url: config.backendUrl, login: true });
             }
             if (data.recover) {
-                this.modalService.show(RecoveryModalComponent);
+                this.modalService.show(RecoveryModalComponent, {class: 'modal-xl modal-dialog-centered', ignoreBackdropClick: true });
             }
         });
         this.webRtcProvider.launchWebsocketClient();

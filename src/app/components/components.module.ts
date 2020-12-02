@@ -9,7 +9,6 @@ import { FooterComponent } from "./footer/footer.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { LanguageProvider } from "../providers/language/languageProvider";
 import { InstructionOverlayComponent } from "./instruction-overlay/instruction-overlay.component";
-import { OrganisationSelectorComponent } from "./organisation-selector/organisation-selector.component";
 
 
 @NgModule({
@@ -24,15 +23,13 @@ import { OrganisationSelectorComponent } from "./organisation-selector/organisat
         BuildNumberComponent,
         MainHeaderComponent,
         FooterComponent,
-        InstructionOverlayComponent,
-        OrganisationSelectorComponent
+        InstructionOverlayComponent
     ],
     exports: [
         BuildNumberComponent,
         MainHeaderComponent,
         FooterComponent,
-        InstructionOverlayComponent,
-        OrganisationSelectorComponent
+        InstructionOverlayComponent
     ],
     providers: [
         LanguageProvider
