@@ -1,0 +1,50 @@
+<div>
+    <div class="table-div">
+       <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
+       </ngx-table>
+    </div>
+ </div>
+ 
+ <ng-template #emailTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex">{{ row.email }}</div>
+    <div *ngIf="editRow === rowIndex">
+       <input type="text" #email placeholder="Email" class="form-label" [value]="row.email" />
+    </div> 
+ </ng-template>
+ <ng-template #usernameTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex">{{ row.username }}</div>
+    <div *ngIf="editRow === rowIndex">
+       <input type="text" #username placeholder="Username" class="form-label" [value]="row.username" />
+    </div>
+ </ng-template>
+ <ng-template #userPowerTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex">{{ row.userPower }}</div>
+    <div *ngIf="editRow === rowIndex"> 
+       <div class="form-group">
+          <select class="form-select" #userPower>
+            <option [value]="utilsProvider.convertRoleNameToUserPower(row.userPower)">{{ row.userPower }}</option>
+            <option *ngIf="row.userPower != 'Admin'" value="1">Admin</option>
+            <option *ngIf="row.userPower != 'User'" value="100">User</option>
+          </select>
+        </div>
+    </div>
+ </ng-template>
+ <ng-template #activeTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex">
+       <img *ngIf="row.active === true || row.active === 'true'" src="/assets/img/success-icon.png" class="table-icon" alt="user">
+       <img *ngIf="row.active === false || row.active === 'false'" src="/assets/img/failed-icon.png" class="table-icon" alt="user">
+    </div>
+    <div *ngIf="editRow === rowIndex">
+       <div class="form-group">
+          <select class="form-select" #active>
+            <option>{{ row.active }}</option>
+            <option *ngIf="row.active !== false && row.active !== 'false'" value="false">false</option>
+            <option *ngIf="row.active !== true && row.active !== 'true'" value="true">true</option>
+          </select>
+        </div>
+    </div>
+ </ng-template>
+ <ng-template #actionTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" class="btn btn-primary" (click)="edit(rowIndex)">Edit</div>
+    <div *ngIf="editRow === rowIndex" class="btn" (click)="update()">Save</div>
+ </ng-template>

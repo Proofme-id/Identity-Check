@@ -9,10 +9,10 @@ import { filter, skip, takeUntil } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
-    templateUrl: "users.page.html",
-    styleUrls: ["users.page.scss"]
+    templateUrl: "suppliers.page.html",
+    styleUrls: ["suppliers.page.scss"]
 })
-export class UsersPageComponent extends BaseComponent implements OnInit {
+export class SuppliersPageComponent extends BaseComponent implements OnInit {
     overviewForm: FormGroup;
     editRow: number;
 
@@ -28,7 +28,6 @@ export class UsersPageComponent extends BaseComponent implements OnInit {
     @ViewChild("userPowerTpl", { static: true }) userPowerTpl: TemplateRef<unknown>;
     @ViewChild("activeTpl", { static: true }) activeTpl: TemplateRef<unknown>;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
-
     constructor(
         private appStateFacade: AppStateFacade,
         private utilsProvider: UtilsProvider,

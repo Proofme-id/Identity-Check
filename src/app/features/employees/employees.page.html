@@ -24,7 +24,6 @@
          <select class="form-select" #userPower>
            <option [value]="row.userPower">{{ row.userPowerName }}</option>
            <option *ngIf="row.userPower !== 1 && row.userPower !== '1'" value="1">Admin</option>
-           <option *ngIf="row.userPower !== 10 && row.userPower !== '10'" value="10">Organisation Admin</option>
            <option *ngIf="row.userPower !== 100 && row.userPower !== '100'" value="100">User</option>
          </select>
        </div>

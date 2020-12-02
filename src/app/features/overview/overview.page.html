@@ -1,22 +1,32 @@
-<ng-template #emailTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex">{{ row.email }}</div>
-    <div *ngIf="editRow === rowIndex">
-       <input type="text" #email placeholder="Email" class="form-label" [value]="row.email" />
-    </div>
- </ng-template>
-<div class="main-container">
-    <div class="main-container">
-        <div>
-            <div class="table-div">
-               <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
-               </ngx-table>
-            </div>
+<div class="center">
+   <div class="container">
+      <!-- <h2>{{ 'PROFILE.title' | translate }}</h2> -->
+      <h2>{{ 'OVERVIEW.details' | translate }}</h2>
+      <div class="topright">
+         <div class="radialProgressBar progress-70">
+            <div class="overlay">70%</div>
          </div>
-    </div>
+      </div>
+      <hr>
+      <form [formGroup]=overviewForm>
+         <div class="form-group">
+            <label>
+               {{ 'PROFILE.username' | translate }}
+            </label>
+            <input type="text" class="Form" formControlName="username">
+         </div>
+         <div class="form-group">
+            <label>
+               {{ 'PROFILE.email' | translate }}
+            </label>
+            <input type="text" class="Form" formControlName="email">
+         </div>
+         <div class="form-group">
+            <label>
+               {{ 'PROFILE.role' | translate }}
+            </label>
+            <input type="text" class="Form" formControlName="role">
+         </div>
+      </form>
+   </div>
 </div>
-<ng-template #actionTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex" class="btn btn-primary" (click)="edit(rowIndex)">Edit</div>
-    <div *ngIf="editRow === rowIndex" class="btn" (click)="update()">Save</div>
- </ng-template>
-
- 
