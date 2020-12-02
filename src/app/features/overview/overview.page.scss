@@ -19,36 +19,6 @@
         margin-left: calc(100% - 44px);
     }
 
-    .pie-wrapper--solid {
-        border-radius: 50%;
-        overflow: hidden;
-
-        &:before {
-            border-radius: 0 100% 100% 0 / 50%;
-            content: '';
-            display: block;
-            height: 100%;
-            margin-left: 50%;
-            transform-origin: left;
-        }
-
-        .label {
-            background: transparent;
-        }
-
-        &.progress-65 {
-            @include draw-progress--solid(65, #e67e22, $bg-color);
-        }
-
-        &.progress-25 {
-            @include draw-progress--solid(25, #9b59b6, $bg-color);
-        }
-
-        &.progress-88 {
-            @include draw-progress--solid(88, #3498db, $bg-color);
-        }
-    }
-
     .table-div {
         margin-left: 3vw;
         margin-right: 3vw;
