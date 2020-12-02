@@ -69,6 +69,9 @@
     "email-sent": "An e-mail has been sent to",
     "link": "Please click on the link in the e-mail address to verify."
   },
+  "OVERVIEW":{
+    "details":"Personal Data"
+  },
   "MAIN": {
     "title": "Welcome to this awesome template",
     "subtitle": "Using this template allows you to see how it's done. This is the landing page. Replace your icon in the top left corner and make a choice in the top right corner to navigate. Scroll to see some random section in the middle and a footer on the bottom. Have fun!",

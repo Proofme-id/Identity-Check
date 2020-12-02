@@ -69,6 +69,9 @@
     "email-sent": "Er is een email verzonden naar",
     "link": "Klik op de link in de e-mail om dit te verifiëren."
   },
+    "OVERVIEW":{
+    "details":"Persoons Gegevens"
+  },
   "MAIN": {
     "title": "Welkom bij deze geweldige template",
     "subtitle": "Door deze template, kunt u zien hoe het moet. Dit is de hoofdpagina. Vervang je logo in de linkerbovenhoek en maak een keuze in de rechterbovenhoek om te navigeren. Scrol om een ​​willekeurig gedeelte in het midden en een voettekst onderaan te zien. Veel plezier!",
@@ -105,7 +108,7 @@
   },
   "TITLE": {
     "terms": "Algemene voorwaarden",
-    "privacy": "Privacybeleid",
+    "privacy": "Privacyverklaring",
     "faq": "Veel gestelde vragen"
   },
   "FAQ": {

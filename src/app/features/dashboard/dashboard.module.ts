@@ -41,6 +41,11 @@ const routes: Routes = [
                 canActivate: [IsAdminGuard]
             },
             {
+                path: "suppliers",
+                loadChildren: "../suppliers/suppliers.module#SuppliersPageModule",
+                canActivate: [IsOrganisationAdminGuard]
+            },
+            {
                 path: "overview",
                 loadChildren: "../overview/overview.module#OverviewPageModule"
             },
