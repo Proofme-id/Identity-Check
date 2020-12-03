@@ -6,8 +6,7 @@ import { SetPageTitleLanguageKeyAction } from "./actions/set-page-title-language
 import { SetBuildNumber } from "./actions/set-build-number.action";
 import { SetLanguage } from "./actions/set-language.action";
 import { SetAuthWsUrlAction } from "./actions/set-auth-ws-url";
-import { ITYPE, ToastMessage } from "../../interfaces/toastMessage.interface";
-import { SendToastAction } from "./actions/toastMessage";
+import { ToastMessage } from "../../interfaces/toastMessage.interface";
 
 @Injectable()
 export class AppStateFacade {

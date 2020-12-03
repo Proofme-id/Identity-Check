@@ -9,7 +9,7 @@ import { OrganisationStateFacade } from "./state/organisation/organisation.facad
 import { OrganisationSelectModalComponent } from "./modals/organisation-select-modal/organisationSelectModal.component";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { BaseComponent } from "./features/base-component/base-component";
-import { filter, take, takeUntil } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
 import { UserStateFacade } from "./state/user/user.facade";
 import { ToastrService } from "ngx-toastr";
 

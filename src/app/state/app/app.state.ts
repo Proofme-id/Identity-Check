@@ -72,10 +72,9 @@ export class AppState {
     }
 
     @Selector()
-    static message(state: IAppState) {
+    static message(state: IAppState): ToastMessage {
         return state.message;
     }
-
 
     constructor(
         private http: HttpClient,
@@ -122,7 +121,7 @@ export class AppState {
 
     // send message
     @Action(SendToastAction)
-    sendMessage(ctx: StateContext<IAppState>, payload: SendToastAction) {
+    sendMessage(ctx: StateContext<IAppState>, payload: SendToastAction): void {
         ctx.patchState({
             message: payload.message
         });

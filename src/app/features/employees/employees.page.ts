@@ -4,11 +4,9 @@ import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
-import { ToastrService } from "ngx-toastr";
 import { DeleteModalComponent } from "../../modals/delete-modal/deleteModal.component"
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { EmployeeInviteModalComponent } from "../../modals/employee-invite-modal/employeeInviteModal.component";
-import { Observable } from "rxjs";
 
 @Component({
     templateUrl: "employees.page.html",
@@ -27,7 +25,6 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
     constructor(
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService,
         private modalService: BsModalService
     ) {
         super();
