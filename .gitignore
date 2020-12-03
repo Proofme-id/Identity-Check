@@ -4,3 +4,4 @@ dist
 builds
 coverage
 .DS_Store
+assets/config/config.json

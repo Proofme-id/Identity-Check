@@ -1,4 +1,4 @@
-<div *ngIf="(isAdmin$ | async)">
+<div *ngIf="(isAdmin$ | async)" class="inner-div">
     <fa-icon [icon]="['fas', 'plug']"></fa-icon>
     <span>
         Build {{ buildNumber$ | async }}
