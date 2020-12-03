@@ -9,7 +9,9 @@ import { OrganisationStateFacade } from "./state/organisation/organisation.facad
 import { OrganisationSelectModalComponent } from "./modals/organisation-select-modal/organisationSelectModal.component";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { BaseComponent } from "./features/base-component/base-component";
-import { filter, takeUntil } from "rxjs/operators";
+import { filter, take, takeUntil } from "rxjs/operators";
+import { UserStateFacade } from "./state/user/user.facade";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: "app-root",
@@ -18,6 +20,7 @@ import { filter, takeUntil } from "rxjs/operators";
 })
 export class AppComponent extends BaseComponent implements OnInit  {
     showOrganisationSelector$ = this.organisationStateFacade.showOrganisationSelector$;
+    message$ = this.appStateFacade.message$;
 
     constructor(
         private translateService: TranslateService,
@@ -25,8 +28,10 @@ export class AppComponent extends BaseComponent implements OnInit  {
         private appStateFacade: AppStateFacade,
         private configProvider: ConfigProvider,
         private titleService: Title,
+        private userStateFacade: UserStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private toastr: ToastrService
     ) {
         super();
         this.translateService.setDefaultLang("en");
@@ -39,6 +44,20 @@ export class AppComponent extends BaseComponent implements OnInit  {
         this.titleService.setTitle(this.configProvider.config.appName);
         this.showOrganisationSelector$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
             this.modalService.show(OrganisationSelectModalComponent, { class: "modal-md modal-dialog-centered", ignoreBackdropClick: true });
+        })
+
+        this.message$.subscribe((message) => {
+            if (message) {
+                if (message.type === "SUCCESS") {
+                    this.toastr.success(message.message);
+                } else if (message.type === "WARNING") {
+                    this.toastr.warning(message.message);
+                } else if (message.type === "ERROR") {
+                    this.toastr.error(message.message);
+                }else {
+                    this.toastr.info(message.message);
+                }
+            }
         })
     }
 

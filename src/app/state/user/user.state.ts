@@ -1,4 +1,4 @@
-import { State, Selector, StateContext, Action } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 import { ConfigProvider } from "src/app/providers/config/configProvider";
 import { LogoutAction } from "./actions/logout.action";
@@ -32,7 +32,7 @@ export interface IUserState {
     registrationError: boolean;
     loginType: string;
     showExternalInstruction: boolean;
-    usersList: IUser[],
+    usersList: IUser[];
     updateUserAdminError: boolean;
     updateUserAdminSuccess: boolean;
 }

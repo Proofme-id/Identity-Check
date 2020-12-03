@@ -1,4 +1,4 @@
-import { State, Selector, StateContext, Action } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { SetPageTitleLanguageKeyAction } from "./actions/set-page-title-language-key.action";
 import { SetBuildNumber } from "./actions/set-build-number.action";
 import { SetLanguage } from "./actions/set-language.action";
@@ -7,6 +7,8 @@ import { HttpClient } from "@angular/common/http";
 import { ConfigProvider } from "src/app/providers/config/configProvider";
 import { Injectable } from "@angular/core";
 import { IConfigResponse } from "src/app/interfaces/config-response.interface";
+import { SendToastAction } from "./actions/toastMessage";
+import { ToastMessage } from "../../interfaces/toastMessage.interface";
 
 export interface IAppState {
     pageTitleLanguageKey: string;
@@ -16,6 +18,7 @@ export interface IAppState {
     emailEnabled: boolean;
     webRtcEnabled: boolean;
     backendUrlDown: boolean;
+    message: ToastMessage;
 }
 
 @State<IAppState>({
@@ -27,7 +30,8 @@ export interface IAppState {
         authWsUrl: null,
         webRtcEnabled: false,
         emailEnabled: false,
-        backendUrlDown: false
+        backendUrlDown: false,
+        message: null
     }
 })
 @Injectable()
@@ -67,13 +71,19 @@ export class AppState {
         return state.webRtcEnabled;
     }
 
+    @Selector()
+    static message(state: IAppState) {
+        return state.message;
+    }
+
+
     constructor(
         private http: HttpClient,
         private configProvider: ConfigProvider
     ) {}
 
     @Action(SetPageTitleLanguageKeyAction)
-    setPageTitleLanugeKey(ctx: StateContext<IAppState>, payload: SetPageTitleLanguageKeyAction): void {
+    setPageTitleLanguageKey(ctx: StateContext<IAppState>, payload: SetPageTitleLanguageKeyAction): void {
         ctx.patchState({
             pageTitleLanguageKey: payload.pageTitleLanguageKey
         });
@@ -107,6 +117,14 @@ export class AppState {
                 backendUrlDown: true
             })
             console.error(err);
+        });
+    }
+
+    // send message
+    @Action(SendToastAction)
+    sendMessage(ctx: StateContext<IAppState>, payload: SendToastAction) {
+        ctx.patchState({
+            message: payload.message
         });
     }
 }

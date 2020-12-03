@@ -8,6 +8,7 @@ import { ToastrService } from "ngx-toastr";
 import { DeleteModalComponent } from "../../modals/delete-modal/deleteModal.component"
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { EmployeeInviteModalComponent } from "../../modals/employee-invite-modal/employeeInviteModal.component";
+import { Observable } from "rxjs";
 
 @Component({
     templateUrl: "employees.page.html",
@@ -61,10 +62,9 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.subscribe((result) => {
-            console.log("Delete record: ", result);
-            console.log("Name: ", name);
-            console.log("Id: ", id);
-            // Todo: Add action!
+            if (result) {
+                this.organisationStateFacade.deleteEmployee(id);
+            }
         })
     }
 
