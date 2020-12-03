@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Store, Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { IJWTDecoded } from "src/app/interfaces/jwtDecoded.interface";
 import { IUser } from "src/app/interfaces/user.interface";
@@ -54,6 +54,8 @@ export class UserStateFacade {
     @Select(UserState.updateUserAdminSuccess)
     updateUserAdminSuccess$: Observable<boolean>;
 
+
+
     constructor(private store: Store) {}
 
     logout(): Observable<void> {
@@ -68,20 +70,20 @@ export class UserStateFacade {
         return this.store.dispatch(new SetAccessTokenAction(token));
     }
 
-    updateAccount(username: string): Observable<void> {
-        return this.store.dispatch(new UpdateUserAction(username));
+    updateAccount(username: string, language: string): Observable<void> {
+        return this.store.dispatch(new UpdateUserAction(username, language));
     }
 
-    registrate(email: string, password: string): Observable<void> {
-        return this.store.dispatch(new RegistrateUserAction(email, password));
+    registrate(email: string, password: string, currentLang: string): Observable<void> {
+        return this.store.dispatch(new RegistrateUserAction(email, password, currentLang));
     }
 
     userLogin(email: string, password: string): Observable<void> {
         return this.store.dispatch(new UserLoginAction(email, password));
     }
 
-    finishRegistration(username: string, termsAndPrivacyAccepted: string, newsLetter: string): Observable<void> {
-        return this.store.dispatch(new FinishRegistrationAction(username, termsAndPrivacyAccepted, newsLetter));
+    finishRegistration(username: string, termsAndPrivacyAccepted: string, newsLetter: string, language: string): Observable<void> {
+        return this.store.dispatch(new FinishRegistrationAction(username, termsAndPrivacyAccepted, newsLetter, language));
     }
 
     finishEnroll(enroll: IEnroll): Observable<void> {

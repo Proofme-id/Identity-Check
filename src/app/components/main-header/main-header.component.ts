@@ -31,30 +31,32 @@ export class MainHeaderComponent {
     }
 
     navigateToLogin(): void {
-        this.isMenuCollapsed = true;
-        this.router.navigate(["login"]);
+        this.closeAllDropdowns()
+        this.router.navigate(["/login"]);
     }
 
     navigateToDashboard(): void {
-        this.isMenuCollapsed = true;
-        this.router.navigate(["dashboard/overview"]);
+        this.closeAllDropdowns()
+        this.router.navigate(["/dashboard/overview"]);
     }
 
     navigateToProfilePage(): void {
-        console.log("navigateToProfilePage");
-        this.isMenuCollapsed = true;
-        this.router.navigate(["dashboard/profile"]);
+        this.closeAllDropdowns()
+        this.router.navigate(["/dashboard/profile"]);
     }
 
     navigateToRegistrate(): void {
-        this.router.navigate(["enroll"]);
+        this.closeAllDropdowns()
+        this.router.navigate(["/enroll"]);
     }
 
     navigateToMainPage(): void {
+        this.closeAllDropdowns()
         this.router.navigate([""]);
     }
 
     selectLanguage(language: string): void {
+        this.closeAllDropdowns()
         this.appStateFacade.setLanguage(language);
         this.translateService.use(language);
     }
@@ -62,16 +64,25 @@ export class MainHeaderComponent {
     toggleMobileHamburger(): void {
         this.isMenuCollapsed = !this.isMenuCollapsed;
     }
-    
-    toggleMobileHamburgerDown(): void {
-        this.isMenuCollapsed = true;
-    }
 
     toggleAccountDropdown(): void {
+        this.isLanguageCollapsed = true;
         this.isAccountCollapsed = !this.isAccountCollapsed
     }
 
     toggleLanguageDropdown(): void {
+        this.isAccountCollapsed = true;
         this.isLanguageCollapsed = !this.isLanguageCollapsed
+    }
+
+    closeAllDropdowns(): void {
+        this.isLanguageCollapsed = true;
+        this.isMenuCollapsed = true;
+        this.isAccountCollapsed = true;
+    }
+
+    switchOrganisation(): void {
+        this.closeAllDropdowns();
+        this.organisationStateFacade.showOrganisationSelector(true);
     }
 }

@@ -1,4 +1,4 @@
-import { State, Selector, StateContext, Action } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 import { ConfigProvider } from "src/app/providers/config/configProvider";
 import { LogoutAction } from "./actions/logout.action";
@@ -22,7 +22,6 @@ import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { FinishEnrollAction } from "./actions/finish-enroll";
 import { SetActiveOrganisation } from "../organisation/actions/set-active-organisation";
 
-
 export interface IUserState {
     access_token: string;
     refresh_token: string;
@@ -33,7 +32,7 @@ export interface IUserState {
     registrationError: boolean;
     loginType: string;
     showExternalInstruction: boolean;
-    usersList: IUser[],
+    usersList: IUser[];
     updateUserAdminError: boolean;
     updateUserAdminSuccess: boolean;
 }
@@ -188,12 +187,13 @@ export class UserState {
         return this.http.patch(
             `${this.configProvider.config.backendUrl}/v1/user/${userId}`,
             {
-                username: payload.username
+                username: payload.username,
+                language: payload.language
             }
         ).pipe(
             tap((response: ITokenResponse) => {
                 const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
-                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims))
+                ctx.dispatch(new SetActiveOrganisation(jwtDecoded.user_claims.custom_claims));
                 ctx.patchState({
                     updateUserError: false,
                     access_token: response.token,
@@ -219,7 +219,8 @@ export class UserState {
             `${this.configProvider.config.backendUrl}/v1/user/registrate`,
             {
                 email: payload.email,
-                password: payload.password
+                password: payload.password,
+                language: payload.currentLang
             }
         ).pipe(
             tap(() => {
@@ -246,7 +247,8 @@ export class UserState {
             {
                 username: payload.username,
                 termsAndPrivacyAccepted: payload.termsAndPrivacyAccepted,
-                newsLetterAccepted: payload.newsLetter
+                newsLetterAccepted: payload.newsLetter,
+                language: payload.lang
             }
         ).pipe(
             tap((response: ITokenResponse) => {
@@ -304,7 +306,7 @@ export class UserState {
     @Action(SetUsersList)
     setUsersList(ctx: StateContext<IUserState>): Observable<IUser[]> {
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/user/list`,
+            `${this.configProvider.config.backendUrl}/v1/user/all`,
         ).pipe(
             tap((usersList: IUser[]) => {
                 for (const user of usersList) {

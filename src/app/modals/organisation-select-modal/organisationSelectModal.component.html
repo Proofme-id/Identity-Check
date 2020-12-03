@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h2 class="title pull-left"> {{ 'ORG_SELECTOR.title' | translate }} </h2>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="select()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center">
+            <img src="/assets/img/logo.png" class="logo" alt="logo">
+        </div>
+        <div class="col-lg-12 d-flex justify-content-center">
+            <p class="instructions-text">{{ 'ORG_SELECTOR.title' | translate }}</p>
+        </div>
+        <div *ngFor="let organisation of myOrganisations$ | async" (click)="select(organisation.organisationId)" class="organisation-item col-lg-12 d-flex justify-content-center">
+            <div class="icon-container" >
+                <fa-icon [icon]="['fas', 'building']"></fa-icon>
+            </div>
+            <span>
+                    {{organisation.organisation.name}}
+                </span>
+        </div>
+    </div>
+</div>

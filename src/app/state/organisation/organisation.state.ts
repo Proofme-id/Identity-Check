@@ -10,14 +10,21 @@ import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { IEmployee } from "../../interfaces/employee.interface";
 import { SetEmployeesList } from "./actions/set-employees-list";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
-import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
 import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
+import { IOrganisation } from "../../interfaces/organisation.interface";
+import { SetMyOrganisations } from "./actions/set-my-organisations";
+import { DeleteEmployee } from "./actions/delete-employee";
+import { SendToastAction } from "../app/actions/toastMessage";
+import { IToastMessage } from "../../interfaces/toastMessage.interface";
+import { IDeleteResponse } from "../../interfaces/delete-response.interface";
+import { InviteEmployee } from "./actions/invite-employee";
 
 
 export interface IOrganisationState {
-    customClaims: ICustomClaims[],
+    customClaims: ICustomClaims[];
+    myOrganisations: IEmployee[];
     activeOrganisation: number;
     activeEmployee: number;
     activeUserPower: number;
@@ -35,9 +42,10 @@ export interface IOrganisationState {
     name: "organisation",
     defaults: {
         customClaims: [],
-        activeOrganisation: 1,
+        myOrganisations: [],
+        activeOrganisation: null,
         activeEmployee: null,
-        activeUserPower: 100,
+        activeUserPower: null,
         updateUserError: false,
         updateEmployeeAdminError: false,
         updateEmployeeAdminSuccess: false,
@@ -81,7 +89,7 @@ export class OrganisationState {
 
     @Selector()
     static isOrganisationAdmin(state: IOrganisationState): boolean {
-        return state.activeUserPower === 10;
+        return state.activeUserPower === 1;
     }
 
     @Selector()
@@ -92,6 +100,11 @@ export class OrganisationState {
     @Selector()
     static updateEmployeeAdminSuccess(state: IOrganisationState): boolean {
         return state.updateEmployeeAdminSuccess;
+    }
+
+    @Selector()
+    static myOrganisations(state: IOrganisationState): IEmployee[] {
+        return state.myOrganisations;
     }
 
     @Selector()
@@ -129,6 +142,7 @@ export class OrganisationState {
             })
         } else if (ctx.getState().customClaims != payload.customClaims || ctx.getState().activeOrganisation === null){
             console.log("Set active organisation selector")
+            ctx.dispatch(new SetMyOrganisations());
             return ctx.patchState( {
                 customClaims: payload.customClaims,
                 showOrganisationSelector: true
@@ -139,22 +153,98 @@ export class OrganisationState {
     @Action(UpdateActiveOrganisation)
     updateActiveOrganisation(ctx: StateContext<IOrganisationState>, payload: UpdateActiveOrganisation): IOrganisationState {
         const organisations = ctx.getState().customClaims;
-        console.log("Active organisation: " + organisations[payload.selection].organisation)
-        console.log("Active employee: " + organisations[payload.selection].employee)
-        console.log("Active userPower: " + organisations[payload.selection].userPower)
-        return ctx.patchState( {
-            activeOrganisation: organisations[payload.selection].organisation,
-            activeEmployee: organisations[payload.selection].employee,
-            activeUserPower: organisations[payload.selection].userPower,
-            showOrganisationSelector: false
+        const selection = organisations.find(obj => {
+            return obj.organisation === payload.selection
         })
+        if(selection) {
+            return ctx.patchState( {
+                activeOrganisation: selection.organisation,
+                activeEmployee: selection.employee,
+                activeUserPower: selection.userPower,
+                showOrganisationSelector: false
+            })
+        }
     }
 
     @Action(SetShowOrganisationSelector)
     setShowOrganisationSelector(ctx: StateContext<IOrganisationState>, payload: SetShowOrganisationSelector): IOrganisationState {
+        ctx.dispatch(new SetMyOrganisations());
         return ctx.patchState({
             showOrganisationSelector: payload.status
         });
+    }
+
+    @Action(SetMyOrganisations)
+    setMyOrganisations(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
+        return this.http.get(
+            `${this.configProvider.config.backendUrl}/v1/organisation`,
+        ).pipe(
+            tap((myOrganisations: IEmployee[]) => {
+                console.log("myOrganisations: ", myOrganisations)
+                ctx.patchState({
+                    myOrganisations
+                });
+            }),
+            catchError((error) => {
+                return throwError(error);
+            })
+        );
+    }
+
+    @Action(DeleteEmployee)
+    deleteEmployee(ctx: StateContext<IOrganisationState>, payload: DeleteEmployee): Observable<IDeleteResponse> {
+        try {
+            return this.http.delete(
+                `${this.configProvider.config.backendUrl}/v1/employee/${payload.employeeId}`,
+            ).pipe(
+                tap((data: IDeleteResponse) => {
+                    const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
+                    ctx.patchState({
+                        employeesList
+                    });
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted employee ${payload.employeeId}`}));
+                }),
+                catchError((error) => {
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                    return throwError(error);
+                })
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    @Action(InviteEmployee)
+    inviteEmployee(ctx: StateContext<IOrganisationState>, payload: InviteEmployee): Observable<IEmployee> {
+        try {
+            return this.http.post(
+                `${this.configProvider.config.backendUrl}/v1/employee/invite`,
+                {
+                    email: payload.email,
+                    name: payload.name,
+                    organisationId: ctx.getState().activeOrganisation
+                }
+            ).pipe(
+                tap((data: IEmployee) => {
+                    console.log(data);
+                    ctx.patchState({
+                        employeesList: [...ctx.getState().employeesList, data ]
+                    });
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
+                }),
+                catchError((error) => {
+                    console.log("error:", error)
+                    if (error.error.error && error.error.error === "DUPLICATE") {
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
+                    } else {
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                    }
+                    return throwError(error);
+                })
+            )
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -162,7 +252,7 @@ export class OrganisationState {
     setEmployeeList(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
         const organisation: number = ctx.getState().activeOrganisation;
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/employee/${organisation}`,
+            `${this.configProvider.config.backendUrl}/v1/employee/all/${organisation}`,
         ).pipe(
             tap((employeesList: IEmployee[]) => {
                 for (const employee of employeesList) {
@@ -181,7 +271,7 @@ export class OrganisationState {
     @Action(SetOrganisationsList)
     setOrganisationsList(ctx: StateContext<IOrganisationState>): Observable<IOrganisation[]> {
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/organisation`,
+            `${this.configProvider.config.backendUrl}/v1/organisation/all`,
         ).pipe(
             tap((organisationsList: IOrganisation[]) => {
                 ctx.patchState({
@@ -193,90 +283,4 @@ export class OrganisationState {
             })
         );
     }
-
-
-
-    // @Action(UpdateUserAction)
-    // updateUser(ctx: StateContext<IOrganisationState>, payload: UpdateUserAction): Observable<ITokenResponse> {
-    //     const userId = ctx.getState().jwtDecoded.userId;
-    //     ctx.patchState({
-    //         updateUserError: false
-    //     });
-    //     return this.http.patch(
-    //         `${this.configProvider.config.backendUrl}/v1/user/${userId}`,
-    //         {
-    //             username: payload.username
-    //         }
-    //     ).pipe(
-    //         tap((response: ITokenResponse) => {
-    //             const jwtDecoded: IJWTDecoded = jwt_decode(response.token);
-    //             ctx.patchState({
-    //                 updateUserError: false,
-    //                 access_token: response.token,
-    //                 jwtDecoded
-    //             });
-    //         }),
-    //         catchError((error) => {
-    //             ctx.patchState({
-    //                 updateUserError: true
-    //             });
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
-
-    // @Action(SetUsersList)
-    // setUsersList(ctx: StateContext<IOrganisationState>): Observable<IUser[]> {
-    //     return this.http.get(
-    //         `${this.configProvider.config.backendUrl}/v1/user/list`,
-    //     ).pipe(
-    //         tap((usersList: IUser[]) => {
-    //             for (const user of usersList) {
-    //                 user.userPower = this.utilsProvider.convertUserPowerToRoleName(user.userPower);
-    //             }
-    //             ctx.patchState({
-    //                 usersList
-    //             });
-    //         }),
-    //         catchError((error) => {
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
-
-    // @Action(UpdateUserAdminAction)
-    // updateUserAdminAction(ctx: StateContext<IOrganisationState>, payload: UpdateUserAdminAction): Observable<ITokenResponse> {
-    //     ctx.patchState({
-    //         updateUserAdminError: null,
-    //         updateUserAdminSuccess: null
-    //     });
-    //     return this.http.patch(
-    //         `${this.configProvider.config.backendUrl}/v1/user/admin/${payload.user.id}`,
-    //         {
-    //             ...payload.user
-    //         }
-    //     ).pipe(
-    //         tap((token: ITokenResponse) => {
-    //             ctx.patchState({
-    //                 updateUserAdminSuccess: true
-    //             });
-    //             if (token) {
-    //                 const accessToken = token.token;
-    //                 if (accessToken) {
-    //                     const jwtDecoded: IJWTDecoded = jwt_decode(accessToken);
-    //                     return ctx.patchState({
-    //                         access_token: accessToken,
-    //                         jwtDecoded,
-    //                     });
-    //                 }
-    //             }
-    //         }),
-    //         catchError((error) => {
-    //             ctx.patchState({
-    //                 updateUserAdminError: true
-    //             });
-    //             return throwError(error);
-    //         })
-    //     );
-    // }
 }

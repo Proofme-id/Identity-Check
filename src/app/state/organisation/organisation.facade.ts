@@ -7,6 +7,10 @@ import { IEmployee } from "../../interfaces/employee.interface";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
 import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
+import { IOrganisation } from "../../interfaces/organisation.interface";
+import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
+import { DeleteEmployee } from "./actions/delete-employee";
+import { InviteEmployee } from "./actions/invite-employee";
 
 @Injectable({
     providedIn: "root"
@@ -22,10 +26,13 @@ export class OrganisationStateFacade {
     employeesList$: Observable<IEmployee[]>;
 
     @Select(OrganisationState.organisationsList)
-    organisationsList$: Observable<IEmployee[]>;
+    organisationsList$: Observable<IOrganisation[]>;
 
     @Select(OrganisationState.showOrganisationSelector)
     showOrganisationSelector$: Observable<boolean>;
+
+    @Select(OrganisationState.myOrganisations)
+    myOrganisations$: Observable<IEmployee[]>
 
     constructor(private store: Store) {}
 
@@ -39,5 +46,17 @@ export class OrganisationStateFacade {
 
     updateActiveOrganisation(selection: number): Observable<void> {
         return this.store.dispatch(new UpdateActiveOrganisation(selection));
+    }
+
+    showOrganisationSelector(show: boolean): Observable<void> {
+        return this.store.dispatch(new SetShowOrganisationSelector(show));
+    }
+
+    deleteEmployee(employeeId: number): Observable<void> {
+        return this.store.dispatch(new DeleteEmployee(employeeId))
+    }
+
+    inviteEmployee(name: string, email: string): Observable<void> {
+        return this.store.dispatch(new InviteEmployee(name, email));
     }
 }

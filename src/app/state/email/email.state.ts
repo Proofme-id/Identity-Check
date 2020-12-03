@@ -44,6 +44,7 @@ export class EmailState {
             email: payload.email,
             name: payload.name,
             message: payload.message,
+            language: payload.language,
             captchaToken: payload.captchaToken
         }).subscribe(() => {
             ctx.patchState({

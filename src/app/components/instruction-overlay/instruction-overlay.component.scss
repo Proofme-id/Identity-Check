@@ -19,7 +19,9 @@
     .overlay-instruction-popup {
         border-radius: 8px;
         width: 500px;
+        max-width: 90vw;
         height: 300px;
+        max-height: 90vh;
         background: var(--white);
         position: absolute;
         display: flex;

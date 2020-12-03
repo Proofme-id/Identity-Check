@@ -19,7 +19,7 @@
     .overlay-instruction-popup {
         border-radius: 8px;
         width: 500px;
-        height: 300px;
+        //height: 300px;
         background: var(--white);
         position: absolute;
         display: flex;
@@ -28,13 +28,33 @@
         align-items: center;
     }
 
-    .mobile-logo {
-        width: 230px;
-        height: 200px;
-        padding-right: 30px;
+    .icon-container {
+        display: inline-block;
+        text-align: center;
+        margin-right: 10px;
     }
 
-    .mobile-instructions-text {
+    .organisation-item {
+        line-height: 60px;
+        height: 60px;
+        font-size: 24px;
+        border-bottom: 1px solid #e7e9ed;
+        padding: 10px 6px;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            background-color: #c8d6f6;
+        }
+    }
+
+    .logo {
+        width: 100px;
+        //height: 200px;
+        padding-top: 30px;
+    }
+
+    .instructions-text {
         padding-top: 16px;
         font-weight: 300;
     }

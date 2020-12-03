@@ -1,18 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { AppStateFacade } from "src/app/state/app/app.facade";
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
-import { LanguageProvider} from "../../providers/language/languageProvider";
+import { LanguageProvider } from "../../providers/language/languageProvider";
 import { ToastrService } from "ngx-toastr";
 import { first } from "rxjs/operators";
 import { UserStateFacade } from "src/app/state/user/user.facade";
 import { UtilsProvider } from "src/app/providers/utils/utils";
+import { BaseComponent } from "../base-component/base-component";
 
 @Component({
     templateUrl: "profile.page.html",
     styleUrls: ["profile.page.scss"]
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent extends BaseComponent implements OnInit {
     profileForm: FormGroup;
     selectLanguage = new FormControl();
     language$ = this.appStateFacade.language$;
@@ -29,6 +30,7 @@ export class ProfilePageComponent implements OnInit {
         private userStateFacade: UserStateFacade,
         private utilsProvider: UtilsProvider
     ) {
+        super(); 
         this.appStateFacade.setPageTitleLanguageKey("HEADER.PROFILE");
 
         this.profileForm = this.formBuilder.group({
@@ -56,7 +58,8 @@ export class ProfilePageComponent implements OnInit {
 
     updateProfile(): void {
         const username = this.profileForm.get("username").value;
-        this.userStateFacade.updateAccount(username).subscribe(() => {
+        const language = this.selectLanguage.value;
+        this.userStateFacade.updateAccount(username, language).subscribe(() => {
             // Success
             this.toastr.success("Updated profile");
         }, () => {

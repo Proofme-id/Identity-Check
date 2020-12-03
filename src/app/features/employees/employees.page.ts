@@ -1,42 +1,34 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
 import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
-import { filter, skip, takeUntil } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
-import { UtilsProvider } from "src/app/providers/utils/utils";
-import { UserStateFacade } from "src/app/state/user/user.facade";
+import { DeleteModalComponent } from "../../modals/delete-modal/deleteModal.component"
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { EmployeeInviteModalComponent } from "../../modals/employee-invite-modal/employeeInviteModal.component";
 
 @Component({
     templateUrl: "employees.page.html",
     styleUrls: ["employees.page.scss"]
 })
 export class EmployeesPageComponent extends BaseComponent implements OnInit {
-    overviewForm: FormGroup;
-    editRow: number;
 
     @ViewChild("email") email: ElementRef;
-    @ViewChild("publicKey") publicKey: ElementRef;
-    @ViewChild("username") username: ElementRef;
-    @ViewChild("userPower") userPower: ElementRef;
-    @ViewChild("active") active: ElementRef;
-
-    @ViewChild("nameTpl", { static: true }) nameTpl: TemplateRef<unknown>;
-    @ViewChild("publicKeyTpl", { static: true }) publicKeyTpl: TemplateRef<unknown>;
-    @ViewChild("usernameTpl", { static: true }) usernameTpl: TemplateRef<unknown>;
-    @ViewChild("userPowerTpl", { static: true }) userPowerTpl: TemplateRef<unknown>;
+    @ViewChild("name") name: ElementRef;
+    @ViewChild("adminTpl", { static: true }) adminTpl: TemplateRef<unknown>;
     @ViewChild("activeTpl", { static: true }) activeTpl: TemplateRef<unknown>;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
+
+    public modalRef: BsModalRef;
 
     constructor(
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
-        private utilsProvider: UtilsProvider,
-        private userStateFacade: UserStateFacade
+        private modalService: BsModalService
     ) {
         super();
-        this.appStateFacade.setPageTitleLanguageKey("HEADER.USERS");
+        this.appStateFacade.setPageTitleLanguageKey("EMPLOYEE.title");
     }
 
     ngOnInit(): void {
@@ -50,26 +42,12 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
         this.configuration.searchEnabled = false;
         this.columns = [
             { key: "id", title: "ID" },
-            { key: "name", title: "Name", cellTemplate: this.nameTpl },
-            { key: "publicKey", title: "Publickey" },
-            { key: "username", title: "Username", cellTemplate: this.usernameTpl },
-            { key: "userPower", title: "User Power", cellTemplate: this.userPowerTpl },
+            { key: "name", title: "Name" },
+            { key: "email", title: "Email" },
+            { key: "userPower", title: "Admin", cellTemplate: this.adminTpl },
             { key: "active", title: "Active", cellTemplate: this.activeTpl },
             { key: "action", title: "Actions", cellTemplate: this.actionTpl }
         ];
-
-        // this.userStateFacade.updateUserAdminError$.pipe(skip(1), filter(x => x !== null), takeUntil(this.destroy$)).subscribe((error) => {
-        //     console.log("updateUserAdminError:", error);
-        //     if (error) {
-        //         console.log("show error!");
-        //         this.toastr.error("Error updating user");
-        //     }
-        // });
-        // this.userStateFacade.updateUserAdminSuccess$.pipe(skip(1), filter(x => x !== null), takeUntil(this.destroy$)).subscribe((success) => {
-        //     if (success) {
-        //         this.toastr.success("Successfully updated user");
-        //     }
-        // });
     }
 
     public configuration: Config;
@@ -77,37 +55,21 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
 
     public data = []
 
-    edit(rowIndex: number): void {
-        this.editRow = rowIndex;
+    delete(name: string, id: number): void {
+        const initialState = { name };
+        this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
+            this.organisationStateFacade.deleteEmployee(id);
+        })
     }
 
-    update(): void {
-        const user = this.data.find(x => x.email === this.email.nativeElement.value);
-        this.userStateFacade.updateUserAdmin({
-            id: user.id,
-            email: this.email.nativeElement.value,
-            username: this.username.nativeElement.value,
-            userPower: this.userPower.nativeElement.value,
-            active: this.active.nativeElement.value,
-        });
-        const sub = this.userStateFacade.updateUserAdminSuccess$.pipe(skip(1), takeUntil(this.destroy$)).subscribe((success) => {
-            if (success) {
-                sub.unsubscribe();
-                this.data = [
-                    ...this.data.map((obj, index) => {
-                        if (index === this.editRow) {
-                            return {
-                                email: this.email.nativeElement.value,
-                                username: this.username.nativeElement.value,
-                                userPower: this.utilsProvider.convertUserPowerToRoleName(this.userPower.nativeElement.value),
-                                active: this.active.nativeElement.value,
-                            };
-                        }
-                        return obj;
-                    }),
-                ];
-                this.editRow = -1;
-            }
-        });
+    view(name: string, id: number): void {
+        // Todo: create modal for viewing employees
+        console.log("Preview ", name);
+        console.log("Id: ", id);
+    }
+
+    invite(): void {
+        this.modalService.show(EmployeeInviteModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }
