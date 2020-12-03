@@ -17,7 +17,7 @@ import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
 import { DeleteEmployee } from "./actions/delete-employee";
 import { SendToastAction } from "../app/actions/toastMessage";
-import { ToastMessage } from "../../interfaces/toastMessage.interface";
+import { IToastMessage } from "../../interfaces/toastMessage.interface";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
 import { InviteEmployee } from "./actions/invite-employee";
 
@@ -198,18 +198,14 @@ export class OrganisationState {
                 `${this.configProvider.config.backendUrl}/v1/employee/${payload.employeeId}`,
             ).pipe(
                 tap((data: IDeleteResponse) => {
-                    if ((data.message) && data.message === "OK") {
-                        const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
-                        ctx.patchState({
-                            employeesList
-                        });
-                        ctx.dispatch(new SendToastAction(new ToastMessage("SUCCESS", `Deleted employee ${payload.employeeId}` )));
-                    } else {
-                        ctx.dispatch(new SendToastAction(new ToastMessage("ERROR", `Can not delete employee ${payload.employeeId}`)));
-                    }
+                    const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
+                    ctx.patchState({
+                        employeesList
+                    });
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted employee ${payload.employeeId}`}));
                 }),
                 catchError((error) => {
-                    ctx.dispatch(new SendToastAction(new ToastMessage("ERROR", "Something went wrong")));
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
                     return throwError(error);
                 })
             )
@@ -234,14 +230,14 @@ export class OrganisationState {
                     ctx.patchState({
                         employeesList: [...ctx.getState().employeesList, data ]
                     });
-                    ctx.dispatch(new SendToastAction(new ToastMessage("SUCCESS", `Added employee ${data.name}` )));
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
                     if (error.error.error && error.error.error === "DUPLICATE") {
-                        ctx.dispatch(new SendToastAction(new ToastMessage("ERROR", error.error.error )));
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
                     } else {
-                        ctx.dispatch(new SendToastAction(new ToastMessage("ERROR", "Something went wrong")));
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
                     }
                     return throwError(error);
                 })

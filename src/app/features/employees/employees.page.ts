@@ -58,14 +58,13 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
     delete(name: string, id: number): void {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
-        this.modalRef.content.onClose.subscribe((result) => {
-            if (result) {
-                this.organisationStateFacade.deleteEmployee(id);
-            }
+        this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
+            this.organisationStateFacade.deleteEmployee(id);
         })
     }
 
     view(name: string, id: number): void {
+        // Todo: create modal for viewing employees
         console.log("Preview ", name);
         console.log("Id: ", id);
     }

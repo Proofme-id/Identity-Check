@@ -8,7 +8,7 @@ import { ConfigProvider } from "src/app/providers/config/configProvider";
 import { Injectable } from "@angular/core";
 import { IConfigResponse } from "src/app/interfaces/config-response.interface";
 import { SendToastAction } from "./actions/toastMessage";
-import { ToastMessage } from "../../interfaces/toastMessage.interface";
+import { IToastMessage } from "../../interfaces/toastMessage.interface";
 
 export interface IAppState {
     pageTitleLanguageKey: string;
@@ -18,7 +18,7 @@ export interface IAppState {
     emailEnabled: boolean;
     webRtcEnabled: boolean;
     backendUrlDown: boolean;
-    message: ToastMessage;
+    message: IToastMessage;
 }
 
 @State<IAppState>({
@@ -72,7 +72,7 @@ export class AppState {
     }
 
     @Selector()
-    static message(state: IAppState): ToastMessage {
+    static message(state: IAppState): IToastMessage {
         return state.message;
     }
 

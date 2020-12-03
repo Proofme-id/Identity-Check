@@ -10,7 +10,6 @@ import { OrganisationSelectModalComponent } from "./modals/organisation-select-m
 import { BsModalService } from "ngx-bootstrap/modal";
 import { BaseComponent } from "./features/base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
-import { UserStateFacade } from "./state/user/user.facade";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -28,7 +27,6 @@ export class AppComponent extends BaseComponent implements OnInit  {
         private appStateFacade: AppStateFacade,
         private configProvider: ConfigProvider,
         private titleService: Title,
-        private userStateFacade: UserStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
         private modalService: BsModalService,
         private toastr: ToastrService
@@ -46,7 +44,7 @@ export class AppComponent extends BaseComponent implements OnInit  {
             this.modalService.show(OrganisationSelectModalComponent, { class: "modal-md modal-dialog-centered", ignoreBackdropClick: true });
         })
 
-        this.message$.subscribe((message) => {
+        this.message$.pipe(takeUntil(this.destroy$)).subscribe((message) => {
             if (message) {
                 if (message.type === "SUCCESS") {
                     this.toastr.success(message.message);

@@ -1,7 +1,7 @@
-import { ToastMessage } from "../../../interfaces/toastMessage.interface";
+import { IToastMessage } from "../../../interfaces/toastMessage.interface";
 
 export class SendToastAction {
     static readonly type = "[App] SendToastAction";
 
-    constructor(public message: ToastMessage) {}
+    constructor(public message: IToastMessage) {}
 }
