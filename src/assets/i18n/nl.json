@@ -375,5 +375,13 @@
     "username": "Naam",
     "email": "Email adres",
     "button": "Uitnodigen"
+  },
+    "SUPPLIER": {
+    "add": " Toevoegen",
+    "title": "Leveranciers",
+    "add-supplier":"Leverancier Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "button": "Toevoegen"
   }
 }

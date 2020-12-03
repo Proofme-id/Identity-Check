@@ -9,6 +9,8 @@ import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
+import { ISupplier } from "src/app/interfaces/supplier.interface";
+import { SetSupplierList } from "./actions/set-supplier-list";
 
 @Injectable({
     providedIn: "root"
@@ -23,6 +25,9 @@ export class OrganisationStateFacade {
     @Select(OrganisationState.employeesList)
     employeesList$: Observable<IEmployee[]>;
 
+    @Select(OrganisationState.supplierList)
+    supplierList$: Observable<ISupplier[]>;
+
     @Select(OrganisationState.organisationsList)
     organisationsList$: Observable<IOrganisation[]>;
 
@@ -36,6 +41,9 @@ export class OrganisationStateFacade {
 
     setEmployeesList(): Observable<void> {
         return this.store.dispatch(new SetEmployeesList());
+    }
+    setSupplierList(): Observable<void> {
+        return this.store.dispatch(new SetSupplierList());
     }
 
     setOrganisationsList(): Observable<void> {

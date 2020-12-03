@@ -375,5 +375,13 @@
     "username": "Name",
     "email": "Email address",
     "button": "Invite"
+  },
+    "SUPPLIER": {
+    "add": " Add",
+    "title": "Suppliers",
+    "add-supplier":"Add Supplier",
+    "id":"Id",
+    "name":"Name",
+    "button": "Add"
   }
 }

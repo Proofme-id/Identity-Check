@@ -8,6 +8,7 @@ import { Injectable } from "@angular/core";
 import { UtilsProvider } from "src/app/providers/utils/utils";
 import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { IEmployee } from "../../interfaces/employee.interface";
+import { ISupplier } from "../../interfaces/supplier.interface";
 import { SetEmployeesList } from "./actions/set-employees-list";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
@@ -15,10 +16,11 @@ import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
+import { SetSupplierList } from "./actions/set-supplier-list";
 
 
 export interface IOrganisationState {
-    customClaims: ICustomClaims[],
+    customClaims: ICustomClaims[];
     myOrganisations: IEmployee[];
     activeOrganisation: number;
     activeEmployee: number;
@@ -31,6 +33,7 @@ export interface IOrganisationState {
 
     employeesList: IEmployee[];
     organisationsList: IOrganisation[];
+    supplierList: ISupplier[];
 }
 
 @State<IOrganisationState>({
@@ -46,7 +49,8 @@ export interface IOrganisationState {
         updateEmployeeAdminSuccess: false,
         showOrganisationSelector: false,
         employeesList: null,
-        organisationsList: null
+        organisationsList: null,
+        supplierList: null
     }
 })
 @Injectable()
@@ -60,6 +64,10 @@ export class OrganisationState {
     @Selector()
     static employeesList(state: IOrganisationState): IEmployee[] {
         return state.employeesList;
+    }
+    @Selector()
+    static supplierList(state: IOrganisationState): ISupplier[] {
+        return state.supplierList;
     }
 
     @Selector()
@@ -194,7 +202,7 @@ export class OrganisationState {
     setEmployeeList(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
         const organisation: number = ctx.getState().activeOrganisation;
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/employee/${organisation}/all`,
+            `${this.configProvider.config.backendUrl}/v1/employee/all/${organisation}`,
         ).pipe(
             tap((employeesList: IEmployee[]) => {
                 for (const employee of employeesList) {
@@ -202,6 +210,23 @@ export class OrganisationState {
                 }
                 ctx.patchState({
                     employeesList
+                });
+            }),
+            catchError((error) => {
+                return throwError(error);
+            })
+        );
+    }
+
+    @Action(SetSupplierList)
+    setSupplierList(ctx: StateContext<IOrganisationState>): Observable<ISupplier[]> {
+        const organisation: number = ctx.getState().activeOrganisation;
+        return this.http.get(
+            `${this.configProvider.config.backendUrl}/v1/supplier/all/${organisation}`,
+        ).pipe(
+            tap((supplierList: ISupplier[]) => {
+                ctx.patchState({
+                    supplierList
                 });
             }),
             catchError((error) => {

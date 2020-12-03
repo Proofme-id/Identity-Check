@@ -1,50 +1,24 @@
-<div>
-    <div class="table-div">
-       <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
-       </ngx-table>
-    </div>
- </div>
- 
- <ng-template #emailTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex">{{ row.email }}</div>
-    <div *ngIf="editRow === rowIndex">
-       <input type="text" #email placeholder="Email" class="form-label" [value]="row.email" />
-    </div> 
- </ng-template>
- <ng-template #usernameTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex">{{ row.username }}</div>
-    <div *ngIf="editRow === rowIndex">
-       <input type="text" #username placeholder="Username" class="form-label" [value]="row.username" />
-    </div>
- </ng-template>
- <ng-template #userPowerTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex">{{ row.userPower }}</div>
-    <div *ngIf="editRow === rowIndex"> 
-       <div class="form-group">
-          <select class="form-select" #userPower>
-            <option [value]="utilsProvider.convertRoleNameToUserPower(row.userPower)">{{ row.userPower }}</option>
-            <option *ngIf="row.userPower != 'Admin'" value="1">Admin</option>
-            <option *ngIf="row.userPower != 'User'" value="100">User</option>
-          </select>
+<div class="main-container">
+    <div class="container">
+        <div class="inner-page-section card">
+            <section class="page-header">
+                <div class="page-header-content d-flex justify-content-between">
+                    <h2 class="title">{{ 'SUPPLIER.title' | translate }}</h2>
+                    <button class="btn btn-green" (click)="add()"><fa-icon [icon]="['fas', 'plus']" class="white"></fa-icon>{{ 'SUPPLIER.add' | translate }}</button>
+                </div>
+            </section>
+            <div>
+                <div class="page-content">
+                    <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
+                    </ngx-table>
+                </div>
+            </div>
+            <ng-template #actionTpl let-row let-rowIndex="rowIndex">
+                <div class="menu-icon-container">
+                    <fa-icon [icon]="['fas', 'eye']" size="2x" class="primary" (click)="view(row.name, row.id)"></fa-icon>
+                    <fa-icon [icon]="['fas', 'trash-alt']" size="2x" class="danger" (click)="delete(row.name, row.id)"></fa-icon>
+                </div>
+            </ng-template>
         </div>
     </div>
- </ng-template>
- <ng-template #activeTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex">
-       <img *ngIf="row.active === true || row.active === 'true'" src="/assets/img/success-icon.png" class="table-icon" alt="user">
-       <img *ngIf="row.active === false || row.active === 'false'" src="/assets/img/failed-icon.png" class="table-icon" alt="user">
-    </div>
-    <div *ngIf="editRow === rowIndex">
-       <div class="form-group">
-          <select class="form-select" #active>
-            <option>{{ row.active }}</option>
-            <option *ngIf="row.active !== false && row.active !== 'false'" value="false">false</option>
-            <option *ngIf="row.active !== true && row.active !== 'true'" value="true">true</option>
-          </select>
-        </div>
-    </div>
- </ng-template>
- <ng-template #actionTpl let-row let-rowIndex="rowIndex">
-    <div *ngIf="editRow !== rowIndex" class="btn btn-primary" (click)="edit(rowIndex)">Edit</div>
-    <div *ngIf="editRow === rowIndex" class="btn" (click)="update()">Save</div>
- </ng-template>
+</div>
