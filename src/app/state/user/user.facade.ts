@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Store, Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { IJWTDecoded } from "src/app/interfaces/jwtDecoded.interface";
 import { IUser } from "src/app/interfaces/user.interface";
@@ -53,6 +53,8 @@ export class UserStateFacade {
 
     @Select(UserState.updateUserAdminSuccess)
     updateUserAdminSuccess$: Observable<boolean>;
+
+
 
     constructor(private store: Store) {}
 

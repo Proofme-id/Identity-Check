@@ -66,6 +66,9 @@ export class LoginPageComponent extends BaseComponent implements OnInit {
                 this.toastr.success("Account recovery cancelled successfully!");
             } else if (params.emailRecoverCancelled && params.emailRecoverCancelled === "false") {
                 this.toastr.error("Account recovery cancel failed!");
+            } else if (params.invite) {
+                // set other things
+                console.log("Dit is een invite!!!")
             }
         });
 

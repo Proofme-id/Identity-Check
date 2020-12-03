@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
+import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
     selector: "employee-invite-modal",
@@ -14,7 +14,7 @@ export class EmployeeInviteModalComponent {
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private toastr: ToastrService
+        private organisationStateFacade: OrganisationStateFacade
     ) {
         this.inviteForm = this.formBuilder.group({
             name: new FormControl("", Validators.required),
@@ -23,12 +23,9 @@ export class EmployeeInviteModalComponent {
     }
 
     invite(): void {
-        const inviteData = {
-            name: this.inviteForm.get("name").value,
-            email: this.inviteForm.get("email").value
-        }
-        console.log("Invite: ", inviteData);
-        this.toastr.success(inviteData.name + " invited");
+        const name: string = this.inviteForm.get("name").value;
+        const email: string = this.inviteForm.get("email").value;
+        this.organisationStateFacade.inviteEmployee(name, email);
         this.closeModal()
     }
 

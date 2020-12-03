@@ -9,6 +9,8 @@ import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
+import { DeleteEmployee } from "./actions/delete-employee";
+import { InviteEmployee } from "./actions/invite-employee";
 
 @Injectable({
     providedIn: "root"
@@ -48,5 +50,13 @@ export class OrganisationStateFacade {
 
     showOrganisationSelector(show: boolean): Observable<void> {
         return this.store.dispatch(new SetShowOrganisationSelector(show));
+    }
+
+    deleteEmployee(employeeId: number): Observable<void> {
+        return this.store.dispatch(new DeleteEmployee(employeeId))
+    }
+
+    inviteEmployee(name: string, email: string): Observable<void> {
+        return this.store.dispatch(new InviteEmployee(name, email));
     }
 }

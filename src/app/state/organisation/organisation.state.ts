@@ -15,10 +15,15 @@ import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
+import { DeleteEmployee } from "./actions/delete-employee";
+import { SendToastAction } from "../app/actions/toastMessage";
+import { IToastMessage } from "../../interfaces/toastMessage.interface";
+import { IDeleteResponse } from "../../interfaces/delete-response.interface";
+import { InviteEmployee } from "./actions/invite-employee";
 
 
 export interface IOrganisationState {
-    customClaims: ICustomClaims[],
+    customClaims: ICustomClaims[];
     myOrganisations: IEmployee[];
     activeOrganisation: number;
     activeEmployee: number;
@@ -152,9 +157,6 @@ export class OrganisationState {
             return obj.organisation === payload.selection
         })
         if(selection) {
-            console.log("Active organisation: " + selection.organisation)
-            console.log("Active employee: " + selection.employee)
-            console.log("Active userPower: " + selection.userPower)
             return ctx.patchState( {
                 activeOrganisation: selection.organisation,
                 activeEmployee: selection.employee,
@@ -189,12 +191,68 @@ export class OrganisationState {
         );
     }
 
+    @Action(DeleteEmployee)
+    deleteEmployee(ctx: StateContext<IOrganisationState>, payload: DeleteEmployee): Observable<IDeleteResponse> {
+        try {
+            return this.http.delete(
+                `${this.configProvider.config.backendUrl}/v1/employee/${payload.employeeId}`,
+            ).pipe(
+                tap((data: IDeleteResponse) => {
+                    const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
+                    ctx.patchState({
+                        employeesList
+                    });
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted employee ${payload.employeeId}`}));
+                }),
+                catchError((error) => {
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                    return throwError(error);
+                })
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    @Action(InviteEmployee)
+    inviteEmployee(ctx: StateContext<IOrganisationState>, payload: InviteEmployee): Observable<IEmployee> {
+        try {
+            return this.http.post(
+                `${this.configProvider.config.backendUrl}/v1/employee/invite`,
+                {
+                    email: payload.email,
+                    name: payload.name,
+                    organisationId: ctx.getState().activeOrganisation
+                }
+            ).pipe(
+                tap((data: IEmployee) => {
+                    console.log(data);
+                    ctx.patchState({
+                        employeesList: [...ctx.getState().employeesList, data ]
+                    });
+                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
+                }),
+                catchError((error) => {
+                    console.log("error:", error)
+                    if (error.error.error && error.error.error === "DUPLICATE") {
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
+                    } else {
+                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                    }
+                    return throwError(error);
+                })
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     @Action(SetEmployeesList)
     setEmployeeList(ctx: StateContext<IOrganisationState>): Observable<IEmployee[]> {
         const organisation: number = ctx.getState().activeOrganisation;
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/employee/${organisation}/all`,
+            `${this.configProvider.config.backendUrl}/v1/employee/all/${organisation}`,
         ).pipe(
             tap((employeesList: IEmployee[]) => {
                 for (const employee of employeesList) {

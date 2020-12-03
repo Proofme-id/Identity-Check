@@ -4,7 +4,6 @@ import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
-import { ToastrService } from "ngx-toastr";
 import { DeleteModalComponent } from "../../modals/delete-modal/deleteModal.component"
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { EmployeeInviteModalComponent } from "../../modals/employee-invite-modal/employeeInviteModal.component";
@@ -26,7 +25,6 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
     constructor(
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService,
         private modalService: BsModalService
     ) {
         super();
@@ -60,15 +58,13 @@ export class EmployeesPageComponent extends BaseComponent implements OnInit {
     delete(name: string, id: number): void {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
-        this.modalRef.content.onClose.subscribe((result) => {
-            console.log("Delete record: ", result);
-            console.log("Name: ", name);
-            console.log("Id: ", id);
-            // Todo: Add action!
+        this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
+            this.organisationStateFacade.deleteEmployee(id);
         })
     }
 
     view(name: string, id: number): void {
+        // Todo: create modal for viewing employees
         console.log("Preview ", name);
         console.log("Id: ", id);
     }
