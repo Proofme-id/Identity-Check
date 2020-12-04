@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { SupplierAddModalComponent } from "../../modals/supplier-add-modal/supplierAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
 import { ISupplier } from "src/app/interfaces/supplier.interface";
+import { SupplierStateFacade } from "src/app/state/supplier/supplier.facade";
 
 @Component({
     templateUrl: "suppliers.page.html",
@@ -32,15 +33,16 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
         private toastr: ToastrService,
+        private supplierStateFacade: SupplierStateFacade,
         private modalService: BsModalService
     ) {
         super();
         this.appStateFacade.setPageTitleLanguageKey("SUPPLIER.title");
     }
-
+    
     ngOnInit(): void {
-        this.organisationStateFacade.setSupplierList();
-        this.organisationStateFacade.supplierList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((supplierList) => {
+        this.supplierStateFacade.setSupplierList();
+        this.supplierStateFacade.supplierList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((supplierList) => {
             this.data = supplierList;
             console.log("supplierList:", supplierList);
         });
@@ -64,7 +66,7 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.organisationStateFacade.deleteSupplier(supplier.id);
+            this.supplierStateFacade.deleteSupplier(supplier.id);
         })
     }
 
