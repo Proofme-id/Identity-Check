@@ -382,6 +382,16 @@
     "add-supplier":"Leverancier Toevoegen",
     "id":"Id",
     "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
+  },
+    "HARDWARE": {
+    "add": " Toevoegen",
+    "title": "Hardware",
+    "add-hardware":"Hardware Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
     "button": "Toevoegen"
   }
 }

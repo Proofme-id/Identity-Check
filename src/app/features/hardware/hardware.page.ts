@@ -6,16 +6,16 @@ import { filter, takeUntil } from "rxjs/operators";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 import { ToastrService } from "ngx-toastr";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { SupplierAddModalComponent } from "../../modals/supplier-add-modal/supplierAddModal.component";
+import { HardwareAddModalComponent } from "../../modals/hardware-add-modal/hardwareAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
-import { ISupplier } from "src/app/interfaces/supplier.interface";
+import { IHardware } from "src/app/interfaces/hardware.interface";
 
 @Component({
-    templateUrl: "suppliers.page.html",
-    styleUrls: ["suppliers.page.scss"]
+    templateUrl: "hardware.page.html",
+    styleUrls: ["hardware.page.scss"]
 })
 
-export class SuppliersPageComponent extends BaseComponent implements OnInit {
+export class HardwarePageComponent extends BaseComponent implements OnInit {
 
     @ViewChild("id") id: ElementRef;
     @ViewChild("name") name: ElementRef;
@@ -35,17 +35,16 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
         private modalService: BsModalService
     ) {
         super();
-        this.appStateFacade.setPageTitleLanguageKey("SUPPLIER.title");
+        this.appStateFacade.setPageTitleLanguageKey("HARDWARE.title");
     }
 
     ngOnInit(): void {
-        this.organisationStateFacade.setSupplierList();
-        this.organisationStateFacade.supplierList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((supplierList) => {
-            this.data = supplierList;
-            console.log("supplierList:", supplierList);
+        this.organisationStateFacade.setHardwareList();
+        this.organisationStateFacade.hardwareList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((hardwareList) => {
+            this.data = hardwareList;
+            console.log("hardwareList:", hardwareList);
         });
         
-
         this.configuration = { ...DefaultConfig };
         this.configuration.searchEnabled = false;
         this.columns = [
@@ -59,20 +58,20 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
     public columns: Columns[];
 
     public data = []
-    
-    delete(supplier: ISupplier): void {
+
+    delete(hardware: IHardware): void {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.organisationStateFacade.deleteSupplier(supplier.id);
+            this.organisationStateFacade.deleteHardware(hardware.id);
         })
     }
 
-    view(supplier: ISupplier): void {
-        console.log("supplier ", supplier);
+    view(hardware: IHardware): void {
+        console.log("hardware ", hardware);
     }
 
     add(): void {
-        this.modalService.show(SupplierAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(HardwareAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }

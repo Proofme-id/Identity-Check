@@ -4,28 +4,29 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
-    selector: "employee-invite-modal",
-    templateUrl: "./employeeInviteModal.component.html"
+    selector: "hardware-add-modal",
+    templateUrl: "./hardwareAddModal.component.html"
 })
-export class EmployeeInviteModalComponent {
+export class HardwareAddModalComponent {
 
-    public inviteForm: FormGroup;
+
+    public addHardwareForm: FormGroup;
 
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
         private organisationStateFacade: OrganisationStateFacade
     ) {
-        this.inviteForm = this.formBuilder.group({
+        this.addHardwareForm = this.formBuilder.group({
             name: new FormControl("", Validators.required),
-            email: new FormControl("", Validators.required)
+            description: new FormControl("", Validators.required)
         });
     }
 
-    invite(): void {
-        const name: string = this.inviteForm.get("name").value;
-        const email: string = this.inviteForm.get("email").value;
-        this.organisationStateFacade.inviteEmployee(name, email);
+    add(): void {
+        const name: string = this.addHardwareForm.get("name").value;
+        const description: string = this.addHardwareForm.get("description").value;
+        this.organisationStateFacade.AddHardware(name, description);
         this.closeModal()
     }
 

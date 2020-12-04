@@ -1,3 +1,3 @@
-export class SetSupplierList {
+export class SetHardwareList {
     static readonly type = "[Organisation] SetHardwareList";
 }

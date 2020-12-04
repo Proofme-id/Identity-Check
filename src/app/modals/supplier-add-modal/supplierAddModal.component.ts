@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
+import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 
 @Component({
     selector: "supplier-add-modal",
@@ -9,26 +9,24 @@ import { ToastrService } from "ngx-toastr";
 })
 export class SupplierAddModalComponent {
 
+
     public addForm: FormGroup;
 
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private toastr: ToastrService
+        private organisationStateFacade: OrganisationStateFacade
     ) {
         this.addForm = this.formBuilder.group({
-            id: new FormControl("", Validators.required),
-            name: new FormControl("", Validators.required)
+            name: new FormControl("", Validators.required),
+            description: new FormControl("", Validators.required)
         });
     }
 
     add(): void {
-        const addData = {
-            id: this.addForm.get("id").value,
-            name: this.addForm.get("name").value
-        }
-        console.log("add: ", addData);
-        this.toastr.success(addData.name + " added");
+        const name: string = this.addForm.get("name").value;
+        const description: string = this.addForm.get("description").value;
+        this.organisationStateFacade.AddSupplier(name, description);
         this.closeModal()
     }
 

@@ -1,6 +1,6 @@
 import { IOrganisation } from "./organisation.interface";
 
-export interface ISupplier {
+export interface IHardware {
     id: number;
     name: string;
     description: string;

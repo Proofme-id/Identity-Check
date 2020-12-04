@@ -382,6 +382,17 @@
     "add-supplier":"Add Supplier",
     "id":"Id",
     "name":"Name",
+    "description":"Description",
+    "button": "Add"
+  }
+  ,
+    "HARDWARE": {
+    "add": " Add",
+    "title": "Hardware",
+    "add-hardware":"Add Hardware",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
     "button": "Add"
   }
 }
