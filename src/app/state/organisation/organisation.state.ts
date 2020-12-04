@@ -17,7 +17,6 @@ import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
 import { DeleteEmployee } from "./actions/delete-employee";
 import { SendToastAction } from "../app/actions/toastMessage";
-import { IToastMessage } from "../../interfaces/toastMessage.interface";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
 import { InviteEmployee } from "./actions/invite-employee";
 
@@ -197,7 +196,7 @@ export class OrganisationState {
             return this.http.delete(
                 `${this.configProvider.config.backendUrl}/v1/employee/${payload.employeeId}`,
             ).pipe(
-                tap((data: IDeleteResponse) => {
+                tap(() => {
                     const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
                     ctx.patchState({
                         employeesList
