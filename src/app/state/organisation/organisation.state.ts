@@ -230,7 +230,7 @@ export class OrganisationState {
                     ctx.patchState({
                         employeesList: [...ctx.getState().employeesList, data ]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
+                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added employee ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
