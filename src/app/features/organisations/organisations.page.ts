@@ -1,10 +1,8 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
-import { UtilsProvider } from "src/app/providers/utils/utils";
 import { BaseComponent } from "../base-component/base-component";
 import { takeUntil } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 
@@ -24,9 +22,7 @@ export class OrganisationsPageComponent extends BaseComponent implements OnInit 
 
     constructor(
         private appStateFacade: AppStateFacade,
-        private utilsProvider: UtilsProvider,
-        private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService
+        private organisationStateFacade: OrganisationStateFacade
     ) {
         super();
         this.appStateFacade.setPageTitleLanguageKey("HEADER.USERS");

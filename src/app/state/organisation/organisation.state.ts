@@ -17,7 +17,6 @@ import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
 import { DeleteEmployee } from "./actions/delete-employee";
 import { SendToastAction } from "../app/actions/toastMessage";
-import { IToastMessage } from "../../interfaces/toastMessage.interface";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
 import { InviteEmployee } from "./actions/invite-employee";
 
@@ -66,6 +65,7 @@ export class OrganisationState {
     static employeesList(state: IOrganisationState): IEmployee[] {
         return state.employeesList;
     }
+
 
     @Selector()
     static organisationsList(state: IOrganisationState): IOrganisation[] {
@@ -197,7 +197,7 @@ export class OrganisationState {
             return this.http.delete(
                 `${this.configProvider.config.backendUrl}/v1/employee/${payload.employeeId}`,
             ).pipe(
-                tap((data: IDeleteResponse) => {
+                tap(() => {
                     const employeesList: IEmployee[] = ctx.getState().employeesList.filter(x => x.id !== payload.employeeId);
                     ctx.patchState({
                         employeesList
@@ -230,7 +230,7 @@ export class OrganisationState {
                     ctx.patchState({
                         employeesList: [...ctx.getState().employeesList, data ]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
+                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added employee ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
@@ -267,6 +267,7 @@ export class OrganisationState {
             })
         );
     }
+
 
     @Action(SetOrganisationsList)
     setOrganisationsList(ctx: StateContext<IOrganisationState>): Observable<IOrganisation[]> {

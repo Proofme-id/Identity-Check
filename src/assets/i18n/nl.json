@@ -375,5 +375,32 @@
     "username": "Naam",
     "email": "Email adres",
     "button": "Uitnodigen"
+  },
+    "SUPPLIER": {
+    "add": " Toevoegen",
+    "title": "Leveranciers",
+    "add-supplier":"Leverancier Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
+  },
+    "PROJECTS": {
+    "add": " Toevoegen",
+    "title": "Projecten",
+    "add-project":"Project Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
+  },
+    "TEAMS": {
+    "add": " Toevoegen",
+    "title": "Teams",
+    "add-team":"Team Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
   }
 }
