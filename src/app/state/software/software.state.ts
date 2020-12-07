@@ -7,29 +7,28 @@ import { Observable, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
 import { SendToastAction } from "../app/actions/toastMessage";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
-import { IProject } from "src/app/interfaces/project.interface";
-import { SetProjectList } from "./actions/set-project-list";
-import { DeleteProject } from "./actions/delete-project";
-import { AddProject } from "./actions/add-project";
 import { OrganisationState } from "../organisation/organisation.state";
+import { ISoftware } from "src/app/interfaces/software.interface";
+import { SetSoftwareList } from "./actions/set-software-list";
+import { AddSoftware } from "./actions/add-software";
+import { DeleteSoftware } from "./actions/delete-software";
 
-
-export interface IOrganisationState {
-    projectList: IProject[];
+export interface ISoftwareState {
+    softwareList: ISoftware[];
 }
 
-@State<IOrganisationState>({
-    name: "project",
+@State<ISoftwareState>({
+    name: "software",
     defaults: {
-        projectList: null
+        softwareList: null
     }
 })
 @Injectable()
-export class ProjectState {
+export class SoftwareState {
 
     @Selector()
-    static projectList(state: IOrganisationState): IProject[] {
-        return state.projectList;
+    static softwareList(state: ISoftwareState): ISoftware[] {
+        return state.softwareList;
     }
 
     constructor(
@@ -40,15 +39,15 @@ export class ProjectState {
 
     }
 
-    @Action(SetProjectList)
-    setProjectList(ctx: StateContext<IOrganisationState>): Observable<IProject[]> {
+    @Action(SetSoftwareList)
+    setsoftwareList(ctx: StateContext<ISoftwareState>): Observable<ISoftware[]> {
         const organisation: number = this.store.selectSnapshot(OrganisationState.activeOrganisation)
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/project/all/${organisation}`,
+            `${this.configProvider.config.backendUrl}/v1/software/all/${organisation}`,
         ).pipe(
-            tap((projectList: IProject[]) => {
+            tap((softwareList: ISoftware[]) => {
                 ctx.patchState({
-                    projectList
+                    softwareList
                 });
             }),
             catchError((error) => {
@@ -57,11 +56,11 @@ export class ProjectState {
         );
     }
 
-    @Action(AddProject)
-    addProject(ctx: StateContext<IOrganisationState>, payload: AddProject): Observable<IProject> {
+    @Action(AddSoftware)
+    addSoftware(ctx: StateContext<ISoftwareState>, payload: AddSoftware): Observable<ISoftware> {
         try {
             return this.http.post(
-                `${this.configProvider.config.backendUrl}/v1/project`,
+                `${this.configProvider.config.backendUrl}/v1/software`,
                 {
                     name: payload.name,
                     details: {
@@ -70,12 +69,12 @@ export class ProjectState {
                     organisationId: this.store.selectSnapshot(OrganisationState.activeOrganisation)
                 }
             ).pipe(
-                tap((data: IProject) => {
+                tap((data: ISoftware) => {
                     console.log(data);
                     ctx.patchState({
-                        projectList: [...ctx.getState().projectList, data ]
+                        softwareList: [...ctx.getState().softwareList, data ]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added project ${data.name}` }));
+                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added software ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
@@ -92,18 +91,18 @@ export class ProjectState {
         }
     }
 
-    @Action(DeleteProject)
-    deleteProject(ctx: StateContext<IOrganisationState>, payload: DeleteProject): Observable<IDeleteResponse> {
+    @Action(DeleteSoftware)
+    deleteSoftware(ctx: StateContext<ISoftwareState>, payload: DeleteSoftware): Observable<IDeleteResponse> {
         try {
             return this.http.delete(
-                `${this.configProvider.config.backendUrl}/v1/project/${payload.projectId}`,
+                `${this.configProvider.config.backendUrl}/v1/software/${payload.softwareId}`,
             ).pipe(
                 tap(() => {
-                    const projectList: IProject[] = ctx.getState().projectList.filter(x => x.id !== payload.projectId);
+                    const softwareList: ISoftware[] = ctx.getState().softwareList.filter(x => x.id !== payload.softwareId);
                     ctx.patchState({
-                        projectList
+                        softwareList
                     });
-                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted project ${payload.projectId}`}));
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted software ${payload.softwareId}`}));
                 }),
                 catchError((error) => {
                     ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));

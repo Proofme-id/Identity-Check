@@ -15,14 +15,12 @@ import { OrganisationState } from "../organisation/organisation.state";
 
 
 export interface IOrganisationState {
-    
     hardwareList: IHardware[];
 }
 
 @State<IOrganisationState>({
     name: "hardware",
     defaults: {
-       
         hardwareList: null
     }
 })

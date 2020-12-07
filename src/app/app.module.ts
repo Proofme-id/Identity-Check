@@ -40,6 +40,7 @@ import { SupplierStateModule } from "./state/supplier/supplier.module";
 import { HardwareStateModule } from "./state/hardware/hardware.module";
 import { ProjectStateModule } from "./state/projects/project.module";
 import { TeamStateModule } from "./state/teams/team.module";
+import { SoftwareStateModule } from "./state/software/software.module";
 
 
 
@@ -61,7 +62,8 @@ const NGXS_MODULES = [
     SupplierStateModule,
     HardwareStateModule,
     ProjectStateModule,
-    TeamStateModule
+    TeamStateModule,
+    SoftwareStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [

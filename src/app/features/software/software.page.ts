@@ -8,6 +8,7 @@ import { DeleteModalComponent } from "../../modals/delete-modal/deleteModal.comp
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ISoftware } from "src/app/interfaces/software.interface";
 import { SoftwareAddModalComponent } from "src/app/modals/software-add-modal/softwareAddModal.component";
+import { SoftwareStateFacade } from "src/app/state/software/software.facade";
 
 @Component({
     templateUrl: "software.page.html",
@@ -25,17 +26,18 @@ export class SoftwarePageComponent extends BaseComponent implements OnInit {
     constructor(
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private softwareStateFacade: SoftwareStateFacade
     ) {
         super();
         this.appStateFacade.setPageTitleLanguageKey("SOFTWARE.title");
     }
 
     ngOnInit(): void {
-        this.organisationStateFacade.setEmployeesList();
-        this.organisationStateFacade.employeesList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((employeesList) => {
-            this.data = employeesList;
-            console.log("employeesList:", employeesList);
+        this.softwareStateFacade.setSoftwareList();
+        this.softwareStateFacade.softwareList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((softwareList) => {
+            this.data = softwareList;
+            console.log("softwareList:", softwareList);
         });
 
         this.configuration = { ...DefaultConfig };
@@ -57,7 +59,7 @@ export class SoftwarePageComponent extends BaseComponent implements OnInit {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.organisationStateFacade.deleteEmployee(software.id);
+            this.softwareStateFacade.deleteSoftware(software.id);
         })
     }
 
