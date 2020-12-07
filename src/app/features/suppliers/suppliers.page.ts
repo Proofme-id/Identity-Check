@@ -44,7 +44,6 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
         this.supplierStateFacade.setSupplierList();
         this.supplierStateFacade.supplierList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((supplierList) => {
             this.data = supplierList;
-            console.log("supplierList:", supplierList);
         });
         
 

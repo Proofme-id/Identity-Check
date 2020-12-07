@@ -21,7 +21,7 @@ export interface IOrganisationState {
 }
 
 @State<IOrganisationState>({
-    name: "organisation",
+    name: "hardware",
     defaults: {
        
         hardwareList: null

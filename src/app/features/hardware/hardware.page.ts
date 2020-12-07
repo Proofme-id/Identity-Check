@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { HardwareAddModalComponent } from "../../modals/hardware-add-modal/hardwareAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
 import { IHardware } from "src/app/interfaces/hardware.interface";
+import { HardwareStateFacade } from "src/app/state/hardware/hardware.facade";
 
 @Component({
     templateUrl: "hardware.page.html",
@@ -32,17 +33,17 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
         private appStateFacade: AppStateFacade,
         private organisationStateFacade: OrganisationStateFacade,
         private toastr: ToastrService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private hardwareStateFacade: HardwareStateFacade
     ) {
         super();
         this.appStateFacade.setPageTitleLanguageKey("HARDWARE.title");
     }
 
     ngOnInit(): void {
-        this.organisationStateFacade.setHardwareList();
-        this.organisationStateFacade.hardwareList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((hardwareList) => {
+        this.hardwareStateFacade.setHardwareList();
+        this.hardwareStateFacade.hardwareList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((hardwareList) => {
             this.data = hardwareList;
-            console.log("hardwareList:", hardwareList);
         });
         
         this.configuration = { ...DefaultConfig };
@@ -63,7 +64,7 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.organisationStateFacade.deleteHardware(hardware.id);
+            this.hardwareStateFacade.deleteHardware(hardware.id);
         })
     }
 

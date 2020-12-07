@@ -8,7 +8,6 @@ import { Injectable } from "@angular/core";
 import { UtilsProvider } from "src/app/providers/utils/utils";
 import { ICustomClaims } from "../../interfaces/customClaims.interface";
 import { IEmployee } from "../../interfaces/employee.interface";
-import { ISupplier } from "../../interfaces/supplier.interface";
 import { SetEmployeesList } from "./actions/set-employees-list";
 import { SetOrganisationsList } from "./actions/set-organisations-list";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
@@ -16,17 +15,10 @@ import { SetActiveOrganisation } from "./actions/set-active-organisation";
 import { UpdateActiveOrganisation } from "./actions/update-active-organisation";
 import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetMyOrganisations } from "./actions/set-my-organisations";
-import { SetSupplierList } from "./actions/set-supplier-list";
-import { AddSupplier } from "./actions/add-supplier";
 import { DeleteEmployee } from "./actions/delete-employee";
 import { SendToastAction } from "../app/actions/toastMessage";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
 import { InviteEmployee } from "./actions/invite-employee";
-import { DeleteSupplier } from "./actions/delete-supplier";
-import { IHardware } from "src/app/interfaces/hardware.interface";
-import { SetHardwareList } from "./actions/set-hardware-list";
-import { DeleteHardware } from "./actions/delete-hardware";
-import { AddHardware } from "./actions/add-hardware";
 
 
 export interface IOrganisationState {
@@ -43,8 +35,6 @@ export interface IOrganisationState {
 
     employeesList: IEmployee[];
     organisationsList: IOrganisation[];
-    supplierList: ISupplier[];
-    hardwareList: IHardware[];
 }
 
 @State<IOrganisationState>({
@@ -60,9 +50,7 @@ export interface IOrganisationState {
         updateEmployeeAdminSuccess: false,
         showOrganisationSelector: false,
         employeesList: null,
-        organisationsList: null,
-        supplierList: null,
-        hardwareList: null
+        organisationsList: null
     }
 })
 @Injectable()
@@ -77,15 +65,7 @@ export class OrganisationState {
     static employeesList(state: IOrganisationState): IEmployee[] {
         return state.employeesList;
     }
-    @Selector()
-    static supplierList(state: IOrganisationState): ISupplier[] {
-        return state.supplierList;
-    }
 
-    @Selector()
-    static hardwareList(state: IOrganisationState): IHardware[] {
-        return state.hardwareList;
-    }
 
     @Selector()
     static organisationsList(state: IOrganisationState): IOrganisation[] {
@@ -288,155 +268,6 @@ export class OrganisationState {
         );
     }
 
-    @Action(SetSupplierList)
-    setSupplierList(ctx: StateContext<IOrganisationState>): Observable<ISupplier[]> {
-        const organisation: number = ctx.getState().activeOrganisation;
-        return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/supplier/all/${organisation}`,
-        ).pipe(
-            tap((supplierList: ISupplier[]) => {
-                ctx.patchState({
-                    supplierList
-                });
-            }),
-            catchError((error) => {
-                return throwError(error);
-            })
-        );
-    }
-    
-    @Action(AddSupplier)
-    AddSupplier(ctx: StateContext<IOrganisationState>, payload: AddSupplier): Observable<ISupplier> {
-        try {
-            return this.http.post(
-                `${this.configProvider.config.backendUrl}/v1/supplier`,
-                {
-                    name: payload.name,
-                    details: {
-                        description: payload.description
-                    },
-                    organisationId: ctx.getState().activeOrganisation
-                }
-            ).pipe(
-                tap((data: ISupplier) => {
-                    console.log(data);
-                    ctx.patchState({
-                        supplierList: [...ctx.getState().supplierList, data ]
-                    });
-                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added supplier ${data.name}` }));
-                }),
-                catchError((error) => {
-                    console.log("error:", error)
-                    if (error.error.error && error.error.error === "DUPLICATE") {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
-                    } else {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
-                    }
-                    return throwError(error);
-                })
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    @Action(DeleteSupplier)
-    DeleteSupplier(ctx: StateContext<IOrganisationState>, payload: DeleteSupplier): Observable<IDeleteResponse> {
-        try {
-            return this.http.delete(
-                `${this.configProvider.config.backendUrl}/v1/supplier/${payload.supplierId}`,
-            ).pipe(
-                tap(() => {
-                    const supplierList: ISupplier[] = ctx.getState().supplierList.filter(x => x.id !== payload.supplierId);
-                    ctx.patchState({
-                        supplierList
-                    });
-                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted supplier ${payload.supplierId}`}));
-                }),
-                catchError((error) => {
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
-                    return throwError(error);
-                })
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    @Action(SetHardwareList)
-    setHardwareList(ctx: StateContext<IOrganisationState>): Observable<IHardware[]> {
-        const organisation: number = ctx.getState().activeOrganisation;
-        return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/hardware/all/${organisation}`,
-        ).pipe(
-            tap((hardwareList: IHardware[]) => {
-                ctx.patchState({
-                    hardwareList
-                });
-            }),
-            catchError((error) => {
-                return throwError(error);
-            })
-        );
-    }
-
-    @Action(AddHardware)
-    AddHardware(ctx: StateContext<IOrganisationState>, payload: AddHardware): Observable<IHardware> {
-        try {
-            return this.http.post(
-                `${this.configProvider.config.backendUrl}/v1/hardware`,
-                {
-                    name: payload.name,
-                    details: {
-                        description: payload.description
-                    },
-                    organisationId: ctx.getState().activeOrganisation
-                }
-            ).pipe(
-                tap((data: IHardware) => {
-                    console.log(data);
-                    ctx.patchState({
-                        hardwareList: [...ctx.getState().hardwareList, data ]
-                    });
-                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added hardware ${data.name}` }));
-                }),
-                catchError((error) => {
-                    console.log("error:", error)
-                    if (error.error.error && error.error.error === "DUPLICATE") {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
-                    } else {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
-                    }
-                    return throwError(error);
-                })
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    @Action(DeleteHardware)
-    DeleteHardware(ctx: StateContext<IOrganisationState>, payload: DeleteHardware): Observable<IDeleteResponse> {
-        try {
-            return this.http.delete(
-                `${this.configProvider.config.backendUrl}/v1/hardware/${payload.hardwareId}`,
-            ).pipe(
-                tap(() => {
-                    const hardwareList: IHardware[] = ctx.getState().hardwareList.filter(x => x.id !== payload.hardwareId);
-                    ctx.patchState({
-                        hardwareList
-                    });
-                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted hardware ${payload.hardwareId}`}));
-                }),
-                catchError((error) => {
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
-                    return throwError(error);
-                })
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     @Action(SetOrganisationsList)
     setOrganisationsList(ctx: StateContext<IOrganisationState>): Observable<IOrganisation[]> {
