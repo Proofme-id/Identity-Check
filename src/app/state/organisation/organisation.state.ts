@@ -66,6 +66,7 @@ export class OrganisationState {
         return state.employeesList;
     }
 
+
     @Selector()
     static organisationsList(state: IOrganisationState): IOrganisation[] {
         return state.organisationsList;
@@ -229,7 +230,7 @@ export class OrganisationState {
                     ctx.patchState({
                         employeesList: [...ctx.getState().employeesList, data ]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: `Added employee ${data.name}` }));
+                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added employee ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
@@ -266,6 +267,7 @@ export class OrganisationState {
             })
         );
     }
+
 
     @Action(SetOrganisationsList)
     setOrganisationsList(ctx: StateContext<IOrganisationState>): Observable<IOrganisation[]> {

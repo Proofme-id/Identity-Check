@@ -36,6 +36,12 @@ import { EmailStateModule } from "./state/email/email.module";
 import { MODALS_COMPONENT } from "./modals/modals.module";
 import { OrganisationStateModule } from "./state/organisation/organisation.module";
 import { IsOrganisationAdminGuard } from "./guards/is-organisation-admin.guard";
+import { SupplierStateModule } from "./state/supplier/supplier.module";
+import { HardwareStateModule } from "./state/hardware/hardware.module";
+import { ProjectStateModule } from "./state/projects/project.module";
+import { TeamStateModule } from "./state/teams/team.module";
+
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -51,7 +57,11 @@ const NGXS_MODULES = [
     AppStateModule,
     UserStateModule,
     EmailStateModule,
-    OrganisationStateModule
+    OrganisationStateModule,
+    SupplierStateModule,
+    HardwareStateModule,
+    ProjectStateModule,
+    TeamStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [

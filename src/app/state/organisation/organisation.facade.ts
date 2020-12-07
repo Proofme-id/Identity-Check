@@ -12,6 +12,9 @@ import { SetShowOrganisationSelector } from "./actions/show-organisation-selecto
 import { DeleteEmployee } from "./actions/delete-employee";
 import { InviteEmployee } from "./actions/invite-employee";
 
+
+
+
 @Injectable({
     providedIn: "root"
 })
@@ -39,7 +42,7 @@ export class OrganisationStateFacade {
     setEmployeesList(): Observable<void> {
         return this.store.dispatch(new SetEmployeesList());
     }
-
+    
     setOrganisationsList(): Observable<void> {
         return this.store.dispatch(new SetOrganisationsList());
     }

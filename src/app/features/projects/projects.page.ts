@@ -3,18 +3,21 @@ import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
+import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
+import { ToastrService } from "ngx-toastr";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { SupplierAddModalComponent } from "../../modals/supplier-add-modal/supplierAddModal.component";
+import { ProjectAddModalComponent } from "../../modals/project-add-modal/projectAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
-import { ISupplier } from "src/app/interfaces/supplier.interface";
-import { SupplierStateFacade } from "src/app/state/supplier/supplier.facade";
+import { ProjectStateFacade } from "src/app/state/projects/project.facade";
+import { IProject } from "src/app/interfaces/project.interface";
+
 
 @Component({
-    templateUrl: "suppliers.page.html",
-    styleUrls: ["suppliers.page.scss"]
+    templateUrl: "projects.page.html",
+    styleUrls: ["projects.page.scss"]
 })
 
-export class SuppliersPageComponent extends BaseComponent implements OnInit {
+export class ProjectsPageComponent extends BaseComponent implements OnInit {
 
     @ViewChild("id") id: ElementRef;
     @ViewChild("name") name: ElementRef;
@@ -29,20 +32,21 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
 
     constructor(
         private appStateFacade: AppStateFacade,
-        private supplierStateFacade: SupplierStateFacade,
-        private modalService: BsModalService
+        private organisationStateFacade: OrganisationStateFacade,
+        private toastr: ToastrService,
+        private modalService: BsModalService,
+        private projectStateFacade: ProjectStateFacade
     ) {
         super();
-        this.appStateFacade.setPageTitleLanguageKey("SUPPLIER.title");
+        this.appStateFacade.setPageTitleLanguageKey("PROJECTS.title");
     }
-    
+
     ngOnInit(): void {
-        this.supplierStateFacade.setSupplierList();
-        this.supplierStateFacade.supplierList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((supplierList) => {
-            this.data = supplierList;
+        this.projectStateFacade.setProjectList();
+        this.projectStateFacade.projectList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((projectList) => {
+            this.data = projectList;
         });
         
-
         this.configuration = { ...DefaultConfig };
         this.configuration.searchEnabled = false;
         this.columns = [
@@ -56,20 +60,20 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
     public columns: Columns[];
 
     public data = []
-    
-    delete(supplier: ISupplier): void {
+
+    delete(project: IProject): void {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.supplierStateFacade.deleteSupplier(supplier.id);
+            this.projectStateFacade.deleteProject(project.id);
         })
     }
 
-    view(supplier: ISupplier): void {
-        console.log("supplier ", supplier);
+    view(project: IProject): void {
+        console.log("project ", project);
     }
 
     add(): void {
-        this.modalService.show(SupplierAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(ProjectAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }
