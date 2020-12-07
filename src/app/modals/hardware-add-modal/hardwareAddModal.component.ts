@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 import { HardwareStateFacade } from "src/app/state/hardware/hardware.facade";
 
 @Component({
@@ -16,7 +15,6 @@ export class HardwareAddModalComponent {
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private organisationStateFacade: OrganisationStateFacade,
         private HardwareStateFacade: HardwareStateFacade
     ) {
         this.addHardwareForm = this.formBuilder.group({
