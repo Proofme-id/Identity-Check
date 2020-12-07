@@ -4,6 +4,7 @@ import { DeleteModalComponent } from "./delete-modal/deleteModal.component";
 import { OrganisationSelectModalComponent } from "./organisation-select-modal/organisationSelectModal.component";
 import { SupplierAddModalComponent } from "./supplier-add-modal/supplierAddModal.component";
 import { HardwareAddModalComponent } from "./hardware-add-modal/hardwareAddModal.component";
+import { ProjectAddModalComponent } from "./project-add-modal/projectAddModal.component";
 
 
 export const MODALS_COMPONENT = [
@@ -12,5 +13,6 @@ export const MODALS_COMPONENT = [
     EmployeeInviteModalComponent,
     DeleteModalComponent,
     SupplierAddModalComponent,
-    HardwareAddModalComponent
+    HardwareAddModalComponent,
+    ProjectAddModalComponent
 ]

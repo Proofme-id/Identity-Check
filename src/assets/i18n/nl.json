@@ -385,10 +385,10 @@
     "description":"Beschrijving",
     "button": "Toevoegen"
   },
-    "HARDWARE": {
+    "PROJECTS": {
     "add": " Toevoegen",
-    "title": "Hardware",
-    "add-hardware":"Hardware Toevoegen",
+    "title": "Projecten",
+    "add-project":"Project Toevoegen",
     "id":"Id",
     "name":"Naam",
     "description":"Beschrijving",

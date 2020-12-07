@@ -5,7 +5,7 @@ import { SetHardwareList } from "./actions/set-hardware-list";
 import { DeleteHardware } from "./actions/delete-hardware";
 import { AddHardware } from "./actions/add-hardware";
 import { Observable } from "rxjs";
-import { ISupplier } from "src/app/interfaces/supplier.interface";
+import { IHardware } from "src/app/interfaces/hardware.interface";
 
 
 
@@ -15,7 +15,7 @@ import { ISupplier } from "src/app/interfaces/supplier.interface";
 export class HardwareStateFacade {
 
     @Select(HardwareState.hardwareList)
-    hardwareList$: Observable<ISupplier[]>;
+    hardwareList$: Observable<IHardware[]>;
 
     constructor(private store: Store) {}
 
