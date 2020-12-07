@@ -7,31 +7,31 @@ import { Observable, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
 import { SendToastAction } from "../app/actions/toastMessage";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
-import { IHardware } from "src/app/interfaces/hardware.interface";
-import { SetHardwareList } from "./actions/set-hardware-list";
-import { DeleteHardware } from "./actions/delete-hardware";
-import { AddHardware } from "./actions/add-hardware";
+import { ITeam } from "src/app/interfaces/team.interface";
+import { SetTeamList } from "./actions/set-team-list";
+import { DeleteTeam } from "./actions/delete-team";
+import { AddTeam } from "./actions/add-team";
 import { OrganisationState } from "../organisation/organisation.state";
 
 
 export interface IOrganisationState {
     
-    hardwareList: IHardware[];
+    teamList: ITeam[];
 }
 
 @State<IOrganisationState>({
-    name: "hardware",
+    name: "team",
     defaults: {
        
-        hardwareList: null
+        teamList: null
     }
 })
 @Injectable()
-export class HardwareState {
+export class TeamState {
 
     @Selector()
-    static hardwareList(state: IOrganisationState): IHardware[] {
-        return state.hardwareList;
+    static teamList(state: IOrganisationState): ITeam[] {
+        return state.teamList;
     }
 
     constructor(
@@ -42,15 +42,15 @@ export class HardwareState {
 
     }
 
-    @Action(SetHardwareList)
-    setHardwareList(ctx: StateContext<IOrganisationState>): Observable<IHardware[]> {
+    @Action(SetTeamList)
+    SetTeamList(ctx: StateContext<IOrganisationState>): Observable<ITeam[]> {
         const organisation: number = this.store.selectSnapshot(OrganisationState.activeOrganisation)
         return this.http.get(
-            `${this.configProvider.config.backendUrl}/v1/hardware/all/${organisation}`,
+            `${this.configProvider.config.backendUrl}/v1/team/all/${organisation}`,
         ).pipe(
-            tap((hardwareList: IHardware[]) => {
+            tap((teamList: ITeam[]) => {
                 ctx.patchState({
-                    hardwareList
+                    teamList
                 });
             }),
             catchError((error) => {
@@ -59,11 +59,11 @@ export class HardwareState {
         );
     }
 
-    @Action(AddHardware)
-    addHardware(ctx: StateContext<IOrganisationState>, payload: AddHardware): Observable<IHardware> {
+    @Action(AddTeam)
+    AddTeam(ctx: StateContext<IOrganisationState>, payload: AddTeam): Observable<ITeam> {
         try {
             return this.http.post(
-                `${this.configProvider.config.backendUrl}/v1/hardware`,
+                `${this.configProvider.config.backendUrl}/v1/team`,
                 {
                     name: payload.name,
                     details: {
@@ -72,12 +72,12 @@ export class HardwareState {
                     organisationId: this.store.selectSnapshot(OrganisationState.activeOrganisation)
                 }
             ).pipe(
-                tap((data: IHardware) => {
+                tap((data: ITeam) => {
                     console.log(data);
                     ctx.patchState({
-                        hardwareList: [...ctx.getState().hardwareList, data ]
+                        teamList: [...ctx.getState().teamList, data ]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added hardware ${data.name}` }));
+                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added team ${data.name}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
@@ -94,18 +94,18 @@ export class HardwareState {
         }
     }
 
-    @Action(DeleteHardware)
-    deleteHardware(ctx: StateContext<IOrganisationState>, payload: DeleteHardware): Observable<IDeleteResponse> {
+    @Action(DeleteTeam)
+    deleteTeam(ctx: StateContext<IOrganisationState>, payload: DeleteTeam): Observable<IDeleteResponse> {
         try {
             return this.http.delete(
-                `${this.configProvider.config.backendUrl}/v1/hardware/${payload.hardwareId}`,
+                `${this.configProvider.config.backendUrl}/v1/team/${payload.teamId}`,
             ).pipe(
                 tap(() => {
-                    const hardwareList: IHardware[] = ctx.getState().hardwareList.filter(x => x.id !== payload.hardwareId);
+                    const teamList: ITeam[] = ctx.getState().teamList.filter(x => x.id !== payload.teamId);
                     ctx.patchState({
-                        hardwareList
+                        teamList
                     });
-                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted hardware ${payload.hardwareId}`}));
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted team ${payload.teamId}`}));
                 }),
                 catchError((error) => {
                     ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));

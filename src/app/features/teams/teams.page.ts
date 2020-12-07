@@ -4,17 +4,18 @@ import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { HardwareAddModalComponent } from "../../modals/hardware-add-modal/hardwareAddModal.component";
+import { TeamAddModalComponent } from "../../modals/team-add-modal/teamAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
-import { IHardware } from "src/app/interfaces/hardware.interface";
-import { HardwareStateFacade } from "src/app/state/hardware/hardware.facade";
+import { TeamStateFacade } from "src/app/state/teams/team.facade";
+import { ITeam } from "src/app/interfaces/team.interface";
+
 
 @Component({
-    templateUrl: "hardware.page.html",
-    styleUrls: ["hardware.page.scss"]
+    templateUrl: "teams.page.html",
+    styleUrls: ["teams.page.scss"]
 })
 
-export class HardwarePageComponent extends BaseComponent implements OnInit {
+export class TeamsPageComponent extends BaseComponent implements OnInit {
 
     @ViewChild("id") id: ElementRef;
     @ViewChild("name") name: ElementRef;
@@ -30,16 +31,16 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
     constructor(
         private appStateFacade: AppStateFacade,
         private modalService: BsModalService,
-        private hardwareStateFacade: HardwareStateFacade
+        private teamStateFacade: TeamStateFacade
     ) {
         super();
-        this.appStateFacade.setPageTitleLanguageKey("HARDWARE.title");
+        this.appStateFacade.setPageTitleLanguageKey("TEAMS.title");
     }
 
     ngOnInit(): void {
-        this.hardwareStateFacade.setHardwareList();
-        this.hardwareStateFacade.hardwareList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((hardwareList) => {
-            this.data = hardwareList;
+        this.teamStateFacade.setTeamList();
+        this.teamStateFacade.teamList$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((teamList) => {
+            this.data = teamList;
         });
         
         this.configuration = { ...DefaultConfig };
@@ -56,19 +57,19 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
 
     public data = []
 
-    delete(hardware: IHardware): void {
+    delete(team: ITeam): void {
         const initialState = { name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
-            this.hardwareStateFacade.deleteHardware(hardware.id);
+            this.teamStateFacade.deleteTeam(team.id);
         })
     }
 
-    view(hardware: IHardware): void {
-        console.log("hardware ", hardware);
+    view(team: ITeam): void {
+        console.log("team ", team);
     }
 
     add(): void {
-        this.modalService.show(HardwareAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(TeamAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }

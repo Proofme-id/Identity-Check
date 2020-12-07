@@ -393,5 +393,14 @@
     "name":"Naam",
     "description":"Beschrijving",
     "button": "Toevoegen"
+  },
+    "TEAMS": {
+    "add": " Toevoegen",
+    "title": "Teams",
+    "add-team":"Team Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
   }
 }

@@ -5,7 +5,6 @@ import { tap } from "rxjs/operators";
 import { catchError } from "rxjs/internal/operators/catchError";
 import { Observable, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
-import { UtilsProvider } from "src/app/providers/utils/utils";
 import { ISupplier } from "../../interfaces/supplier.interface";
 import { SetSupplierList } from "./actions/set-supplier-list";
 import { AddSupplier } from "./actions/add-supplier";
@@ -39,7 +38,6 @@ export class Supplierstate {
     constructor(
         private http: HttpClient,
         private configProvider: ConfigProvider,
-        private utilsProvider: UtilsProvider,
         private store: Store
     ) {
 

@@ -5,7 +5,6 @@ import { tap } from "rxjs/operators";
 import { catchError } from "rxjs/internal/operators/catchError";
 import { Observable, throwError } from "rxjs";
 import { Injectable } from "@angular/core";
-import { UtilsProvider } from "src/app/providers/utils/utils";
 import { SendToastAction } from "../app/actions/toastMessage";
 import { IDeleteResponse } from "../../interfaces/delete-response.interface";
 import { IProject } from "src/app/interfaces/project.interface";
@@ -38,7 +37,6 @@ export class ProjectState {
     constructor(
         private http: HttpClient,
         private configProvider: ConfigProvider,
-        private utilsProvider: UtilsProvider,
         private store: Store
     ) {
 

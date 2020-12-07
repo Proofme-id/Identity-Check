@@ -56,6 +56,11 @@ const routes: Routes = [
                 canActivate: [IsOrganisationAdminGuard]
             },
             {
+                path: "teams",
+                loadChildren: "../teams/teams.module#TeamsPageModule",
+                canActivate: [IsOrganisationAdminGuard]
+            },
+            {
                 path: "overview",
                 loadChildren: "../overview/overview.module#OverviewPageModule"
             },

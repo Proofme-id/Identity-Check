@@ -402,5 +402,14 @@
     "name":"Name",
     "description":"Description",
     "button": "Add"
+  },
+    "TEAMS": {
+    "add": " Add",
+    "title": "Teams",
+    "add-team":"Add Team",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
+    "button": "Add"
   }
 }

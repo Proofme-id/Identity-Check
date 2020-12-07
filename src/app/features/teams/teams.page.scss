@@ -1,0 +1,13 @@
+:host {
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 80px;
+
+    .form-group {
+        margin-bottom: 0 !important;
+    }
+
+    .table-icon {
+        width: 25px;
+    }
+}

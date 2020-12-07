@@ -3,8 +3,6 @@ import { AppStateFacade } from "src/app/state/app/app.facade";
 import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
-import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
-import { ToastrService } from "ngx-toastr";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { SupplierAddModalComponent } from "../../modals/supplier-add-modal/supplierAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
@@ -31,8 +29,6 @@ export class SuppliersPageComponent extends BaseComponent implements OnInit {
 
     constructor(
         private appStateFacade: AppStateFacade,
-        private organisationStateFacade: OrganisationStateFacade,
-        private toastr: ToastrService,
         private supplierStateFacade: SupplierStateFacade,
         private modalService: BsModalService
     ) {

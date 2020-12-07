@@ -39,6 +39,7 @@ import { IsOrganisationAdminGuard } from "./guards/is-organisation-admin.guard";
 import { SupplierStateModule } from "./state/supplier/supplier.module";
 import { HardwareStateModule } from "./state/hardware/hardware.module";
 import { ProjectStateModule } from "./state/projects/project.module";
+import { TeamStateModule } from "./state/teams/team.module";
 
 
 
@@ -59,7 +60,8 @@ const NGXS_MODULES = [
     OrganisationStateModule,
     SupplierStateModule,
     HardwareStateModule,
-    ProjectStateModule
+    ProjectStateModule,
+    TeamStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [
