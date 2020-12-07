@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
 import { SupplierStateFacade } from "src/app/state/supplier/supplier.facade";
 
 @Component({
@@ -10,13 +9,11 @@ import { SupplierStateFacade } from "src/app/state/supplier/supplier.facade";
 })
 export class SupplierAddModalComponent {
 
-
     public addForm: FormGroup;
 
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private organisationStateFacade: OrganisationStateFacade,
         private supplierStateFacade: SupplierStateFacade
     ) {
         this.addForm = this.formBuilder.group({

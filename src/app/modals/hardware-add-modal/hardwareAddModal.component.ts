@@ -9,13 +9,12 @@ import { HardwareStateFacade } from "src/app/state/hardware/hardware.facade";
 })
 export class HardwareAddModalComponent {
 
-
     public addHardwareForm: FormGroup;
 
     constructor(
         private modalService: BsModalService,
         private formBuilder: FormBuilder,
-        private HardwareStateFacade: HardwareStateFacade
+        private hardwareStateFacade: HardwareStateFacade
     ) {
         this.addHardwareForm = this.formBuilder.group({
             name: new FormControl("", Validators.required),
@@ -26,7 +25,7 @@ export class HardwareAddModalComponent {
     add(): void {
         const name: string = this.addHardwareForm.get("name").value;
         const description: string = this.addHardwareForm.get("description").value;
-        this.HardwareStateFacade.addHardware(name, description);
+        this.hardwareStateFacade.addHardware(name, description);
         this.closeModal()
     }
 
