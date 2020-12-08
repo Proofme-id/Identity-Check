@@ -402,5 +402,16 @@
     "name":"Naam",
     "description":"Beschrijving",
     "button": "Toevoegen"
+  },
+    "ROLES": {
+    "add": " Toevoegen",
+    "title": "Rollen",
+    "role": "Rol",
+    "reportsTo": "ReportsTo",
+    "add-role":"Rol Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen"
   }
 }

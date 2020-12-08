@@ -412,4 +412,16 @@
     "description":"Description",
     "button": "Add"
   }
+  ,
+    "ROLES": {
+    "add": " Add",
+    "title": "Roles",
+    "role": "Role",
+    "reportsTo": "ReportsTo",
+    "add-role":"Add Role",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
+    "button": "Add"
+  }
 }
