@@ -17,7 +17,7 @@
                                 </label>
                                 <input type="text" class="form-control" formControlName="title">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="roleList.length > 0">
                                 <label class="form-label">
                                     {{ 'ROLES.reportsTo' | translate }}
                                 </label>

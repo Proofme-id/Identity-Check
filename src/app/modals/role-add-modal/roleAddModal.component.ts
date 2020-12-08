@@ -22,11 +22,9 @@ export class RoleAddModalComponent implements OnInit {
     ) {
         this.addRoleForm = this.formBuilder.group({
             title: new FormControl("", Validators.required),
-            reportsTo: new FormControl("", Validators.required),
+            reportsTo: new FormControl(null),
             description: new FormControl("", Validators.required)
         });
-
-        
     }
 
     ngOnInit(): void {
