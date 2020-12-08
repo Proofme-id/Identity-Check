@@ -48,7 +48,7 @@ export class RolesPageComponent extends BaseComponent implements OnInit {
         this.configuration.searchEnabled = false;
         this.columns = [
             { key: "title", title: "Role" },
-            { key: "reportsTo", title: "ReportsTo" },
+            { key: "reportsToName", title: "ReportsTo" },
             { key: "details.description", title: "Description" },
             { key: "action", title: "Actions", cellTemplate: this.actionTpl }
         ];

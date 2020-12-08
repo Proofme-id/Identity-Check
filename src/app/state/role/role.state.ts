@@ -50,6 +50,11 @@ export class RoleState {
             `${this.configProvider.config.backendUrl}/v1/role/all/${organisation}`,
         ).pipe(
             tap((roleList: IRole[]) => {
+                for (const role of roleList) {
+                    if (roleList.find(x => x.id === role.reportsTo)) {
+                        role.reportsToName = roleList.find(x => x.id === role.reportsTo).title;
+                    }
+                }
                 ctx.patchState({
                     roleList
                 });
@@ -75,6 +80,9 @@ export class RoleState {
                 }
             ).pipe(
                 tap((data: IRole) => {
+                    if (ctx.getState().roleList.find(x => x.id === data.reportsTo)) {
+                        data.reportsToName = ctx.getState().roleList.find(x => x.id === data.reportsTo).title;
+                    }
                     console.log(data);
                     ctx.patchState({
                         roleList: [...ctx.getState().roleList, data ]
