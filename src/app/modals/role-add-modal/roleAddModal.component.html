@@ -22,7 +22,7 @@
                                     {{ 'ROLES.reportsTo' | translate }}
                                 </label>
                                 <select type="text" class="form-control" formControlName="reportsTo">
-                                    <option *ngFor="let role of roleList" [value]="role.id" [selected]="role.title == true">{{role.title}}</option>
+                                    <option *ngFor="let role of roleList" [value]="role.id">{{role.title}}</option>
                                 </select>
                             </div>
                             <div class="form-group">

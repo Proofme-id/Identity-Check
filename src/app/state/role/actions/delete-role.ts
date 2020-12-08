@@ -1,5 +1,5 @@
 export class DeleteRole {
-    static readonly type = "[Organisation] DeleteRole";
+    static readonly type = "[Role] DeleteRole";
 
     constructor(public roleId: number) {}
 }

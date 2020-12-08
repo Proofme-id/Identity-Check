@@ -1,3 +1,3 @@
 export class SetRoleList {
-    static readonly type = "[Organisation] SetRoleList";
+    static readonly type = "[Role] SetRoleList";
 }
