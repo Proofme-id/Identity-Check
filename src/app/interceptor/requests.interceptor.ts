@@ -3,13 +3,12 @@ import { Injectable } from "@angular/core";
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/common/http";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject, throwError } from "rxjs";
 import { Router } from "@angular/router"
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/take";
-import { throwError } from "rxjs";
 import { UserStateFacade } from "../state/user/user.facade";
 import { UserState } from "../state/user/user.state";
 
