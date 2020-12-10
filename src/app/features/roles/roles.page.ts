@@ -67,15 +67,10 @@ export class RolesPageComponent extends BaseComponent implements OnInit {
         })
     }
 
-    update(role: IRole): void {
+    openModal(role: IRole): void {
+        console.log("role", role);
         console.log("this.data:", this.data);
         const initialState = { role, roleList: this.data };
-        this.modalService.show(RoleModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
-    }
-
-    add(): void {
-        console.log("this.data:", this.data);
-        const initialState = { roleList: this.data };
         this.modalService.show(RoleModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }
