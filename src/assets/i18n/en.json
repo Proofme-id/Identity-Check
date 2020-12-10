@@ -419,9 +419,11 @@
     "role": "Role",
     "reportsTo": "ReportsTo",
     "add-role":"Add Role",
+    "update-role": "Update Role",
     "id":"Id",
     "name":"Name",
     "description":"Description",
-    "button": "Add"
+    "button": "Add",
+    "button-update": "Update"
   }
 }

@@ -12,6 +12,8 @@ import { DeleteRole } from "./actions/delete-role";
 import { SendToastAction } from "../app/actions/toastMessage";
 import { IDeleteResponse } from "src/app/interfaces/delete-response.interface";
 import { OrganisationState } from "../organisation/organisation.state";
+import { UpdateRole } from "./actions/update-role";
+
 
 
 
@@ -28,12 +30,11 @@ export interface IRoleState {
 @Injectable()
 export class RoleState {
 
-    
+
     @Selector()
     static roleList(state: IRoleState): IRole[] {
         return state.roleList;
     }
-
 
     constructor(
         private http: HttpClient,
@@ -64,7 +65,7 @@ export class RoleState {
             })
         );
     }
-    
+
     @Action(AddRole)
     addRole(ctx: StateContext<IRoleState>, payload: AddRole): Observable<IRole> {
         try {
@@ -85,16 +86,16 @@ export class RoleState {
                     }
                     console.log(data);
                     ctx.patchState({
-                        roleList: [...ctx.getState().roleList, data ]
+                        roleList: [data, ...ctx.getState().roleList]
                     });
-                    ctx.dispatch(new SendToastAction({ type:"SUCCESS", message: `Added role ${data.title}` }));
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Added role ${data.title}` }));
                 }),
                 catchError((error) => {
                     console.log("error:", error)
                     if (error.error.error && error.error.error === "DUPLICATE") {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: error.error.error }));
+                        ctx.dispatch(new SendToastAction({ type: "ERROR", message: error.error.error }));
                     } else {
-                        ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                        ctx.dispatch(new SendToastAction({ type: "ERROR", message: "Something went wrong" }));
                     }
                     return throwError(error);
                 })
@@ -115,15 +116,57 @@ export class RoleState {
                     ctx.patchState({
                         roleList
                     });
-                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted role ${payload.roleId}`}));
+                    ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Deleted role ${payload.roleId}` }));
                 }),
                 catchError((error) => {
-                    ctx.dispatch(new SendToastAction({ type:"ERROR", message: "Something went wrong" }));
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: "Something went wrong" }));
                     return throwError(error);
                 })
             )
         } catch (error) {
             console.log(error);
         }
+    }
+
+    @Action(UpdateRole)
+    updateRole(ctx: StateContext<IRoleState>, payload: UpdateRole): Observable<IRole> {
+        return this.http.patch(
+            `${this.configProvider.config.backendUrl}/v1/role/${payload.id}`,
+            {
+                title: payload.title,
+                reportsTo: payload.reportsTo,
+                details: {
+                    description: payload.description
+                }
+            }
+        ).pipe(
+            tap((data: IRole) => {
+                const index = ctx.getState().roleList.findIndex(x => x.id === payload.id);
+                if (ctx.getState().roleList.find(x => x.id === data.reportsTo)) {
+                    data.reportsToName = ctx.getState().roleList.find(x => x.id === data.reportsTo).title;
+                }
+                console.log("data", data);
+                ctx.patchState({
+                    roleList: Object.assign(
+                        [...ctx.getState().roleList],
+                        {
+                            [index]: {
+                                ...data
+                            }
+                        }
+                    )
+                });
+                ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Updated role ${data.title}` }));
+            }),
+            catchError((error) => {
+                console.log("error:", error)
+                if (error.error.error && error.error.error === "DUPLICATE") {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: error.error.error }));
+                } else {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: "Something went wrong" }));
+                }
+                return throwError(error);
+            })
+        );
     }
 }

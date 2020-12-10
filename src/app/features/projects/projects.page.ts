@@ -62,7 +62,7 @@ export class ProjectsPageComponent extends BaseComponent implements OnInit {
     public data = []
 
     delete(project: IProject): void {
-        const initialState = { name };
+        const initialState = { name: project.name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
             this.projectStateFacade.deleteProject(project.id);

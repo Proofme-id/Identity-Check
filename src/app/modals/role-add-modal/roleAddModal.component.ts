@@ -33,7 +33,7 @@ export class RoleAddModalComponent implements OnInit {
 
     add(): void {
         const title: string = this.addRoleForm.get("title").value;
-        const reportsTo: string = this.addRoleForm.get("reportsTo").value;
+        const reportsTo: number = this.addRoleForm.get("reportsTo").value;
         const description: string = this.addRoleForm.get("description").value;
         this.roleStateFacade.addRole(title, reportsTo, description);
         this.closeModal()

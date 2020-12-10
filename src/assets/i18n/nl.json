@@ -409,9 +409,11 @@
     "role": "Rol",
     "reportsTo": "ReportsTo",
     "add-role":"Rol Toevoegen",
+    "update-role": "Rol Wijzigen",
     "id":"Id",
     "name":"Naam",
     "description":"Beschrijving",
-    "button": "Toevoegen"
+    "button": "Toevoegen",
+    "button-update": "Wijzigen"
   }
 }

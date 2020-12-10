@@ -7,6 +7,7 @@ import { HardwareAddModalComponent } from "./hardware-add-modal/hardwareAddModal
 import { ProjectAddModalComponent } from "./project-add-modal/projectAddModal.component";
 import { TeamAddModalComponent } from "./team-add-modal/teamAddModal.component";
 import { RoleAddModalComponent } from "./role-add-modal/roleAddModal.component";
+import { RoleUpdateModalComponent } from "./role-update-modal/roleUpdateModal.component";
 
 
 export const MODALS_COMPONENT = [
@@ -18,5 +19,6 @@ export const MODALS_COMPONENT = [
     HardwareAddModalComponent,
     ProjectAddModalComponent,
     TeamAddModalComponent,
-    RoleAddModalComponent
+    RoleAddModalComponent,
+    RoleUpdateModalComponent
 ]

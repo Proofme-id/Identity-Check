@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h2 class="title pull-left"> {{ 'ROLES.update-role' | translate }}</h2>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <main class="col-lg-12">
+            <div class="entry-wrapper">
+                <div class="entry-single">
+                    <form [formGroup]=updateRoleForm>
+                        <div class="form">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'ROLES.role' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="title">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'ROLES.reportsTo' | translate }}
+                                </label>
+                                <select type="text" class="form-control" formControlName="reportsTo">
+                                    <option *ngFor="let roleItem of roleList" [value]="roleItem.id">{{roleItem.title}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'ROLES.description' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="description">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <br />
+                                </label>
+                                <button class="btn btn-blue form-button" (click)="update()"
+                                    [disabled]="!updateRoleForm.valid">
+                                    {{ 'ROLES.button-update' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

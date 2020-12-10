@@ -8,6 +8,7 @@ import { RoleAddModalComponent } from "../../modals/role-add-modal/roleAddModal.
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
 import { IRole } from "src/app/interfaces/role.interface";
 import { RoleStateFacade } from "src/app/state/role/role.facade";
+import { RoleUpdateModalComponent } from "src/app/modals/role-update-modal/roleUpdateModal.component";
 
 @Component({
     templateUrl: "roles.page.html",
@@ -67,8 +68,10 @@ export class RolesPageComponent extends BaseComponent implements OnInit {
         })
     }
 
-    view(role: IRole): void {
-        console.log("role ", role);
+    update(role: IRole): void {
+        console.log("this.data:", this.data);
+        const initialState = { role, roleList: this.data };
+        this.modalService.show(RoleUpdateModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 
     add(): void {

@@ -15,7 +15,7 @@
             </div>
             <ng-template #actionTpl let-row let-rowIndex="rowIndex">
                 <div class="menu-icon-container">
-                    <fa-icon [icon]="['fas', 'eye']" size="2x" class="primary" (click)="view(row)"></fa-icon>
+                    <fa-icon [icon]="['fas', 'pencil-alt']" size="2x" class="primary" (click)="update(row)"></fa-icon>
                     <fa-icon [icon]="['fas', 'trash-alt']" size="2x" class="danger" (click)="delete(row)"></fa-icon>
                 </div>
             </ng-template>

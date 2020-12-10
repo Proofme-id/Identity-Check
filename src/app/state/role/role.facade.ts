@@ -6,6 +6,7 @@ import { SetRoleList } from "./actions/set-role-list";
 import { AddRole } from "./actions/add-role";
 import { DeleteRole } from "./actions/delete-role";
 import { RoleState } from "./role.state";
+import { UpdateRole } from "./actions/update-role";
 
 
 @Injectable({
@@ -23,8 +24,12 @@ export class RoleStateFacade {
         return this.store.dispatch(new SetRoleList());
     }
 
-    addRole(title: string, reportsTo: string, description: string): Observable<void> {
+    addRole(title: string, reportsTo: number, description: string): Observable<void> {
         return this.store.dispatch(new AddRole(title, reportsTo, description));
+    }
+
+    updateRole(id: number, title: string, reportsTo: number, description: string): Observable<void> {
+        return this.store.dispatch(new UpdateRole(id, title, reportsTo, description));
     }
 
     deleteRole(roleId: number): Observable<void> {
