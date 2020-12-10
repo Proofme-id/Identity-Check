@@ -4,11 +4,10 @@ import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { RoleAddModalComponent } from "../../modals/role-add-modal/roleAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
 import { IRole } from "src/app/interfaces/role.interface";
 import { RoleStateFacade } from "src/app/state/role/role.facade";
-import { RoleUpdateModalComponent } from "src/app/modals/role-update-modal/roleUpdateModal.component";
+import { RoleModalComponent } from "src/app/modals/role-modal/roleModal.component";
 
 @Component({
     templateUrl: "roles.page.html",
@@ -71,12 +70,12 @@ export class RolesPageComponent extends BaseComponent implements OnInit {
     update(role: IRole): void {
         console.log("this.data:", this.data);
         const initialState = { role, roleList: this.data };
-        this.modalService.show(RoleUpdateModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(RoleModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 
     add(): void {
         console.log("this.data:", this.data);
         const initialState = { roleList: this.data };
-        this.modalService.show(RoleAddModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(RoleModalComponent, { initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }

@@ -6,10 +6,10 @@ import { IRole } from "src/app/interfaces/role.interface";
 
 
 @Component({
-    selector: "role-update-modal",
-    templateUrl: "./roleUpdateModal.component.html"
+    selector: "role-modal",
+    templateUrl: "./roleModal.component.html"
 })
-export class RoleUpdateModalComponent implements OnInit {
+export class RoleModalComponent implements OnInit {
 
     public updateRoleForm: FormGroup;
 
@@ -30,9 +30,9 @@ export class RoleUpdateModalComponent implements OnInit {
     ngOnInit(): void {
         console.log("Update role:", this.role);
         this.updateRoleForm = this.formBuilder.group({
-            title: new FormControl(this.role.title, Validators.required),
-            reportsTo: new FormControl(this.role.reportsTo),
-            description: new FormControl(this.role.details.description, Validators.required)
+            title: new FormControl(this.role ? this.role.title : null, Validators.required),
+            reportsTo: new FormControl( this.role ? this.role.reportsTo : null),
+            description: new FormControl(this.role ? this.role.details.description : null, Validators.required)
         });
     }
 
@@ -46,6 +46,14 @@ export class RoleUpdateModalComponent implements OnInit {
         console.log("typeof", typeof reportsTo);
         const description: string = this.updateRoleForm.get("description").value;
         this.roleStateFacade.updateRole(this.role.id, title, reportsTo, description);
+        this.closeModal()
+    }
+
+    add(): void {
+        const title: string = this.updateRoleForm.get("title").value;
+        const reportsTo: number = this.updateRoleForm.get("reportsTo").value;
+        const description: string = this.updateRoleForm.get("description").value;
+        this.roleStateFacade.addRole(title, reportsTo, description);
         this.closeModal()
     }
 
