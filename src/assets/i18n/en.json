@@ -411,5 +411,25 @@
     "name":"Name",
     "description":"Description",
     "button": "Add"
+  },
+  "LABEL":{
+    "title":"Label",
+    "add": "Add",
+    "add-label":"Add Label",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
+    "button": "Add",
+    "color": "Color"
+  },
+  "UPDATE-LABEL":{
+    "title":"Label",
+    "add": "Update",
+    "update-label":"Update Label",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
+    "button": "Update",
+    "color": "Color"
   }
 }

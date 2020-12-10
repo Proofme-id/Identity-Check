@@ -402,5 +402,25 @@
     "name":"Naam",
     "description":"Beschrijving",
     "button": "Toevoegen"
+  },
+  "LABEL":{
+    "title":"Label",
+    "add": "Toevoegen",
+    "add-label":"Label Toevoegen",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Beschrijving",
+    "button": "Toevoegen",
+    "color": "Kleur"
+  },
+  "UPDATE-LABEL":{
+    "title":"Label",
+    "add": "bijwerken",
+    "update-label":"bijwerken Label",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Omschrijving",
+    "button": "bijwerken",
+    "color": "Kleur"
   }
 }

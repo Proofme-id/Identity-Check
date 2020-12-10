@@ -40,7 +40,7 @@ import { SupplierStateModule } from "./state/supplier/supplier.module";
 import { HardwareStateModule } from "./state/hardware/hardware.module";
 import { ProjectStateModule } from "./state/projects/project.module";
 import { TeamStateModule } from "./state/teams/team.module";
-
+import { LabelStateModule } from "./state/label/label.module";
 
 
 // AoT requires an exported function for factories
@@ -61,7 +61,8 @@ const NGXS_MODULES = [
     SupplierStateModule,
     HardwareStateModule,
     ProjectStateModule,
-    TeamStateModule
+    TeamStateModule,
+    LabelStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [
