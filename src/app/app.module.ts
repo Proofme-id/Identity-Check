@@ -63,7 +63,7 @@ const NGXS_MODULES = [
     HardwareStateModule,
     ProjectStateModule,
     TeamStateModule,
-    RoleStateModule
+    RoleStateModule,
     LabelStateModule
 ];
 

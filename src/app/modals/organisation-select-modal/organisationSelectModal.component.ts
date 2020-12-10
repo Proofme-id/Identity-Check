@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder } from "@angular/forms";
 import { OrganisationStateFacade } from "../../state/organisation/organisation.facade";
-import { take } from "rxjs/operators";
 
 @Component({
     selector: "employee-invite-modal",
