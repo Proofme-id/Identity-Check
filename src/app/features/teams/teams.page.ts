@@ -58,7 +58,7 @@ export class TeamsPageComponent extends BaseComponent implements OnInit {
     public data = []
 
     delete(team: ITeam): void {
-        const initialState = { name };
+        const initialState = { name: team.name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
             this.teamStateFacade.deleteTeam(team.id);

@@ -432,4 +432,18 @@
     "button": "Update",
     "color": "Color"
   }
+  ,
+    "ROLES": {
+    "add": " Add",
+    "title": "Roles",
+    "role": "Role",
+    "reportsTo": "ReportsTo",
+    "add-role":"Add Role",
+    "update-role": "Update Role",
+    "id":"Id",
+    "name":"Name",
+    "description":"Description",
+    "button": "Add",
+    "button-update": "Update"
+  }
 }

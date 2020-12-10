@@ -403,6 +403,13 @@
     "description":"Beschrijving",
     "button": "Toevoegen"
   },
+    "ROLES": {
+    "add": " Toevoegen",
+    "title": "Rollen",
+    "role": "Rol",
+    "reportsTo": "ReportsTo",
+    "add-role":"Rol Toevoegen",
+    "update-role": "Rol Wijzigen"
   "LABEL":{
     "title":"Label",
     "add": "Toevoegen",
@@ -411,6 +418,7 @@
     "name":"Naam",
     "description":"Beschrijving",
     "button": "Toevoegen",
+    "button-update": "Wijzigen",
     "color": "Kleur"
   },
   "UPDATE-LABEL":{

@@ -1,0 +1,24 @@
+<div class="main-container">
+    <div class="container">
+        <div class="inner-page-section card">
+            <section class="page-header">
+                <div class="page-header-content d-flex justify-content-between">
+                    <h2 class="title">{{ 'ROLES.title' | translate }}</h2>
+                    <button class="btn btn-green" (click)="update()"><fa-icon [icon]="['fas', 'plus']" class="white"></fa-icon>{{ 'ROLES.add' | translate }}</button>
+                </div>
+            </section>
+            <div>
+                <div class="page-content">
+                    <ngx-table [configuration]="configuration" [data]="data" [columns]="columns">
+                    </ngx-table>
+                </div>
+            </div>
+            <ng-template #actionTpl let-row let-rowIndex="rowIndex">
+                <div class="menu-icon-container">
+                    <fa-icon [icon]="['fas', 'pencil-alt']" size="2x" class="primary" (click)="update(row)"></fa-icon>
+                    <fa-icon [icon]="['fas', 'trash-alt']" size="2x" class="danger" (click)="delete(row)"></fa-icon>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
