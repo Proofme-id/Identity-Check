@@ -1,3 +1,3 @@
 export class SetLabelList {
-    static readonly type = "[Organisation] SetLabelList";
+    static readonly type = "[Label] SetLabelList";
 }

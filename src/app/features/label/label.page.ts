@@ -4,11 +4,10 @@ import { Columns, Config, DefaultConfig } from "ngx-easy-table";
 import { BaseComponent } from "../base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { LabelAddModalComponent } from "../../modals/label-add-modal/labelAddModal.component";
 import { DeleteModalComponent } from "src/app/modals/delete-modal/deleteModal.component";
 import { ILabel } from "src/app/interfaces/label.interface";
 import { LabelStateFacade } from "src/app/state/label/label.facade";
-import { LabelUpdateModalComponent } from 'src/app/modals/update-modal/updateModal.component';
+import { LabelModalComponent } from "src/app/modals/label-modal/labelModal.component";
 
 @Component({
     templateUrl: "label.page.html",
@@ -71,11 +70,11 @@ export class LabelPageComponent extends BaseComponent implements OnInit {
     edit(label: ILabel): void {
         // console.log("label ", label);
         const initialState = { label }
-        this.modalService.show(LabelUpdateModalComponent, {initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(LabelModalComponent, {initialState, class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
 
     }
 
     add(): void {
-        this.modalService.show(LabelAddModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
+        this.modalService.show(LabelModalComponent, {class: "modal-lg modal-dialog-centered", ignoreBackdropClick: true });
     }
 }
