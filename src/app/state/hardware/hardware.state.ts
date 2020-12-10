@@ -14,15 +14,13 @@ import { AddHardware } from "./actions/add-hardware";
 import { OrganisationState } from "../organisation/organisation.state";
 
 
-export interface IOrganisationState {
-    
+export interface IHardwareState {
     hardwareList: IHardware[];
 }
 
-@State<IOrganisationState>({
+@State<IHardwareState>({
     name: "hardware",
     defaults: {
-       
         hardwareList: null
     }
 })
@@ -30,7 +28,7 @@ export interface IOrganisationState {
 export class HardwareState {
 
     @Selector()
-    static hardwareList(state: IOrganisationState): IHardware[] {
+    static hardwareList(state: IHardwareState): IHardware[] {
         return state.hardwareList;
     }
 
@@ -43,7 +41,7 @@ export class HardwareState {
     }
 
     @Action(SetHardwareList)
-    setHardwareList(ctx: StateContext<IOrganisationState>): Observable<IHardware[]> {
+    setHardwareList(ctx: StateContext<IHardwareState>): Observable<IHardware[]> {
         const organisation: number = this.store.selectSnapshot(OrganisationState.activeOrganisation)
         return this.http.get(
             `${this.configProvider.config.backendUrl}/v1/hardware/all/${organisation}`,
@@ -60,7 +58,7 @@ export class HardwareState {
     }
 
     @Action(AddHardware)
-    addHardware(ctx: StateContext<IOrganisationState>, payload: AddHardware): Observable<IHardware> {
+    addHardware(ctx: StateContext<IHardwareState>, payload: AddHardware): Observable<IHardware> {
         try {
             return this.http.post(
                 `${this.configProvider.config.backendUrl}/v1/hardware`,
@@ -95,7 +93,7 @@ export class HardwareState {
     }
 
     @Action(DeleteHardware)
-    deleteHardware(ctx: StateContext<IOrganisationState>, payload: DeleteHardware): Observable<IDeleteResponse> {
+    deleteHardware(ctx: StateContext<IHardwareState>, payload: DeleteHardware): Observable<IDeleteResponse> {
         try {
             return this.http.delete(
                 `${this.configProvider.config.backendUrl}/v1/hardware/${payload.hardwareId}`,
