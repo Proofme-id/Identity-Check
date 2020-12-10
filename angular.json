@@ -29,9 +29,15 @@
             "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              { "input": "./src/styles.scss" },
-              { "input": "./src/theme/variables.scss" },
-              { "input": "./src/theme/panel.scss" },
+              {
+                "input": "./src/styles.scss"
+              },
+              {
+                "input": "./src/theme/variables.scss"
+              },
+              {
+                "input": "./src/theme/panel.scss"
+              },
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
@@ -123,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "boilerplate-frontend"
+  "defaultProject": "boilerplate-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -409,11 +409,26 @@
     "role": "Rol",
     "reportsTo": "ReportsTo",
     "add-role":"Rol Toevoegen",
-    "update-role": "Rol Wijzigen",
+    "update-role": "Rol Wijzigen"
+  "LABEL":{
+    "title":"Label",
+    "add": "Toevoegen",
+    "add-label":"Label Toevoegen",
     "id":"Id",
     "name":"Naam",
     "description":"Beschrijving",
     "button": "Toevoegen",
-    "button-update": "Wijzigen"
+    "button-update": "Wijzigen",
+    "color": "Kleur"
+  },
+  "UPDATE-LABEL":{
+    "title":"Label",
+    "add": "bijwerken",
+    "update-label":"bijwerken Label",
+    "id":"Id",
+    "name":"Naam",
+    "description":"Omschrijving",
+    "button": "bijwerken",
+    "color": "Kleur"
   }
 }
