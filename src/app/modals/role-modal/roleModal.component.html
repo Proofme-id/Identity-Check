@@ -10,7 +10,7 @@
         <main class="col-lg-12">
             <div class="entry-wrapper">
                 <div class="entry-single">
-                    <form [formGroup]=updateRoleForm>
+                    <form [formGroup]=RoleForm>
                         <div class="form">
                             <div class="form-group">
                                 <label class="form-label">
@@ -38,11 +38,11 @@
                                     <br />
                                 </label>
                                 <button div *ngIf="role" class="btn btn-blue form-button" (click)="update()"
-                                    [disabled]="!updateRoleForm.valid">
+                                    [disabled]="!RoleForm.valid">
                                     {{ 'ROLES.button-update' | translate }}
                                 </button>
                                 <button *ngIf="!role" class="btn btn-blue form-button" (click)="add()"
-                                    [disabled]="!updateRoleForm.valid">
+                                    [disabled]="!RoleForm.valid">
                                     {{ 'ROLES.button' | translate }}
                                 </button>
                             </div>
