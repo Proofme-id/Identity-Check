@@ -1,10 +1,6 @@
 <div class="modal-header">
-    <div *ngIf="role">
-        <h2 class="title pull-left"> {{ 'ROLES.update-role' | translate }}</h2>
-    </div>
-    <div *ngIf="!role">
-        <h2 class="title pull-left"> {{ 'ROLES.add-role' | translate }}</h2>
-    </div>
+    <h2 *ngIf="role" class="title pull-left"> {{ 'ROLES.update-role' | translate }}</h2>
+    <h2 *ngIf="!role" class="title pull-left"> {{ 'ROLES.add-role' | translate }}</h2>
     <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -41,18 +37,14 @@
                                 <label class="form-label">
                                     <br />
                                 </label>
-                                <div *ngIf="role">
-                                    <button class="btn btn-blue form-button" (click)="update()"
-                                        [disabled]="!updateRoleForm.valid">
-                                        {{ 'ROLES.button-update' | translate }}
-                                    </button>
-                                </div>
-                                <div *ngIf="!role">
-                                    <button class="btn btn-blue form-button" (click)="add()"
-                                        [disabled]="!updateRoleForm.valid">
-                                        {{ 'ROLES.button' | translate }}
-                                    </button>
-                                </div>
+                                <button div *ngIf="role" class="btn btn-blue form-button" (click)="update()"
+                                    [disabled]="!updateRoleForm.valid">
+                                    {{ 'ROLES.button-update' | translate }}
+                                </button>
+                                <button *ngIf="!role" class="btn btn-blue form-button" (click)="add()"
+                                    [disabled]="!updateRoleForm.valid">
+                                    {{ 'ROLES.button' | translate }}
+                                </button>
                             </div>
                         </div>
                     </form>
