@@ -1,5 +1,5 @@
 export class AddHardware {
-    static readonly type = "[Organisation] AddHardware";
+    static readonly type = "[Hardware] AddHardware";
 
     constructor(public name: string, public description: string) {}
 }

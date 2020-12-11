@@ -1,5 +1,5 @@
 export class DeleteSupplier {
-    static readonly type = "[Organisation] DeleteSupplier";
+    static readonly type = "[Supplier] DeleteSupplier";
 
     constructor(public supplierId: number) {}
 }

@@ -13,7 +13,6 @@ import { DeleteHardware } from "./actions/delete-hardware";
 import { AddHardware } from "./actions/add-hardware";
 import { OrganisationState } from "../organisation/organisation.state";
 
-
 export interface IHardwareState {
     hardwareList: IHardware[];
 }

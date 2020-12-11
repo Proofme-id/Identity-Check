@@ -30,9 +30,7 @@ export interface IOrganisationState {
     updateUserError: boolean;
     updateEmployeeAdminError: boolean;
     updateEmployeeAdminSuccess: boolean;
-
     showOrganisationSelector: boolean;
-
     employeesList: IEmployee[];
     organisationsList: IOrganisation[];
 }
