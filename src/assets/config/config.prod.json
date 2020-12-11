@@ -1,0 +1,9 @@
+{
+    "backendUrl": "https://api.soof.io",
+    "appName": "Soof",
+    "appDescription": "Soof",
+    "facebook": "https://www.facebook.com/DiduxVaults",
+    "linkedin": "https://www.linkedin.com/company/didux-io/",
+    "twitter": "https://twitter.com/diduxvaults",
+    "captchaSiteKey": "SITE_KEY"
+}

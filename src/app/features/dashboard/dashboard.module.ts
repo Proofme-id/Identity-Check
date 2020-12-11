@@ -56,8 +56,18 @@ const routes: Routes = [
                 canActivate: [IsOrganisationAdminGuard]
             },
             {
+                path: "label",
+                loadChildren: "../label/label.module#LabelPageModule",
+                canActivate: [IsOrganisationAdminGuard]
+            },
+            {
                 path: "projects",
                 loadChildren: "../projects/projects.module#ProjectsPageModule",
+                canActivate: [IsOrganisationAdminGuard]
+            },
+            {
+                path: "roles",
+                loadChildren: "../roles/roles.module#RolesPageModule",
                 canActivate: [IsOrganisationAdminGuard]
             },
             {

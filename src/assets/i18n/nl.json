@@ -410,5 +410,34 @@
 		"modal_name": "Naam",
 		"modal_description": "Beschrijving",
 		"modal_add_button": "Toevoegen"
+	},
+	"ROLES": {
+		"add": " Toevoegen",
+		"title": "Rollen",
+		"role": "Rol",
+		"reportsTo": "ReportsTo",
+		"add-role": "Rol Toevoegen",
+		"update-role": "Rol Wijzigen"
+	},
+	"LABEL": {
+		"title": "Label",
+		"add": "Toevoegen",
+		"add-label": "Label Toevoegen",
+		"id": "Id",
+		"name": "Naam",
+		"description": "Beschrijving",
+		"button": "Toevoegen",
+		"button-update": "Wijzigen",
+		"color": "Kleur"
+	},
+	"UPDATE-LABEL": {
+		"title": "Label",
+		"add": "bijwerken",
+		"update-label": "bijwerken Label",
+		"id": "Id",
+		"name": "Naam",
+		"description": "Omschrijving",
+		"button": "bijwerken",
+		"color": "Kleur"
 	}
 }

@@ -7,7 +7,8 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div [ngbCollapse]="isMenuCollapsed" 
+		class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
 					<p class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
@@ -24,9 +25,9 @@
 						<p *ngIf="(accessToken$ | async)" class="dropdown-item" (click)="navigateToProfilePage()">
 							{{ 'HEADER.myaccount' | translate }}</p>
 						<div *ngIf="(accessToken$ | async)" class="dropdown-divider"></div>
-						<p *ngIf="(accessToken$ | async) && (organisations$ | async).length > 1" class="dropdown-item" (click)="switchOrganisation()">
-							Switch account</p>
-						<p *ngIf="(accessToken$ | async)" class="dropdown-item" [routerLink]="['/dashboard/logout']">{{ 'HEADER.logout' | translate }}</p>
+						<p *ngIf="(accessToken$ | async) && (organisations$ | async).length >= 1" class="dropdown-item" (click)="navigateToDashboard()">
+							Switch organisation</p>
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" [routerLink]="['logout']">{{ 'HEADER.logout' | translate }}</p>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

@@ -57,7 +57,7 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
     public data = []
 
     delete(hardware: IHardware): void {
-        const initialState = { name };
+        const initialState = { name: hardware.name };
         this.modalRef = this.modalService.show(DeleteModalComponent, {initialState, class: "modal-sm modal-dialog-centered", ignoreBackdropClick: true });
         this.modalRef.content.onClose.pipe(filter(x => !!x)).subscribe(() => {
             this.hardwareStateFacade.deleteHardware(hardware.id);

@@ -7,6 +7,8 @@ import { SupplierAddModalComponent } from "./supplier-add-modal/supplierAddModal
 import { HardwareAddModalComponent } from "./hardware-add-modal/hardwareAddModal.component";
 import { ProjectAddModalComponent } from "./project-add-modal/projectAddModal.component";
 import { TeamAddModalComponent } from "./team-add-modal/teamAddModal.component";
+import { RoleModalComponent } from "./role-modal/roleModal.component";
+import { LabelModalComponent } from "./label-modal/labelModal.component";
 
 
 export const MODALS_COMPONENT = [
@@ -18,5 +20,7 @@ export const MODALS_COMPONENT = [
     SupplierAddModalComponent,
     HardwareAddModalComponent,
     ProjectAddModalComponent,
-    TeamAddModalComponent
+    TeamAddModalComponent,
+    RoleModalComponent,
+    LabelModalComponent
 ]

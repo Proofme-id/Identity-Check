@@ -419,5 +419,38 @@
 		"modal_name": "Name",
 		"modal_description": "Description",
 		"modal_add_button": "Add"
+	},
+	"LABEL": {
+		"title": "Label",
+		"add": "Add",
+		"add-label": "Add Label",
+		"id": "Id",
+		"name": "Name",
+		"description": "Description",
+		"button": "Add",
+		"color": "Color"
+	},
+	"UPDATE-LABEL": {
+		"title": "Label",
+		"add": "Update",
+		"update-label": "Update Label",
+		"id": "Id",
+		"name": "Name",
+		"description": "Description",
+		"button": "Update",
+		"color": "Color"
+	},
+	"ROLES": {
+		"add": " Add",
+		"title": "Roles",
+		"role": "Role",
+		"reportsTo": "ReportsTo",
+		"add-role": "Add Role",
+		"update-role": "Update Role",
+		"id": "Id",
+		"name": "Name",
+		"description": "Description",
+		"button": "Add",
+		"button-update": "Update"
 	}
 }
