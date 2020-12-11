@@ -23,8 +23,8 @@ export class HardwareStateFacade {
         return this.store.dispatch(new SetHardwareList());
     }
 
-    addHardware(name: string, description: string): Observable<void> {
-        return this.store.dispatch(new AddHardware(name, description));
+    addHardware(name: string, description: string, serialnumber: string): Observable<void> {
+        return this.store.dispatch(new AddHardware(name, description, serialnumber));
     }
 
     deleteHardware(hardwareId: number): Observable<void> {

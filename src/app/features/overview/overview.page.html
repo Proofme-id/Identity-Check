@@ -1,4 +1,4 @@
-<div class="center">
+<!-- <div class="center">
    <div class="container">
       <h2>{{ 'OVERVIEW.details' | translate }}</h2>
       <div class="topright">
@@ -28,4 +28,81 @@
          </div>
       </form>
    </div>
-</div>
+</div> -->
+<div class="main-container">
+   <div class="container">
+      <div class="inner-page-section card">
+         <section class="page-header">
+            <div class="page-header-content d-flex justify-content-between">
+               <div class="row">
+                  <div class="col-sm center">
+                     <h2 class="title">Elkan Roelen</h2>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <div class="row">
+            <div class="col-sm center">
+               <div><img src="/assets/img/background.jpg" alt="img"></div>
+            </div>
+     
+            <div class="col-sm center">
+               <tr class="text">
+                  <th>{{ 'DASHBOARD.date-of-birth' | translate }}</th>
+                  <td>11-april-1985</td>
+               </tr>
+
+               <tr class="text"> {{ 'DASHBOARD.function' | translate }} 
+                  <td class="right">CEO</td>
+               </tr>
+
+               <tr class="text"> {{ 'DASHBOARD.date-service' | translate }} 
+                  <td class="right">1-januari-2010</td>
+               </tr>
+               
+            </div>
+            <div class="col-sm center">
+               <div class="radialProgressBar progress-70">
+                  <div class="overlay">70%</div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="main-container">
+      <div class="container">
+         <div class="inner-page-section card">
+            <section class="page-header">
+               <div class="page-header-content d-flex justify-content-between">
+                  <h2 class="title">{{ 'HARDWARE.title' | translate }}</h2>
+               </div>
+            </section>
+            <div>
+               <div class="page-content">
+                  <ngx-table [configuration]="configurationHardware" [data]="dataHardware" [columns]="columnsHardware">
+                  </ngx-table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="main-container">
+      <div class="container">
+         <div class="inner-page-section card">
+            <section class="page-header">
+               <div class="page-header-content d-flex justify-content-between">
+                  <h2 class="title"> {{ 'SOFTWARE.title' | translate }}</h2>
+               </div>
+            </section>
+            <div>
+               <div class="page-content">
+                  <ngx-table [configuration]="configurationSoftware" [data]="dataSoftware" [columns]="columnsSofware">
+                  </ngx-table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>

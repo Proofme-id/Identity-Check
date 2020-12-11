@@ -18,14 +18,16 @@ export class HardwareAddModalComponent {
     ) {
         this.addHardwareForm = this.formBuilder.group({
             name: new FormControl("", Validators.required),
-            description: new FormControl("", Validators.required)
+            description: new FormControl("", Validators.required),
+            serialnumber: new FormControl("", Validators.required)
         });
     }
 
     add(): void {
         const name: string = this.addHardwareForm.get("name").value;
         const description: string = this.addHardwareForm.get("description").value;
-        this.hardwareStateFacade.addHardware(name, description);
+        const serialnumber: string = this.addHardwareForm.get("serialnumber").value;
+        this.hardwareStateFacade.addHardware(name, description, serialnumber);
         this.closeModal()
     }
 

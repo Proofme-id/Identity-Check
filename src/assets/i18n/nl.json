@@ -394,6 +394,16 @@
 		"description": "Beschrijving",
 		"button": "Toevoegen"
 	},
+		"HARDWARE": {
+		"add": " Toevoegen",
+		"title": "Hardware",
+		"add-hardware": "Hardware Toevoegen",
+		"id": "Id",
+		"name": "Naam",
+		"description": "Beschrijving",
+		"button": "Toevoegen",
+		"serialnumber": "Serienummer"
+	},
 	"TEAMS": {
 		"add": " Toevoegen",
 		"title": "Teams",
@@ -439,5 +449,10 @@
 		"description": "Omschrijving",
 		"button": "bijwerken",
 		"color": "Kleur"
+	},
+	"DASHBOARD": {
+		"date-of-birth": "Geboortedatum",
+		"function": "Functie",
+		"date-service": "Datum in dienst"
 	}
 }

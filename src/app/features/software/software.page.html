@@ -13,18 +13,6 @@
                     </ngx-table>
                 </div>
             </div>
-            <ng-template #nameTpl let-row let-rowIndex="rowIndex">
-                <div *ngIf="editRow !== rowIndex">{{ row.name }}</div>
-                <div *ngIf="editRow === rowIndex">
-                   <input type="text" #name placeholder="Name" class="form-label" [value]="row.name" />
-                </div>
-             </ng-template>
-             <ng-template #descriptionTpl let-row let-rowIndex="rowIndex">
-                <div *ngIf="editRow !== rowIndex">{{ row.description }}</div>
-                <div *ngIf="editRow === rowIndex">
-                   <input type="text" #description placeholder="Description" class="form-label" [value]="row.description" />
-                </div>
-             </ng-template>
             <ng-template #actionTpl let-row let-rowIndex="rowIndex">
                 <div class="menu-icon-container">
                     <fa-icon [icon]="['fas', 'eye']" size="2x" class="primary" (click)="view(row)"></fa-icon>

@@ -22,10 +22,6 @@ export class ProjectsPageComponent extends BaseComponent implements OnInit {
     @ViewChild("id") id: ElementRef;
     @ViewChild("name") name: ElementRef;
     @ViewChild("description") description: ElementRef;
-
-    @ViewChild("nameTpl", { static: true }) nameTpl: TemplateRef<unknown>;
-    @ViewChild("idTpl", { static: true }) idTpl: TemplateRef<unknown>;
-    @ViewChild("descriptionTpl", {static: true }) descriptionTpl: TemplateRef<unknown>;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
 
     public modalRef: BsModalRef;

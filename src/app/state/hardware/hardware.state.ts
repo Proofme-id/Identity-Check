@@ -64,7 +64,8 @@ export class HardwareState {
                 {
                     name: payload.name,
                     details: {
-                        description: payload.description
+                        description: payload.description,
+                        serialnumber: payload.serialnumber
                     },
                     organisationId: this.store.selectSnapshot(OrganisationState.activeOrganisation)
                 }

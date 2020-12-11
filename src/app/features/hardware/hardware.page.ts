@@ -19,10 +19,7 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
     @ViewChild("id") id: ElementRef;
     @ViewChild("name") name: ElementRef;
     @ViewChild("description") description: ElementRef;
-
-    @ViewChild("nameTpl", { static: true }) nameTpl: TemplateRef<unknown>;
-    @ViewChild("idTpl", { static: true }) idTpl: TemplateRef<unknown>;
-    @ViewChild("descriptionTpl", {static: true }) descriptionTpl: TemplateRef<unknown>;
+    @ViewChild("serialnumber") serialnumber: ElementRef;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
 
     public modalRef: BsModalRef;
@@ -46,7 +43,8 @@ export class HardwarePageComponent extends BaseComponent implements OnInit {
         this.configuration.searchEnabled = false;
         this.columns = [
             { key: "name", title: "Name" },
-            { key: "details.description", title: "Description"},
+            { key: "details.description", title: "Description" },
+            { key: "details.serialnumber", title: "Serialnumber" },
             { key: "action", title: "Actions", cellTemplate: this.actionTpl }
         ];
     }

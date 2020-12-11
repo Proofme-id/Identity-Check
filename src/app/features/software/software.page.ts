@@ -17,8 +17,7 @@ import { SoftwareStateFacade } from "src/app/state/software/software.facade";
 export class SoftwarePageComponent extends BaseComponent implements OnInit {
 
     @ViewChild("name") name: ElementRef;
-    @ViewChild("description") description: ElementRef;
-    @ViewChild("activeTpl", { static: true }) activeTpl: TemplateRef<unknown>;
+    @ViewChild("details.description") description: ElementRef;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
 
     public modalRef: BsModalRef;
@@ -45,7 +44,7 @@ export class SoftwarePageComponent extends BaseComponent implements OnInit {
         this.columns = [
             { key: "id", title: "ID" },
             { key: "name", title: "Name" },
-            { key: "description", title: "description" },
+            { key: "details.description", title: "description" },
             { key: "action", title: "Actions", cellTemplate: this.actionTpl }
         ];
     }

@@ -392,7 +392,8 @@
 		"id": "Id",
 		"name": "Name",
 		"description": "Description",
-		"button": "Add"
+		"button": "Add",
+		"serialnumber": "Serialnumber"
 	},
 	"PROJECTS": {
 		"add": " Add",
@@ -452,5 +453,10 @@
 		"description": "Description",
 		"button": "Add",
 		"button-update": "Update"
+	},
+	"DASHBOARD": {
+		"date-of-birth": "Date of birth",
+		"function": "Function",
+		"date-service": "Date of entry"
 	}
 }

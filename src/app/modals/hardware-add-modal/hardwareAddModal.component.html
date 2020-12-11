@@ -25,6 +25,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">
+                                    {{ 'HARDWARE.serialnumber' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="serialnumber">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
                                     <br />
                                 </label>
                                 <button class="btn btn-blue form-button" (click)="add()" [disabled]="!addHardwareForm.valid">

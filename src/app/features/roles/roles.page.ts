@@ -20,11 +20,6 @@ export class RolesPageComponent extends BaseComponent implements OnInit {
     @ViewChild("title") title: ElementRef;
     @ViewChild("reportsTo") reportsTo: ElementRef;
     @ViewChild("description") description: ElementRef;
-
-    @ViewChild("titleTpl", { static: true }) titleTpl: TemplateRef<unknown>;
-    @ViewChild("reportsToTpl", { static: true }) reportsToTpl: TemplateRef<unknown>;
-    @ViewChild("idTpl", { static: true }) idTpl: TemplateRef<unknown>;
-    @ViewChild("descriptionTpl", { static: true }) descriptionTpl: TemplateRef<unknown>;
     @ViewChild("actionTpl", { static: true }) actionTpl: TemplateRef<unknown>;
 
     public modalRef: BsModalRef;
