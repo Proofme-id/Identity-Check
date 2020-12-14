@@ -12,6 +12,7 @@
     }
 
     .text{
+        padding-top: 2vh;
         color: #50596c;
         border-collapse: collapse;
         border-spacing: 0;
@@ -19,30 +20,43 @@
         font-family: Montserrat, Verdana, serif;
         font-size: 14px;
         text-align: left;
-        margin-bottom: 2vh;
+        display: flex;
+        justify-content: space-between;
     }
-
-    .right{
-        margin-left: 10px;
+    .centerright{
+        margin: auto;
+        display: flex;
+        justify-content: center;
     }
     .center{
         margin: auto;
     }
-
+    .responsivetext{
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+    .bottom{
+        padding-bottom: 5vh;
+    }
+    .header{
+        padding-top: 50px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
     img {
-        margin-left: 1vw;
-        margin-top: 1vh;
-        margin-bottom: 2vh;
+        margin: auto;
+        display: flex;
         height: 170px;
         width: 170px;
         overflow: hidden;
         border: 2px solid grey;
         border-radius: 50%;
+        margin-bottom: 2vh;
       }
     .radialProgressBar {
         border-radius: 50%;
-        width: 140px;
-        height: 140px;
+        width: 170px;
+        height: 170px;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -52,8 +66,9 @@
     .radialProgressBar .overlay {
         color: black;
         border-radius: 50%;
-        width: 110px;
-        height: 110px;
+        width: 140px;
+        height: 140px;
+        font-size: x-large;
         margin: auto;
         background: #fff;
         text-align: center;
