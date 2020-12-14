@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserStateFacade } from "src/app/state/user/user.facade";
 import { WebRtcProvider } from "@proofmeid/webrtc-web";
@@ -7,13 +7,14 @@ import { WebRtcProvider } from "@proofmeid/webrtc-web";
     selector: "app-logout",
     templateUrl: "logout.component.html"
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent implements AfterViewInit {
 
     constructor(private route: Router,
                 private webRtcProvider: WebRtcProvider,
-                private userStateFacade: UserStateFacade) {}
+                private userStateFacade: UserStateFacade
+    ) {}
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         localStorage.clear();
         this.webRtcProvider.remoteDisconnect();
         this.userStateFacade.logout();

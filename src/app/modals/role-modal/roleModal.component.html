@@ -37,7 +37,7 @@
                                 <label class="form-label">
                                     <br />
                                 </label>
-                                <button div *ngIf="role" class="btn btn-blue form-button" (click)="update()"
+                                <button *ngIf="role" class="btn btn-blue form-button" (click)="update()"
                                     [disabled]="!RoleForm.valid">
                                     {{ 'ROLES.button-update' | translate }}
                                 </button>

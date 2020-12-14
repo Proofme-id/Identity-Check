@@ -27,7 +27,7 @@
 						<div *ngIf="(accessToken$ | async)" class="dropdown-divider"></div>
 						<p *ngIf="(accessToken$ | async) && (organisations$ | async).length >= 1" class="dropdown-item" (click)="navigateToDashboard()">
 							Switch organisation</p>
-						<p *ngIf="(accessToken$ | async)" class="dropdown-item" [routerLink]="['logout']">{{ 'HEADER.logout' | translate }}</p>
+						<p *ngIf="(accessToken$ | async)" class="dropdown-item" [routerLink]="['/dashboard/logout']">{{ 'HEADER.logout' | translate }}</p>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

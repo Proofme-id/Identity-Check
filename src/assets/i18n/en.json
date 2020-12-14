@@ -388,12 +388,15 @@
 	"HARDWARE": {
 		"add": " Add",
 		"title": "Hardware",
-		"add-hardware": "Add Hardware",
-		"id": "Id",
-		"name": "Name",
-		"description": "Description",
-		"button": "Add",
-		"serialnumber": "Serialnumber"
+		"modal_button_add": "Add",
+		"modal_button_update": "Update",
+		"modal_add_title": "Add hardware",
+		"modal_update_title": "Update hardware",
+		"modal_name": "Name",
+		"modal_description": "Description",
+		"modal_serial_number": "Serialnumber",
+		"modal_add_button": "Add",
+		"modal_employee": "Employee"
 	},
 	"PROJECTS": {
 		"add": " Add",
@@ -415,11 +418,14 @@
 	},
 	"SOFTWARE": {
 		"title": "Software",
-		"add": "Add",
-		"modal_title": "Add software",
+		"modal_button_add": "Add",
+		"modal_button_update": "Update",
+		"modal_add_title": "Add software",
+		"modal_update_title": "Update software",
 		"modal_name": "Name",
 		"modal_description": "Description",
-		"modal_add_button": "Add"
+		"modal_add_button": "Add",
+		"modal_employee": "Employee"
 	},
 	"LABEL": {
 		"title": "Label",

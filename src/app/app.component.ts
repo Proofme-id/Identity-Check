@@ -11,6 +11,7 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { BaseComponent } from "./features/base-component/base-component";
 import { filter, takeUntil } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
+import { UserStateFacade } from "./state/user/user.facade";
 
 @Component({
     selector: "app-root",
@@ -29,7 +30,8 @@ export class AppComponent extends BaseComponent implements OnInit  {
         private titleService: Title,
         private organisationStateFacade: OrganisationStateFacade,
         private modalService: BsModalService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private userStateFacade: UserStateFacade
     ) {
         super();
         this.translateService.setDefaultLang("en");
@@ -56,7 +58,11 @@ export class AppComponent extends BaseComponent implements OnInit  {
                     this.toastr.info(message.message);
                 }
             }
-        })
+        });
+
+        this.organisationStateFacade.activeOrganisation$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe((activeOrganisationId) => {
+            this.userStateFacade.setUserProfile(activeOrganisationId);
+        });
     }
 
     setBuildNumber(): void {

@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left">{{ 'MODALS.DELETE.title' | translate }} {{ name }} ?</h4>
+    <h4 class="modal-title pull-left">{{ 'MODALS.DELETE.title' | translate }} {{ name }}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    {{ 'MODALS.DELETE.text1' | translate }} {{ name }} {{ 'MODALS.DELETE.text2' | translate }}<br><br>
+    {{ 'MODALS.DELETE.text1' | translate }} {{ name }}{{ 'MODALS.DELETE.text2' | translate }}<br><br>
     <div class="d-flex justify-content-between">
         <button type="button" class="btn btn-danger" (click)="delete()">{{ 'MODALS.DELETE.delete' | translate }}</button>
         <button type="button" class="btn btn-primary" (click)="closeModal()">{{ 'MODALS.DELETE.cancel' | translate }}</button>

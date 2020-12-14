@@ -12,6 +12,7 @@ import { ISoftware } from "src/app/interfaces/software.interface";
 import { SetSoftwareList } from "./actions/set-software-list";
 import { AddSoftware } from "./actions/add-software";
 import { DeleteSoftware } from "./actions/delete-software";
+import { UpdateSoftware } from "./actions/update-software";
 
 export interface ISoftwareState {
     softwareList: ISoftware[];
@@ -63,6 +64,7 @@ export class SoftwareState {
                 `${this.configProvider.config.backendUrl}/v1/software`,
                 {
                     name: payload.name,
+                    employeeId: payload.employeeId,
                     details: {
                         description: payload.description
                     },
@@ -112,5 +114,43 @@ export class SoftwareState {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    @Action(UpdateSoftware)
+    updateSoftware(ctx: StateContext<ISoftwareState>, payload: UpdateSoftware): Observable<ISoftware> {
+        return this.http.patch(
+            `${this.configProvider.config.backendUrl}/v1/software/${payload.id}`,
+            {
+                name: payload.name,
+                employeeId: payload.employeeId,
+                details: {
+                    description: payload.description
+                }
+            }
+        ).pipe(
+            tap((data: ISoftware) => {
+                const index = ctx.getState().softwareList.findIndex(x => x.id === payload.id);
+                ctx.patchState({
+                    softwareList: Object.assign(
+                        [...ctx.getState().softwareList],
+                        {
+                            [index]: {
+                                ...data
+                            }
+                        }
+                    )
+                });
+                ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Updated software ${data.name}` }));
+            }),
+            catchError((error) => {
+                console.log("error:", error)
+                if (error.error.error && error.error.error === "DUPLICATE") {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: error.error.error }));
+                } else {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: "Something went wrong" }));
+                }
+                return throwError(error);
+            })
+        );
     }
 }

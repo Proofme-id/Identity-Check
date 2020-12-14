@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { RoleStateFacade } from "src/app/state/role/role.facade";
 import { IRole } from "src/app/interfaces/role.interface";
 
-
 @Component({
     selector: "role-modal",
     templateUrl: "./roleModal.component.html"

@@ -11,6 +11,7 @@ import { IOrganisation } from "../../interfaces/organisation.interface";
 import { SetShowOrganisationSelector } from "./actions/show-organisation-selector";
 import { DeleteEmployee } from "./actions/delete-employee";
 import { InviteEmployee } from "./actions/invite-employee";
+import { SetActiveOrganisation } from "./actions/set-active-organisation";
 
 
 
@@ -37,6 +38,9 @@ export class OrganisationStateFacade {
     @Select(OrganisationState.myOrganisations)
     myOrganisations$: Observable<IEmployee[]>
 
+    @Select(OrganisationState.activeOrganisation)
+    activeOrganisation$: Observable<number>
+
     constructor(private store: Store) {}
 
     setEmployeesList(): Observable<void> {
@@ -61,5 +65,9 @@ export class OrganisationStateFacade {
 
     inviteEmployee(name: string, email: string): Observable<void> {
         return this.store.dispatch(new InviteEmployee(name, email));
+    }
+
+    setActiveOrganisation(customClaims: ICustomClaims[]): Observable<void> {
+        return this.store.dispatch(new SetActiveOrganisation(customClaims));
     }
 }

@@ -6,6 +6,7 @@ import { DeleteSoftware } from "./actions/delete-software";
 import { AddSoftware } from "./actions/add-software";
 import { Observable } from "rxjs";
 import { ISoftware } from "src/app/interfaces/software.interface";
+import { UpdateSoftware } from "./actions/update-software";
 
 @Injectable({
     providedIn: "root"
@@ -21,8 +22,12 @@ export class SoftwareStateFacade {
         return this.store.dispatch(new SetSoftwareList());
     }
 
-    addSoftware(name: string, description: string): Observable<void> {
-        return this.store.dispatch(new AddSoftware(name, description));
+    addSoftware(name: string, description: string, employeeId: number): Observable<void> {
+        return this.store.dispatch(new AddSoftware(name, description, employeeId));
+    }
+
+    updateSoftware(id: number, name: string, description: string, employeeId: number): Observable<void> {
+        return this.store.dispatch(new UpdateSoftware(id, name, description, employeeId));
     }
 
     deleteSoftware(softwareId: number): Observable<void> {

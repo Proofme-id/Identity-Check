@@ -6,6 +6,7 @@ import { DeleteHardware } from "./actions/delete-hardware";
 import { AddHardware } from "./actions/add-hardware";
 import { Observable } from "rxjs";
 import { IHardware } from "src/app/interfaces/hardware.interface";
+import { UpdateHardware } from "./actions/update-hardware";
 
 
 
@@ -23,11 +24,15 @@ export class HardwareStateFacade {
         return this.store.dispatch(new SetHardwareList());
     }
 
-    addHardware(name: string, description: string, serialnumber: string): Observable<void> {
-        return this.store.dispatch(new AddHardware(name, description, serialnumber));
+    addHardware(name: string, description: string, serialnumber: string, employeeId: number): Observable<void> {
+        return this.store.dispatch(new AddHardware(name, description, serialnumber, employeeId));
     }
 
     deleteHardware(hardwareId: number): Observable<void> {
         return this.store.dispatch(new DeleteHardware(hardwareId))
+    }
+
+    updateHardware(id: number, name: string, description: string, employeeId: number): Observable<void> {
+        return this.store.dispatch(new UpdateHardware(id, name, description, employeeId));
     }
 }

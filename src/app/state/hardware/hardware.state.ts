@@ -12,6 +12,7 @@ import { SetHardwareList } from "./actions/set-hardware-list";
 import { DeleteHardware } from "./actions/delete-hardware";
 import { AddHardware } from "./actions/add-hardware";
 import { OrganisationState } from "../organisation/organisation.state";
+import { UpdateHardware } from "./actions/update-hardware";
 
 export interface IHardwareState {
     hardwareList: IHardware[];
@@ -63,6 +64,7 @@ export class HardwareState {
                 `${this.configProvider.config.backendUrl}/v1/hardware`,
                 {
                     name: payload.name,
+                    employeeId: payload.employeeId,
                     details: {
                         description: payload.description,
                         serialnumber: payload.serialnumber
@@ -113,5 +115,43 @@ export class HardwareState {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    @Action(UpdateHardware)
+    updateHardware(ctx: StateContext<IHardwareState>, payload: UpdateHardware): Observable<IHardware> {
+        return this.http.patch(
+            `${this.configProvider.config.backendUrl}/v1/hardware/${payload.id}`,
+            {
+                name: payload.name,
+                employeeId: payload.employeeId,
+                details: {
+                    description: payload.description
+                }
+            }
+        ).pipe(
+            tap((data: IHardware) => {
+                const index = ctx.getState().hardwareList.findIndex(x => x.id === payload.id);
+                ctx.patchState({
+                    hardwareList: Object.assign(
+                        [...ctx.getState().hardwareList],
+                        {
+                            [index]: {
+                                ...data
+                            }
+                        }
+                    )
+                });
+                ctx.dispatch(new SendToastAction({ type: "SUCCESS", message: `Updated software ${data.name}` }));
+            }),
+            catchError((error) => {
+                console.log("error:", error)
+                if (error.error.error && error.error.error === "DUPLICATE") {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: error.error.error }));
+                } else {
+                    ctx.dispatch(new SendToastAction({ type: "ERROR", message: "Something went wrong" }));
+                }
+                return throwError(error);
+            })
+        );
     }
 }

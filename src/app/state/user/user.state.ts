@@ -21,6 +21,8 @@ import { UtilsProvider } from "src/app/providers/utils/utils";
 import { UpdateUserAdminAction } from "./actions/update-user-admin";
 import { FinishEnrollAction } from "./actions/finish-enroll";
 import { SetActiveOrganisation } from "../organisation/actions/set-active-organisation";
+import { SetUserProfileAction } from "./actions/set-user-profile.action";
+import { IUserProfile } from "src/app/interfaces/user-profile.interface";
 
 export interface IUserState {
     access_token: string;
@@ -35,6 +37,7 @@ export interface IUserState {
     usersList: IUser[];
     updateUserAdminError: boolean;
     updateUserAdminSuccess: boolean;
+    userProfile: IUserProfile
 }
 
 @State<IUserState>({
@@ -51,7 +54,8 @@ export interface IUserState {
         showExternalInstruction: false,
         usersList: [],
         updateUserAdminError: false,
-        updateUserAdminSuccess: false
+        updateUserAdminSuccess: false,
+        userProfile: null
     }
 })
 @Injectable()
@@ -117,6 +121,11 @@ export class UserState {
         return state.updateUserAdminSuccess;
     }
 
+    @Selector()
+    static userProfile(state: IUserState): IUserProfile {
+        return state.userProfile;
+    }
+
     constructor(
         private http: HttpClient,
         private configProvider: ConfigProvider,
@@ -138,8 +147,13 @@ export class UserState {
 
     @Action(LogoutAction)
     logoutAction(ctx: StateContext<IUserState>): IUserState {
-        ctx.dispatch(new SetActiveOrganisation([]))
+        // Without the timeout we get the 'Expression has changed after it was checked error'. From true to false for the activeUserPower.
+        // Which is correct though...
+        setTimeout(() => {
+            ctx.dispatch(new SetActiveOrganisation([]))
+        });
         return ctx.patchState({
+            userProfile: null,
             refresh_token: null,
             access_token: null
         });
@@ -354,6 +368,24 @@ export class UserState {
                 ctx.patchState({
                     updateUserAdminError: true
                 });
+                return throwError(error);
+            })
+        );
+    }
+
+    @Action(SetUserProfileAction)
+    setUserProfileAction(ctx: StateContext<IUserState>, payload: SetUserProfileAction): Observable<IUserProfile> {
+        return this.http.get(
+            `${this.configProvider.config.backendUrl}/v1/user/profile/${payload.organisationId}`
+        ).pipe(
+            tap((userProfile: IUserProfile) => {
+                if (userProfile) {
+                    return ctx.patchState({
+                        userProfile
+                    });
+                }
+            }),
+            catchError((error) => {
                 return throwError(error);
             })
         );

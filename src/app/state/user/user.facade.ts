@@ -16,6 +16,8 @@ import { UserLoginAction } from "./actions/user-login";
 import { UserState } from "./user.state";
 import { IEnroll } from "../../interfaces/enroll.interface";
 import { FinishEnrollAction } from "./actions/finish-enroll";
+import { SetUserProfileAction } from "./actions/set-user-profile.action";
+import { IUserProfile } from "src/app/interfaces/user-profile.interface";
 
 @Injectable({
     providedIn: "root"
@@ -54,7 +56,8 @@ export class UserStateFacade {
     @Select(UserState.updateUserAdminSuccess)
     updateUserAdminSuccess$: Observable<boolean>;
 
-
+    @Select(UserState.userProfile)
+    userProfile$: Observable<IUserProfile>;
 
     constructor(private store: Store) {}
 
@@ -100,5 +103,9 @@ export class UserStateFacade {
 
     updateUserAdmin(user: IUser): Observable<void> {
         return this.store.dispatch(new UpdateUserAdminAction(user));
+    }
+
+    setUserProfile(organisationId: number): Observable<void> {
+        return this.store.dispatch(new SetUserProfileAction(organisationId));
     }
 }

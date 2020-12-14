@@ -394,15 +394,18 @@
 		"description": "Beschrijving",
 		"button": "Toevoegen"
 	},
-		"HARDWARE": {
+	"HARDWARE": {
 		"add": " Toevoegen",
 		"title": "Hardware",
-		"add-hardware": "Hardware Toevoegen",
-		"id": "Id",
-		"name": "Naam",
-		"description": "Beschrijving",
-		"button": "Toevoegen",
-		"serialnumber": "Serienummer"
+		"modal_button_add": "Toevoegen",
+		"modal_button_update": "Bijwerken",
+		"modal_add_title": "Voeg hardware toe",
+		"modal_update_title": "Hardware bijwerken",
+		"modal_name": "Naam",
+		"modal_description": "Beschrijving",
+		"modal_serial_number": "Serienummer",
+		"modal_add_button": "Toevoegen",
+		"modal_employee": "Medewerker"
 	},
 	"TEAMS": {
 		"add": " Toevoegen",
@@ -415,11 +418,14 @@
 	},
 	"SOFTWARE": {
 		"title": "Software",
-		"add": "Toevoegen",
-		"modal_title": "Software toevoegen",
+		"modal_button_add": "Toevoegen",
+		"modal_button_update": "Bijwerken",
+		"modal_add_title": "Software toevoegen",
+		"modal_update_title": "Software bijwerken",
 		"modal_name": "Naam",
 		"modal_description": "Beschrijving",
-		"modal_add_button": "Toevoegen"
+		"modal_add_button": "Toevoegen",
+		"modal_employee": "Medewerker"
 	},
 	"ROLES": {
 		"add": " Toevoegen",

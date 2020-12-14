@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h2 *ngIf="hardware" class="title pull-left"> {{ 'HARDWARE.modal_update_title' | translate }}</h2>
+    <h2 *ngIf="!hardware" class="title pull-left"> {{ 'HARDWARE.modal_add_title' | translate }}</h2>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <main class="col-lg-12">
+            <div class="entry-wrapper">
+                <div class="entry-single">
+                    <form [formGroup]=form>
+                        <div class="form">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'HARDWARE.modal_name' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'HARDWARE.modal_description' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="description">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'HARDWARE.modal_serial_number' | translate }}
+                                </label>
+                                <input type="text" class="form-control" formControlName="serialnumber">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{ 'HARDWARE.modal_employee' | translate }}
+                                </label>
+                                <select type="text" class="form-control" formControlName="employeeId">
+                                    <option *ngFor="let employee of employeeList" [value]="employee.id">{{ employee.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <br />
+                                </label>
+                                <button *ngIf="hardware" class="btn btn-blue form-button" (click)="update()"
+                                    [disabled]="!form.valid">
+                                    {{ 'HARDWARE.modal_button_update' | translate }}
+                                </button>
+                                <button *ngIf="!hardware" class="btn btn-blue form-button" (click)="add()"
+                                    [disabled]="!form.valid">
+                                    {{ 'HARDWARE.modal_button_add' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
