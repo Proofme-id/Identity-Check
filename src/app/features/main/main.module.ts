@@ -8,7 +8,6 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentsModule } from "src/app/components/components.module";
 import { NgxSelectModule } from "ngx-select-ex";
-import { LanguageProvider } from "../../providers/language/languageProvider";
 import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
 import { SharedModule } from "../../components/shared-module/shared-module.module";
 import { ZXingScannerModule } from "@zxing/ngx-scanner"
@@ -43,7 +42,6 @@ const routes: Routes = [
         SafeHtmlPipeImage
     ],
     providers: [
-        LanguageProvider,
         BsModalService,
         SafeHtmlPipeImage
     ]

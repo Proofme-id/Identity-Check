@@ -1,7 +1,7 @@
 {
-  "name": "didux-io-scan-share",
+  "name": "identity-check",
   "version": "1.0.0",
-  "description": "Scan share",
+  "description": "Identity check",
   "scripts": {
     "prebuild": "node prebuild.js",
     "ng": "ng",
@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/didux-io/Scan-Share.git"
+    "url": "git+https://github.com/Proofme-id/Identity-Check.git"
   },
   "bugs": {
-    "url": "https://github.com/didux-io/Scan-Share/issues"
+    "url": "https://github.com/Proofme-id/Identity-Check/issues"
   },
-  "homepage": "https://www.didux.io",
+  "homepage": "https://www.proofme.id",
   "author": "Didux.io",
   "license": "GPL-3.0-only",
   "jest": {

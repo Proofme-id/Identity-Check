@@ -17,7 +17,6 @@ import { ComponentsModule } from "./components/components.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxSelectModule } from "ngx-select-ex";
-import { LanguageProvider } from "./providers/language/languageProvider";
 import { StoragePlugin } from "./ngxs-plugins/storage/storage.plugin";
 import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
 import { PopoverModule } from "ngx-bootstrap/popover";
@@ -93,7 +92,6 @@ const NGXS_PROVIDERS: Provider[] = [
         ...NGXS_PROVIDERS,
         WebRtcProvider,
         ProofmeUtilsProvider,
-        LanguageProvider,
         UtilsProvider
     ],
     bootstrap: [AppComponent]
