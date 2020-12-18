@@ -6,14 +6,13 @@
     "prebuild": "node prebuild.js",
     "ng": "ng",
     "start": "ng serve --port=4215 --host=0.0.0.0",
-    "build": "ng version; ng build --prod",
+    "build": "npm run lint:json && ng version; ng build --prod",
     "lint": "eslint . --ext .ts",
     "lint:json": "eslint . --ext .ts -f json -o coverage/eslint.json",
     "lint:fix": "eslint . --fix --ext .ts",
     "clean": "rm -rf build coverage",
     "view:coverage": "serve coverage/lcov-report",
-    "sonar": "sonar-scanner",
-    "test": "cross-env NODE_ENV=test jest --coverage --testTimeout=10000 && npm run lint:json"
+    "sonar": "sonar-scanner"
   },
   "repository": {
     "type": "git",
