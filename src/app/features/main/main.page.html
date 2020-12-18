@@ -6,10 +6,10 @@
     <div *ngIf="shared" class="information">
         <h1>Shared information</h1>
         <div class="information-div">
-            <div *ngFor="let sharedItem of shared" class="information-detail" [ngClass]="credentialIsPassportImage(sharedItem.credentialSubject.credential.type) ? 'img-div' : ''">
+            <div *ngFor="let sharedItem of shared" class="information-detail">
                 <img *ngIf="sharedType === 'EPASS' && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" src="/assets/img/epass.png" class="small-img" />
                 <img *ngIf="sharedType === 'IDIN'" src="/assets/img/idin.png" class="small-img" />
-                <div class="information-detail-text-div">
+                <div class="information-detail-text-div" [ngClass]="credentialIsPassportImage(sharedItem.credentialSubject.credential.type) ? 'img-div' : ''">
                     <p *ngIf="!credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" class="type">{{ sharedItem.credentialSubject.credential.type}}</p>
                     <p *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type) && valueIsTrueBoolean(sharedItem.credentialSubject.credential.value)" class="value">Yes</p>
                     <p *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type) && valueIsFalseBoolean(sharedItem.credentialSubject.credential.value)" class="value">No</p>
