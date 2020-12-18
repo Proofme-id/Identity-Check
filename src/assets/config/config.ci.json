@@ -1,9 +1,0 @@
-{
-    "backendUrl": "https://bp-backend.didux.network",
-    "appName": "APPLICATION_NAME",
-    "appDescription": "APPLICATION DESCRIPTION",
-    "facebook": "https://www.facebook.com/DiduxVaults",
-    "linkedin": "https://www.linkedin.com/company/didux-io/",
-    "twitter": "https://twitter.com/diduxvaults",
-    "captchaSiteKey": "SITE_KEY"
-}
