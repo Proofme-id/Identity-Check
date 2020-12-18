@@ -1,57 +1,34 @@
-<app-main-header></app-main-header>
-<div class="main-view-div">
-    <div class="container">
-        <div class="main-title">
-            <h1>{{ 'MAIN.title' | translate }}</h1>
+<ngx-spinner type="ball-climbing-dot"></ngx-spinner>
+<div class="container">
+    <div *ngIf="!shared && !validCredentialObj">
+        <zxing-scanner (scanSuccess)="onCodeResult($event)" #scannerView></zxing-scanner>
+    </div>
+    <div *ngIf="shared" class="information">
+        <h1>Shared information</h1>
+        <div class="information-div">
+            <div *ngFor="let sharedItem of shared" class="information-detail" [ngClass]="credentialIsPassportImage(sharedItem.credentialSubject.credential.type) ? 'img-div' : ''">
+                <img *ngIf="sharedType === 'EPASS' && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" src="/assets/img/epass.png" class="small-img" />
+                <img *ngIf="sharedType === 'IDIN'" src="/assets/img/idin.png" class="small-img" />
+                <div class="information-detail-text-div">
+                    <p *ngIf="!credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" class="type">{{ sharedItem.credentialSubject.credential.type}}</p>
+                    <p *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type) && valueIsTrueBoolean(sharedItem.credentialSubject.credential.value)" class="value">Yes</p>
+                    <p *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type) && valueIsFalseBoolean(sharedItem.credentialSubject.credential.value)" class="value">No</p>
+                    <p *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && !credentialIsPassportImage(sharedItem.credentialSubject.credential.type) && !valueIsTrueBoolean(sharedItem.credentialSubject.credential.value) && !valueIsFalseBoolean(sharedItem.credentialSubject.credential.value)" class="value">
+                        {{ sharedItem.credentialSubject.credential.value }}
+                    </p>
+                    <p *ngIf="isTwoDigitDateCredential(sharedItem.type[1])">
+                        {{ convertTwoDigitDate(sharedItem.credentialSubject.credential.value) | date:'yyyy-MM-dd'}}
+                    </p>
+                    <img *ngIf="!isTwoDigitDateCredential(sharedItem.type[1]) && credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" [src]="sharedItem.credentialSubject.credential.value | safeHtmlImage" class="epassimg">
+                </div>
+                <img *ngIf="!credentialIsPassportImage(sharedItem.credentialSubject.credential.type)" src="/assets/img/success-icon.png" class="small-img" />
+            </div>
         </div>
-        <div class="main-text">
-            <h5> {{ 'MAIN.subtitle' | translate }}</h5>
-        </div>
-
-        <section class="section-1">
-
-            <h2>{{ 'MAIN.title2' | translate }}</h2>
-            <h5>{{ 'MAIN.subtitle2' | translate }}</h5>
-
-        </section>
+        <button (click)="reScan()" class="button">RESCAN</button>
+    </div>
+    <div *ngIf="validCredentialObj && !validCredentialObj.valid" class="information">
+        <h1 class="error">Error validating information</h1>
+        <p class="type">{{ validCredentialObj.message }}</p>
+        <button (click)="reScan()" class="button">rescan</button>
     </div>
 </div>
-
-
-<!-- contact-section start -->
-<section id="contact" class="contact-section">
-
-    <div class="container card">
-        <div class="contact-wrapper">
-            <div class="section-header text-center mb--50">
-                <h3>{{ 'index.contact.title' | translate}}</h3>
-                <h6>{{ 'index.contact.subtitle' | translate}} <em
-                        class="fa fa-heart"></em>{{ 'index.contact.subtitle2' | translate}}</h6>
-            </div>
-            <div class="contact">
-                <form [formGroup]=contactForm class="contact-form" *ngIf="!contactEmail">
-                    <div class="row">
-                        <div class="col-lg-6 mb-lg-0 margin-top-50">
-                            <input type="text" formControlName="name" class="border-radius" name="name" id="name"
-                                placeholder="{{ 'index.contact.name' | translate}}">
-                            <input type="email"  formControlName="email" class="border-radius" name="email" email="true" id="emailaddress"
-                                placeholder="{{ 'index.contact.email' | translate}}">
-                        </div>
-                        <div class="col-lg-6">
-                            <textarea id="message" formControlName="message" class="border-radius"
-                                placeholder="{{ 'index.contact.message' | translate}}"></textarea>
-                        </div>
-                        <div class="col-12 text-center pt--50 send-email-button">
-                            <button type="button" (click)="sendEmail();" [disabled]="!contactForm.valid" class="contact-button">
-                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                                {{ 'index.contact.send' | translate}}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- contact-section end -->
-<app-footer></app-footer>

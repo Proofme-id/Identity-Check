@@ -1,151 +1,87 @@
 :host {
-    .container {
-        padding-top: calc(88px + 5vh);
-    }
-    h3{
-        font-size: 1.875em;
-        color: var(--title-color);
-        font-weight: 700;
-        font-family: "Roboto", sans-serif;
-        line-height: 1.5;  
-    }
-    h6{
-        font-size: 19px;
-        margin: 0 0 1.6em;
-        color: var(--subtext-color);
-        line-height: 1.75;
-        font-family: "Roboto", sans-serif;
-        font-weight: 600;
-    }
-    p{
-        font-size: 15px;
-        margin: 0 0 1.6em;
-        color: var(--white);
-        line-height: 1.75;
-        font-family: "Roboto", sans-serif;
-        font-weight: 400;
-    }
-
-    .login-header {
-        height: 80px;
-        width: 100%;
+    .information {
+        height: 100%;
         display: flex;
+        justify-content: center;
         align-items: center;
-        z-index: 1;
-        position: absolute;
-        color: var(--white);
-        justify-content: space-between;
-        padding-right: 50px;
+        flex-direction: column;
 
+        h1 {
+            color: #006599;
+            padding-bottom: 35px;
+        }
+    }
+
+    .epassimg {
+        width: 150px;
+    }
+
+    .container {
+        height: 100%;
+    }
+
+    video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+    }
+
+    .information-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
         p {
             margin-bottom: 0;
-            font-weight: 800;
-        }
-
-        img {
-            width: 50px;
-            margin-left: 25px;
         }
     }
 
-    .main-view-div {
-        left: 0;
-        top: 0;
-        background: url(/assets/img/background.jpg) no-repeat;
-        background-size: cover;
-        height: 100vh;
-        width: 100%;
-        overflow: hidden;
-        color: var(--white);
+    .information-detail-text-div {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .section-1 {
-        height: 50vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .contact-wrapper {
-            opacity: 1.0;
-            background-image: url(/assets/img/contact-background.jpg);
-            background-repeat: no-repeat;
-            background-position: center center;
-            margin-bottom: 5px;
-    }
-
-    .contact-form {
-        max-width: 930px;
+        justify-content: space-between;
         width: 100%;
-        margin: auto;
-        input, textarea {
-            width: 100%;
-            padding: 12px 25px;
-            border: 1px solid var(--lightGrey);
-            box-shadow: 0 0 15px 0 rgba(var(--black), 0.06);
-            outline: none;
-            &:active,&:hover,&:focus {
-                border-color: var(--base-color);
-            }
-        }
-        input {
-            margin-bottom: 50px;
-            font-size: 14px;
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-        textarea {
-            font-size: 14px;
-            height: 100%;
-        }
-        
-        button {
-            padding: 15px 60px;
-            font-size: 14px;
-            background-color: var(--base-color);
-            border: none;
-            color: var(--white);
-            &:enabled {
-                &:hover {
-                    color:  var(--white);
-                    background-color: var(--title-color);
-                }
-            }
-        }
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .border-radius {
-        border-radius: 5px;
+    .img-div {
+        justify-content: center;
+        margin-bottom: 30px;
     }
 
-    .margin-top-50 {
-        margin-bottom: 50px;
-    }
+    .button {
+        outline: none;
+        border: none;
+        background: #006599;
+        color: white;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 50%;
+        margin-top: 16px;
 
-    .send-email-button {
-        border-radius: 5px; margin-top:50px
-    }
-
-    .contact-button {
-        border-radius: 5px;
-
-        &:disabled {
+        &:hover {
+            cursor: pointer;
             opacity: 0.5;
-
-            background: red;
         }
     }
 
-    .card {
-        box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.1); 
-        padding: 30px;
-        margin-bottom: 5vh;
-        margin-top: 5vh;
-        border-radius: 10px;
+    .error {
+        color: red !important;
+    }
+
+    .small-img {
+        width: 50px;
+    }
+
+    .information-div {
+        width: 50%;
+        max-height: 55vh;
+        overflow: scroll;
     }
 }
-

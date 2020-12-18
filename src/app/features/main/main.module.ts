@@ -1,15 +1,19 @@
 import { NgModule } from "@angular/core";
 import { MainPageComponent } from "./main.page";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
-import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { fab } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentsModule } from "src/app/components/components.module";
 import { NgxSelectModule } from "ngx-select-ex";
 import { LanguageProvider } from "../../providers/language/languageProvider";
+import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
+import { SharedModule } from "../../components/shared-module/shared-module.module";
+import { ZXingScannerModule } from "@zxing/ngx-scanner"
+import { NgxSpinnerModule } from "ngx-spinner";
+import { SafeHtmlPipeImage } from "src/pipes/safe-html-pipe-image";
 
 const routes: Routes = [
     {
@@ -28,18 +32,22 @@ const routes: Routes = [
         FontAwesomeModule,
         NgbModule,
         ComponentsModule,
-        NgxSelectModule
+        NgxSelectModule,
+        ModalModule.forRoot(),
+        SharedModule,
+        ZXingScannerModule,
+        NgxSpinnerModule
     ],
     declarations: [
         MainPageComponent,
+        SafeHtmlPipeImage
     ],
     providers: [
-        LanguageProvider
+        LanguageProvider,
+        BsModalService,
+        SafeHtmlPipeImage
     ]
 })
 export class MainPageModule {
 
-    constructor(library: FaIconLibrary) {
-        library.addIconPacks(fab);
-    }
 }

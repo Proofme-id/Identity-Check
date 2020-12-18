@@ -1,88 +1,156 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { LanguageProvider } from "../../providers/language/languageProvider";
-import { TranslateService } from "@ngx-translate/core";
-import { ConfigProvider } from "src/app/providers/config/configProvider";
+import { AfterViewInit, Component, NgZone, ViewChild } from "@angular/core";
+import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
+import { filter, skip, takeUntil } from "rxjs/operators";
 import { BaseComponent } from "../base-component/base-component";
-import { load, ReCaptchaInstance } from "recaptcha-v3";
-import { EmailStateFacade } from "src/app/state/email/email.facade";
-import { filter, take, takeUntil } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { AppStateFacade } from "src/app/state/app/app.facade";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ZXingScannerComponent } from "@zxing/ngx-scanner";
+import { IValidCredential } from "src/app/interfaces/valid-credential.interface";
+import Web3 from "web3";
+import { claimHolderAbi } from "../../smartcontracts/claimHolderAbi";
+import { ICheckedDid } from "src/app/interfaces/checkedDid.interface";
 
 @Component({
-    templateUrl: "main.page.html",
-    styleUrls: ["main.page.scss"]
+	templateUrl: "main.page.html",
+	styleUrls: ["main.page.scss"]
 })
-export class MainPageComponent extends BaseComponent implements OnInit {
-    contactForm: FormGroup;
-    languages = [];
-    recaptcha: ReCaptchaInstance;
-    contactEmail: string;
-    language$ = this.appStateFacade.language$;
+export class MainPageComponent extends BaseComponent implements AfterViewInit {
 
-    constructor(
-        private router: Router,
-        private languageProvider: LanguageProvider,
-        private configProvider: ConfigProvider,
-        private emailStateFacade: EmailStateFacade,
-        private toastrService: ToastrService,
-        private translateService: TranslateService,
-        private formBuilder: FormBuilder,
-        private appStateFacade: AppStateFacade
-    ) {
-        super();
+	web3Url = "https://api.didux.network/";
+	validCredentialObj: IValidCredential = null;
+	blockResult = false;
+	shared = null;
+	sharedType: string;
 
-        this.contactForm = this.formBuilder.group({
-            name: new FormControl("", Validators.required),
-            email: new FormControl("", Validators.required),
-            message: new FormControl("", Validators.required)
-        });
+	@ViewChild("scannerView")
+	scannerView: ZXingScannerComponent;
+
+	constructor(
+		private webRtcProvider: WebRtcProvider,
+		private ngZone: NgZone,
+		private spinner: NgxSpinnerService,
+		private proofmeUtilsProvider: ProofmeUtilsProvider
+	) {
+		super();
+		this.spinner.show();
+
+		window.onbeforeunload = () => {
+			console.log("WINDOW UNLOAD");
+            this.webRtcProvider.remoteDisconnect();
+        };
+	}
+
+	ngAfterViewInit(): void {
+		this.scannerView.previewElemRef.nativeElement.onplay = () => {
+			this.spinner.hide();
+		}
+	}
+
+	onCodeResult(resultString: string): void {
+		if (!this.blockResult) {
+			this.blockResult = true;
+			this.spinner.show();
+			console.log("onCodeResult:", resultString);
+			const uuid = resultString.split(":")[1];
+			console.log("uuid:", uuid);
+			this.webRtcProvider.setHostUuid(uuid);
+			this.webRtcProvider.setConfig({
+				isHost: false,
+				signalingUrl: null
+			});
+			this.webRtcProvider.launchWebsocketClient();
+			this.setupWebrtcResponseHandler();
+		} else {
+			console.log("BLOCKED duplicate scan");
+		}
+	}
+
+	setupWebrtcResponseHandler(): void {
+		this.webRtcProvider.receivedActions$.pipe(skip(1)).subscribe(async (data) => {
+			console.log("Received:", data);
+			// When the client is connected
+			if (data.action === "p2pConnected" && data.p2pConnected) {
+				console.log("P2P Connected!");
+			}
+			if (data.action === "shared") {
+				console.log("data.shared:", data.shared);
+				const checkedDid: ICheckedDid[] = [];
+				for (const sharedItem of data.shared) {
+					this.validCredentialObj = await this.proofmeUtilsProvider.validCredential(sharedItem, this.web3Url, checkedDid);
+					console.log("this.validCredentialObj:", this.validCredentialObj);
+					if (!this.validCredentialObj.valid) {
+						break;
+					}
+				}
+				if (!this.validCredentialObj.valid) {
+					console.error(this.validCredentialObj);
+				} else {
+					this.ngZone.run(() => {
+						this.shared = data.shared;
+						this.sharedType = data.sharedType;
+					});
+				}
+				this.ngZone.run(() => {
+					this.blockResult = false;
+					this.spinner.hide();
+				});
+				console.log("SENDING SHARE SUCCESS!!!");
+				this.webRtcProvider.sendData("share-success", {});
+			}
+		});
+
+		this.webRtcProvider.websocketConnectionClosed$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
+			console.log("Websocket closed!");
+		});
+
+		this.webRtcProvider.websocketConnectionOpen$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
+			console.log("Websocket open!");
+		});
+	}
+
+	reScan(): void {
+		this.webRtcProvider.remoteDisconnect();
+		this.spinner.show();
+		setInterval(() => {
+			if (this.scannerView) {
+				this.scannerView.previewElemRef.nativeElement.onplay = () => {
+					this.spinner.hide();
+				}
+			}
+		}, 50);
+		this.shared = null;
+		this.validCredentialObj = null;
+	}
+
+	credentialIsPassportImage(type: string): boolean {
+        return type === "PassportImage";
     }
 
-    async ngOnInit(): Promise<void> {
-        const config = await this.configProvider.getConfig();
-        this.languages = this.languageProvider.getLanguages();
-
-        // Captcha
-        this.recaptcha = await load(config.captchaSiteKey);
-
-        this.emailStateFacade.emailSendSuccess$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
-            this.toastrService.success("Email send!");
-            this.contactForm.reset();
-        });
-
-        this.emailStateFacade.emailSendFailure$.pipe(takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
-            this.toastrService.error("Email not send!");
-        });
+    valueIsTrueBoolean(value: string | boolean): boolean {
+        return value === true;
     }
 
-    navigateToTerms(): void {
-        this.router.navigate(["terms"]);
+    valueIsFalseBoolean(value: string | boolean): boolean {
+        return value === false;
     }
 
-    navigateToPrivacy(): void {
-        this.router.navigate(["privacy"]);
-    }
+	isTwoDigitDateCredential(type: string): boolean {
+		if (type === "DocumentExpiryDateCredential" || type === "DateOfBirthCredential") {
+			return true;
+		}
+		return false;
+	}
 
-    navigateToFAQ(): void {
-        this.router.navigate(["faq"]);
-    }
+    convertTwoDigitDate(twoDigitYearDate: string): Date {
+		const year = twoDigitYearDate.substring(0, 2);
+		const month = twoDigitYearDate.substring(2, 4);
+		const day = twoDigitYearDate.substring(4, 6);
 
-    async sendEmail(): Promise<void> {
-        const token = await this.recaptcha.execute("submit");
-
-        console.log(token);
-        const name = this.contactForm.get("name").value;
-        const email = this.contactForm.get("email").value;
-        const message = this.contactForm.get("message").value;
-        const language = await this.language$.pipe(take(1)).toPromise().then(result => {
-            return result;
-        });
-    
-        console.log("Send mail in: " + language);
-
-        this.emailStateFacade.sendEmail(email, name, message, language, token);
-    }
+		let fullYear = null;
+		if (parseInt(year, 10) >= 40) {
+			fullYear = "19" + year;
+		} else {
+			fullYear = "20" + year;
+		}
+		return new Date(`${fullYear}-${month}-${day}`);
+	}
 }
