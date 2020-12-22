@@ -1,14 +1,18 @@
 :host {
     .information {
         height: 100%;
+        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        text-align: center;
+        max-width: 500px;
 
         h1 {
             color: #006599;
-            padding-bottom: 35px;
+            padding-bottom: 20px;
+            padding-top: 20px;
         }
     }
 
@@ -20,30 +24,37 @@
         height: 100%;
     }
 
-    video {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-    }
-
     .information-detail {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+        padding-bottom: 16px;
         
         p {
             margin-bottom: 0;
         }
     }
 
-    .information-detail-text-div {
+    .information-detail-key {
         display: flex;
-        justify-content: space-between;
         width: 100%;
-        padding-left: 16px;
-        padding-right: 16px;
+        //padding-left: 16px;
+        //padding-right: 16px;
+        white-space: nowrap;
+    }
+
+    .information-detail-value {
+        //display: flex;
+        width: 100%;
+        //padding-left: 16px;
+        //padding-right: 16px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .value {
+        color: #51A351;
     }
 
     .img-div {
@@ -56,14 +67,14 @@
         border: none;
         background: #006599;
         color: white;
-        padding-left: 16px;
-        padding-right: 16px;
         padding-top: 8px;
         padding-bottom: 8px;
         border-radius: 8px;
         font-size: 16px;
-        width: 50%;
+        width: 100%;
         margin-top: 16px;
+        margin-bottom: 16px;
+        max-width: 500px;
 
         &:hover {
             cursor: pointer;
@@ -80,8 +91,25 @@
     }
 
     .information-div {
-        width: 50%;
-        max-height: 55vh;
         overflow: scroll;
+        width: 100%;
+    }
+
+    // Fullscreen camera
+    .fullscreen {
+        display: block;
+        position:absolute;
+        height:auto;
+        bottom:0;
+        top:0;
+        left:0;
+        right:0;
+        background-color: black;
+    }
+
+    zxing-scanner::ng-deep video {
+        width:100% !important;
+        height:100% !important;
+        object-fit: cover;
     }
 }

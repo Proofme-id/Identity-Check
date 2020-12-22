@@ -1,13 +1,11 @@
 import { AfterViewInit, Component, NgZone, ViewChild } from "@angular/core";
-import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
-import { filter, skip, takeUntil } from "rxjs/operators";
-import { BaseComponent } from "../base-component/base-component";
-import { NgxSpinnerService } from "ngx-spinner";
+import { ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
 import { ZXingScannerComponent } from "@zxing/ngx-scanner";
-import { IValidCredential } from "src/app/interfaces/valid-credential.interface";
-import Web3 from "web3";
-import { claimHolderAbi } from "../../smartcontracts/claimHolderAbi";
+import { NgxSpinnerService } from "ngx-spinner";
+import { filter, skip, takeUntil } from "rxjs/operators";
 import { ICheckedDid } from "src/app/interfaces/checkedDid.interface";
+import { IValidCredential } from "src/app/interfaces/valid-credential.interface";
+import { BaseComponent } from "../base-component/base-component";
 
 @Component({
 	templateUrl: "main.page.html",
