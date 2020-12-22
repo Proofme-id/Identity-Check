@@ -9,13 +9,13 @@
                 <div *ngFor="let sharedItem of shared" class="information-detail row">
                     <div class="col-md-12" *ngIf="credentialIsPassportImage(sharedItem.credentialSubject.credential.type)">
                         <div class="information-detail-key img-div">
-                            <img [src]="sharedItem.credentialSubject.credential.value | safeHtmlImage" class="epassimg">
+                            <img [src]="sharedItem.credentialSubject.credential.value | safeHtmlImage" class="epassimg" alt="passport image">
                         </div>
                     </div>
                     <div class="col" *ngIf="!credentialIsPassportImage(sharedItem.credentialSubject.credential.type)">
                         <div class="information-detail-key">
-                            <img *ngIf="sharedType === 'EPASS'" src="/assets/img/epass.png" class="small-img" />
-                            <img *ngIf="sharedType === 'IDIN'" src="/assets/img/idin.png" class="small-img" />
+                            <img *ngIf="sharedType === 'EPASS'" src="/assets/img/epass.png" class="small-img" alt="passport"/>
+                            <img *ngIf="sharedType === 'IDIN'" src="/assets/img/idin.png" class="small-img" alt="iDIN"/>
                             <p class="type">{{ sharedItem.credentialSubject.credential.type}}</p>
                         </div>
                     </div>
@@ -29,7 +29,6 @@
                             <p *ngIf="isTwoDigitDateCredential(sharedItem.type[1])" class="value">
                                 {{ convertTwoDigitDate(sharedItem.credentialSubject.credential.value) | date:'yyyy-MM-dd'}}
                             </p>
-<!--                            <img *ngIf="!isTwoDigitDateCredential(sharedItem.type[1])" [src]="sharedItem.credentialSubject.credential.value | safeHtmlImage" class="epassimg">-->
                         </div>
                     </div>
                 </div>
