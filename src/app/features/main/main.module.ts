@@ -12,7 +12,7 @@ import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
 import { SharedModule } from "../../components/shared-module/shared-module.module";
 import { ZXingScannerModule } from "@zxing/ngx-scanner"
 import { NgxSpinnerModule } from "ngx-spinner";
-import { SafeHtmlPipeImage } from "src/pipes/safe-html-pipe-image";
+import { SafeHtmlPipeImage } from "src/app/pipes/safe-html-pipe-image";
 
 const routes: Routes = [
     {
