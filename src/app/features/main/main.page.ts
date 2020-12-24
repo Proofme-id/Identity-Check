@@ -3,7 +3,6 @@ import { ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
 import { ZXingScannerComponent } from "@zxing/ngx-scanner";
 import { NgxSpinnerService } from "ngx-spinner";
 import { filter, skip, takeUntil } from "rxjs/operators";
-import { ICheckedDid } from "src/app/interfaces/checkedDid.interface";
 import { IValidCredential } from "src/app/interfaces/valid-credential.interface";
 import { BaseComponent } from "../base-component/base-component";
 
@@ -16,7 +15,7 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 	web3Url = "https://api.didux.network/";
 	validCredentialObj: IValidCredential = null;
 	blockResult = false;
-	shared = null;
+	credentialObject = null;
 	sharedType: string;
 
 	@ViewChild("scannerView")
@@ -53,7 +52,8 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 			this.webRtcProvider.setHostUuid(uuid);
 			this.webRtcProvider.setConfig({
 				isHost: false,
-				signalingUrl: null
+				signalingUrl: "ws://10.1.17.46:4005"
+				// signalingUrl: "ws://192.168.0.125:4005"
 			});
 			this.webRtcProvider.launchWebsocketClient();
 			this.setupWebrtcResponseHandler();
@@ -70,20 +70,13 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 				console.log("P2P Connected!");
 			}
 			if (data.action === "shared") {
-				console.log("data.shared:", data.shared);
-				const checkedDid: ICheckedDid[] = [];
-				for (const sharedItem of data.shared) {
-					this.validCredentialObj = await this.proofmeUtilsProvider.validCredential(sharedItem, this.web3Url, checkedDid);
-					console.log("this.validCredentialObj:", this.validCredentialObj);
-					if (!this.validCredentialObj.valid) {
-						break;
-					}
-				}
+				console.log("data.credentialObject:", data.credentialObject);
+				this.validCredentialObj = await this.proofmeUtilsProvider.validCredentials(data.credentialObject, this.web3Url);
 				if (!this.validCredentialObj.valid) {
 					console.error(this.validCredentialObj);
 				} else {
 					this.ngZone.run(() => {
-						this.shared = data.shared;
+						this.credentialObject = data.credentialObject.credentials;
 						this.sharedType = data.sharedType;
 					});
 				}
@@ -115,27 +108,8 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 				}
 			}
 		}, 50);
-		this.shared = null;
+		this.credentialObject = null;
 		this.validCredentialObj = null;
-	}
-
-	credentialIsPassportImage(type: string): boolean {
-        return type === "PassportImage";
-    }
-
-    valueIsTrueBoolean(value: string | boolean): boolean {
-        return value === true;
-    }
-
-    valueIsFalseBoolean(value: string | boolean): boolean {
-        return value === false;
-    }
-
-	isTwoDigitDateCredential(type: string): boolean {
-		if (type === "DocumentExpiryDateCredential" || type === "DateOfBirthCredential") {
-			return true;
-		}
-		return false;
 	}
 
     convertTwoDigitDate(twoDigitYearDate: string): Date {
