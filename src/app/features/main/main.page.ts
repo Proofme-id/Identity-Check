@@ -52,7 +52,8 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 			this.webRtcProvider.setHostUuid(uuid);
 			this.webRtcProvider.setConfig({
 				isHost: false,
-				signalingUrl: "ws://10.1.17.46:4005"
+				signalingUrl: null
+				// signalingUrl: "ws://10.1.17.46:4005"
 				// signalingUrl: "ws://192.168.0.125:4005"
 			});
 			this.webRtcProvider.launchWebsocketClient();
