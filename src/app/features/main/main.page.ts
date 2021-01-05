@@ -21,6 +21,8 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 	@ViewChild("scannerView")
 	scannerView: ZXingScannerComponent;
 
+	mediaDeviceSupported = true;
+
 	constructor(
 		private webRtcProvider: WebRtcProvider,
 		private ngZone: NgZone,
@@ -33,12 +35,20 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 		window.onbeforeunload = () => {
 			console.log("WINDOW UNLOAD");
             this.webRtcProvider.remoteDisconnect();
-        };
+		};
+		
+		if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+			console.log("This browser does not support the API yet");
+			this.mediaDeviceSupported = false;
+			this.spinner.hide();
+		}
 	}
 
 	ngAfterViewInit(): void {
-		this.scannerView.previewElemRef.nativeElement.onplay = () => {
-			this.spinner.hide();
+		if (this.mediaDeviceSupported) {
+			this.scannerView.previewElemRef.nativeElement.onplay = () => {
+				this.spinner.hide();
+			}
 		}
 	}
 

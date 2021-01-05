@@ -16,6 +16,23 @@
         }
     }
 
+    .media-error-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        h1 {
+            color: red;
+            font-weight: 800;
+        }
+
+        p {
+            color: red;
+        }
+    }
+
     .epassimg {
         width: 150px;
     }

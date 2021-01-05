@@ -1,8 +1,12 @@
 <ngx-spinner type="ball-climbing-dot"></ngx-spinner>
-<div *ngIf="!credentialObject && !validCredentialObj" class="fullscreen">
+<div *ngIf="!mediaDeviceSupported" class="media-error-div">
+    <h1>500</h1>
+    <p>Your browser does not support user media.</p>
+</div>
+<div *ngIf="!credentialObject && !validCredentialObj && mediaDeviceSupported" class="fullscreen">
     <zxing-scanner style="height: 100%" class="fullscreen" (scanSuccess)="onCodeResult($event)" #scannerView></zxing-scanner>
 </div>
-<div class="container d-flex justify-content-center">
+<div *ngIf="mediaDeviceSupported" class="container d-flex justify-content-center">
     <div *ngIf="credentialObject" class="information">
         <h1>Shared information</h1>
         <div class="information-div">
