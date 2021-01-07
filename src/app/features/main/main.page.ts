@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, NgZone, ViewChild } from "@angular/core";
-import { ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
+import { IValidCredential, ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
 import { ZXingScannerComponent } from "@zxing/ngx-scanner";
 import { NgxSpinnerService } from "ngx-spinner";
 import { filter, skip, takeUntil } from "rxjs/operators";
-import { IValidCredential } from "src/app/interfaces/valid-credential.interface";
 import { BaseComponent } from "../base-component/base-component";
 
 @Component({
