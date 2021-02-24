@@ -1,0 +1,80 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center">
+            <img src="/assets/img/logo.png" class="logo" alt="logo">
+        </div>
+        <div class="max-width" *ngIf="selectedAction === null">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <p class="instructions-text">{{ 'ACTION_SELECT.title' | translate }}</p>
+            </div>
+            <div class="col-lg-12">
+                <div *ngFor="let action of actions" (click)="select(action.key)" class="organisation-item">
+
+                    <div class="icon">
+                        <fa-icon [icon]="['fas', action.icon]"></fa-icon>
+                    </div>
+
+                    <p>{{ 'ACTION_SELECT.' + action.key | translate }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-width" *ngIf="selectedAction === 'REQUEST'">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <p class="instructions-text">{{ 'ACTION_SELECT.providers' | translate }}</p>
+            </div>
+            <div class="col-lg-12">
+                <div *ngFor="let provider of providers" (click)="setProvider(provider.key)" class="organisation-item" [ngClass]="provider.required ? 'item-checked': ''">
+
+                    <div class="icon">
+                        <fa-icon [icon]="['fas', provider.icon]"></fa-icon>
+                    </div>
+
+                    <p>{{ 'PROVIDERS.' + provider.key | translate }}</p>
+                </div>
+                <button (click)="setAttributes()" class="button">{{ 'ACTION_SELECT.next' | translate }}</button>
+            </div>
+        </div>
+        <div class="max-width" *ngIf="selectedAction === 'ATTRIBUTES'">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <p class="instructions-text">{{ 'ACTION_SELECT.attributes' | translate }}</p>
+            </div>
+            <div class="col-lg-12" *ngFor="let provider of requiredProviders()">
+                <div class="provider-item">
+                    <div class="icon">
+                        <fa-icon [icon]="['fas', provider.icon]"></fa-icon>
+                    </div>
+
+                    <p>{{ 'PROVIDERS.' + provider.key | translate }}</p>
+                </div>
+                <div *ngFor="let attribute of provider.attributes" (click)="setAttribute(provider.key, attribute.key)" class="attribute-item">
+                    <div *ngIf="attribute.required" class="icon">
+                        <fa-icon [icon]="['fas', 'check']" class="text-success"></fa-icon>
+                    </div>
+                    <div *ngIf="!attribute.required" class="icon">
+                        <fa-icon [icon]="['far', 'square']" class="text-black-50"></fa-icon>
+                    </div>
+                    <p [ngClass]="attribute.required ? 'text-success' : 'text-black-50'">{{ 'ATTRIBUTE.' + provider.key + '.' + attribute.key | translate }}</p>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <button (click)="setDataRequest()" class="button">{{ 'ACTION_SELECT.next' | translate }}</button>
+            </div>
+        </div>
+        <div class="max-width" *ngIf="selectedAction === 'SETTINGS'">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <p class="instructions-text">{{ 'ACTION_SELECT.settings' | translate }}</p>
+            </div>
+            <div class="col-lg-12">
+                <div *ngFor="let list of consortiumList" (click)="setTrustedConsortiumList(list.key)" class="organisation-item" [ngClass]="list.required ? 'item-checked': ''">
+
+                    <div class="icon">
+                        <fa-icon [icon]="['fas', list.icon]"></fa-icon>
+                    </div>
+
+                    <p>{{ list.name }}</p>
+                </div>
+                <button (click)="setTrustedConsortiumLists()" class="button">{{ 'ACTION_SELECT.save' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,269 +1,133 @@
-<ngx-spinner type="ball-climbing-dot"></ngx-spinner>
-<div *ngIf="!mediaDeviceSupported" class="media-error-div">
-    <h1>500</h1>
-    <p>Your browser does not support user media.</p>
-</div>
-<div *ngIf="!credentialObject && !validCredentialObj && mediaDeviceSupported" class="fullscreen">
-    <zxing-scanner style="height: 100%" class="fullscreen" (scanSuccess)="onCodeResult($event)" #scannerView></zxing-scanner>
-</div>
-<div *ngIf="mediaDeviceSupported" class="container d-flex justify-content-center">
-    <div *ngIf="credentialObject" class="information">
-        <h1>Shared information</h1>
-        <div class="information-div">
-            <!-- IDIN -->
-            <div *ngIf="sharedType === 'IDIN'">
-                <div *ngIf="credentialObject['INITIALS']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['INITIALS'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['INITIALS'].credentialSubject.credential.value }}</p>
-                        </div>
+<div class="main-container background-img">
+    <div class="menu-overlay">
+        <nav class="navbar navbar-dark float-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="showMenu()"
+                    aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+            </button>
+        </nav>
+    </div>
+
+
+    <ngx-spinner type="ball-climbing-dot"></ngx-spinner>
+    <div *ngIf="!mediaDeviceSupported" class="container">
+        <div class="content justify-content-center d-flex">
+            <div class="col-xl-12 content-div">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-dark">Oops</h6>
                     </div>
-                </div>
-                <div *ngIf="credentialObject['LAST_NAME']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['LAST_NAME'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['LAST_NAME'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['LAST_NAME_PREFERRED']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['LAST_NAME_PREFERRED'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['LAST_NAME_PREFERRED'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['STREET']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['STREET'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['STREET'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['HOUSE_NUMBER']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['HOUSE_NUMBER'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['HOUSE_NUMBER'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['POSTAL_CODE']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['POSTAL_CODE'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['POSTAL_CODE'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['CITY']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['CITY'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['CITY'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['COUNTRY_CODE']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['COUNTRY_CODE'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['COUNTRY_CODE'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['BIRTH_DATE']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['BIRTH_DATE'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['BIRTH_DATE'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['OLDER_THAN_18']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['OLDER_THAN_18'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value" *ngIf="credentialObject['OLDER_THAN_18'].credentialSubject.credential.value === true">Yes</p>
-                            <p class="value" *ngIf="credentialObject['OLDER_THAN_18'].credentialSubject.credential.value === false">No</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['GENDER']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['GENDER'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value" *ngIf="credentialObject['GENDER'].credentialSubject.credential.value === 'MALE'">Male</p>
-                            <p class="value" *ngIf="credentialObject['GENDER'].credentialSubject.credential.value === 'FEMALE'">Female</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['EMAIL']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['EMAIL'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['EMAIL'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['PHONE_NUMBER']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/idin.png" class="small-img" />
-                            <p class="type">{{ credentialObject['PHONE_NUMBER'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['PHONE_NUMBER'].credentialSubject.credential.value }}</p>
+                    <div class="card-body">
+                        <div>
+                            <div class="page-content">
+                                <p>Your browser does not support user media.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- EPASS -->
-            <div *ngIf="sharedType === 'EPASS'">
-                <div *ngIf="credentialObject['PHOTO']" class="information-detail">
-                    <div class="col-md-12">
-                        <div class="information-detail-key img-div">
-                            <img [src]="credentialObject['PHOTO'].credentialSubject.credential.value | safeHtmlImage" class="epassimg" alt="passport image">
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['GENDER']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['GENDER'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value" *ngIf="credentialObject['GENDER'].credentialSubject.credential.value === 'M'">Male</p>
-                            <p class="value" *ngIf="credentialObject['GENDER'].credentialSubject.credential.value === 'F'">Female</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['NATIONALITY']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['NATIONALITY'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['NATIONALITY'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['BIRTH_DATE']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['BIRTH_DATE'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ convertTwoDigitDate(credentialObject['BIRTH_DATE'].credentialSubject.credential.value) | date:'yyyy-MM-dd' }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['PERSONAL_NUMBER']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['PERSONAL_NUMBER'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['PERSONAL_NUMBER'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['OLDER_THAN_18']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['OLDER_THAN_18'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value" *ngIf="credentialObject['OLDER_THAN_18'].credentialSubject.credential.value === true">Yes</p>
-                            <p class="value" *ngIf="credentialObject['OLDER_THAN_18'].credentialSubject.credential.value === false">No</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['LAST_NAME']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['LAST_NAME'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['LAST_NAME'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['FIRST_NAME']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['FIRST_NAME'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ credentialObject['FIRST_NAME'].credentialSubject.credential.value }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="credentialObject['DOCUMENT_EXPIRY_DATE']" class="information-detail">
-                    <div class="col">
-                        <div class="information-detail-key">
-                            <img src="/assets/img/epass.png" class="small-img" />
-                            <p class="type">{{ credentialObject['DOCUMENT_EXPIRY_DATE'].credentialSubject.credential.type}}</p>
-                        </div>
-                        <div class="information-detail-value">
-                            <p class="value">{{ convertTwoDigitDate(credentialObject['DOCUMENT_EXPIRY_DATE'].credentialSubject.credential.value) | date:'yyyy-MM-dd' }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button (click)="reScan()" class="button">RESCAN</button>
         </div>
     </div>
-    <div *ngIf="validCredentialObj && !validCredentialObj.valid" class="information">
-        <h1 class="error">Error validating information</h1>
-        <p class="type">{{ validCredentialObj.message }}</p>
-        <button (click)="reScan()" class="button">rescan</button>
+    <div *ngIf="settings.action === 'SCAN' && !credentialObject && !validCredentialObj && mediaDeviceSupported" class="fullscreen">
+        <zxing-scanner style="height: 100%" class="fullscreen" (scanSuccess)="onCodeResult($event)" #scannerView></zxing-scanner>
+    </div>
+    <div *ngIf="mediaDeviceSupported">
+        <div *ngIf="(settings.action === 'SCAN' || settings.action === 'REQUEST') && credentialObject" class="container">
+            <div class="content justify-content-center d-flex">
+                <div class="col-xl-12 content-div">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-dark">Shared information</h6>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="page-content">
+                                    <div class="information-div">
+                                        <div *ngIf="credentialObject['PHOTO']" class="information-detail">
+                                            <div class="col-md-12">
+                                                <div class="information-detail-key img-div">
+                                                    <img [src]="credentialObject['PHOTO'].credentialSubject.credential.value | safeHtmlImage" class="epassimg" alt="passport image">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngFor="let credentialKey of objectKeysWithFilter(credentialObject)" class="information-detail">
+                                            <div class="col row d-flex justify-content-between">
+                                                <div class="information-detail-key">
+                                                    <div class="icon">
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'IDIN'" [icon]="['fas', 'university']"></fa-icon>
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'EPASS'" [icon]="['fas', 'passport']"></fa-icon>
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'PHONE_NUMBER'" [icon]="['fas', 'mobile-alt']"></fa-icon>
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'EMAIL'" [icon]="['fas', 'envelope']"></fa-icon>
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'HEALTH'" [icon]="['fas', 'medkit']"></fa-icon>
+                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'CUSTOM'" [icon]="['fas', 'question']"></fa-icon>
+                                                    </div>
+                                                    <p class="type">{{ credentialObject[credentialKey].credentialSubject.credential.type }}</p>
+                                                </div>
+                                                <div class="information-detail-value">
+                                                    <p class="value" *ngIf="getExpectedValue(credentialKey) === null">{{ getFriendlyValue(credentialKey, credentialObject[credentialKey].credentialSubject.credential.value) }}</p>
+                                                    <fa-icon
+                                                            *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) == credentialObject[credentialKey].credentialSubject.credential.value.toString()"
+                                                            [icon]="['fas', 'check']" size="2x" class="success"></fa-icon>
+                                                    <fa-icon
+                                                            *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) != credentialObject[credentialKey].credentialSubject.credential.value.toString()"
+                                                            [icon]="['fas', 'times']" size="2x" class="danger"></fa-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- EPASS -->
+                                        <button *ngIf="settings.action === 'SCAN'" (click)="reScan()" class="button">RESCAN</button>
+                                        <button *ngIf="settings.action === 'REQUEST'" (click)="reScan()" class="button">OPNIEUW</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="settings.action === 'SCAN' && validCredentialObj && !validCredentialObj.valid">
+            <div class="content justify-content-center d-flex">
+                <div class="col-xl-12 content-div">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-dark">Error validating information</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="page-content">
+                                <p class="type">{{ validCredentialObj.message }}</p>
+                                <button (click)="reScan()" class="button">rescan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request QR screen -->
+        <div *ngIf="settings.action === 'REQUEST' && !validCredentialObj">
+            <div class="content justify-content-center d-flex">
+                <div class="col-xl-12 content-div">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-dark">Instant data request</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="page-content">
+                                <div class="qr-div">
+                                    <div class="qr-code">
+                                        <div *ngIf="websocketDisconnected" class="disconnect-overlay margin-left"
+                                             (click)="refreshWebsocketDisconnect()">
+                                            <p>{{ 'PROFILE.disconnected' | translate }}</p>
+                                        </div>
+                                        <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''" #qrCodeCanvas></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
