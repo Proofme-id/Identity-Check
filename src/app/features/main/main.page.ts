@@ -225,7 +225,7 @@ export class MainPageComponent extends BaseComponent {
 	}
 
 	objectKeysWithFilter(object: any): string[] {
-		return Object.keys(object).filter(x => x !== 'PHOTO');
+		return Object.keys(object).filter(x => x !== "PHOTO");
 	}
 
 	getFriendlyValue(key: string, value: any) {

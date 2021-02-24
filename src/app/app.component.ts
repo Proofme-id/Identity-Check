@@ -13,6 +13,6 @@ export class AppComponent extends BaseComponent {
         private translate: TranslateService
     ) {
         super();
-        this.translate.setDefaultLang('nl');
+        this.translate.setDefaultLang("nl");
     }
 }
