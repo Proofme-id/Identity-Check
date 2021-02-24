@@ -1,0 +1,82 @@
+{
+	"ACTION_SELECT": {
+		"HELP": "Help",
+		"REQUEST": "Instant data request",
+		"SCAN": "Scan QR",
+		"SETTINGS": "Settings",
+		"attributes": "Attributes",
+		"next": "Next",
+		"providers": "Providers",
+		"save": "Save",
+		"settings": "Settings",
+		"title": "Select an action"
+	},
+	"ATTRIBUTE": {
+		"EMAIL": {
+			"EMAIL": "Email",
+			"EMAIL_HASHED": "Hashed email"
+		},
+		"EPASS": {
+			"BIRTH_DATE": "Birth date",
+			"DOCUMENT_EXPIRY_DATE": "Document expiration date",
+			"DOCUMENT_NUMBER": "Document number",
+			"DOCUMENT_TYPE": "Document type",
+			"FIRST_NAME": "First name",
+			"GENDER": "Gender",
+			"ISSUING_AUTHORITY": "Issuer",
+			"LAST_NAME": "Last nam",
+			"NATIONALITY": "Nationality",
+			"OLDER_THAN_12": "Older than 12",
+			"OLDER_THAN_16": "Older than 16",
+			"OLDER_THAN_18": "Older than 18",
+			"OLDER_THAN_21": "Older than 21",
+			"PERSONAL_NUMBER": "Personal number",
+			"PHOTO": "Pho"
+		},
+		"HEALTH": {
+			"VPASS_COR_MODERNA": "Corona vaccination (Moderna)",
+			"VPASS_COR_PFIZER": "Corona vaccination (Pfizer)",
+			"VTEST_COR_ANTIGEEN": "Corona test (Antigeen)",
+			"VTEST_COR_LAMP": "Corona test (Lamp)",
+			"VTEST_COR_PCR": "Corona test (PCR)"
+		},
+		"IDIN": {
+			"BIRTH_DATE": "Birth date",
+			"CITY": "City",
+			"COUNTRY_CODE": "Country code",
+			"CUSTOMER_ID": "Customer ID",
+			"GENDER": "Gender",
+			"HOUSE_NUMBER": "House number",
+			"INITIALS": "Initials",
+			"LAST_NAME": "Last name",
+			"LAST_NAME_PREFERRED": "Preferred last name",
+			"LAST_NAME_PREFERRED_PREFIX": "Preferred last name prefix",
+			"LAST_NAME_PREFIX": "Lastname prefix",
+			"OLDER_THAN_12": "Older than 12",
+			"OLDER_THAN_16": "Older than 16",
+			"OLDER_THAN_18": "Older than 18",
+			"OLDER_THAN_21": "Older than 21",
+			"PARTNER_LAST_NAME": "Lastname partner",
+			"PARTNER_LAST_NAME_PREFIX": "Lastname partner prefix",
+			"POSTAL_CODE": "Postal code",
+			"STREET": "Street"
+		},
+		"PHONE_NUMBER": {
+			"PHONE_NUMBER": "Phone number",
+			"PHONE_NUMBER_HASHED": "Hashed phone number"
+		}
+	},
+	"PROFILE": {
+		"disconnected": "Disconnected"
+	},
+	"PROVIDERS": {
+		"EMAIL": "Email",
+		"EPASS": "Passport",
+		"HEALTH": "Health",
+		"IDIN": "iDin",
+		"PHONE_NUMBER": "Phonenumber"
+	},
+	"INSTRUCTION_OVERLAY": {
+		"message": "Follow the instructions in the app"
+	}
+}

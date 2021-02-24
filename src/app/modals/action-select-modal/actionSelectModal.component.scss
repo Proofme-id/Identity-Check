@@ -1,0 +1,200 @@
+:host {
+    .overlay-instruction {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 50;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .overlay-instruction-background {
+        background: var(--base-color);
+        opacity: 0.5;
+        width: 100%;
+        height: 100%;
+    }
+
+    .overlay-instruction-popup {
+        border-radius: 8px;
+        width: 500px;
+        background: var(--white);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo {
+        width: 150px;
+        margin-top: 10px;
+    }
+
+    .instructions-text {
+        margin-top: 16px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .organisation-item {
+        position: relative;
+        width: 95%;
+        background-color: #F7F8FC;
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: block;
+        transition: all .5s ease-in-out;
+        overflow: hidden;
+
+        &:hover {
+            background-color: #08a3f8;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        .icon {
+            position: relative;
+            background-color: #FFF;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            line-height: 40px;
+            text-align: center;
+            color: initial;
+            border: 5px solid #FFF;
+            border-radius: 50%;
+            float: left;
+        }
+
+        p {
+            margin: 0px;
+            line-height: 50px;
+            display: block;
+        }
+    }
+
+    .provider-item {
+        position: relative;
+        width: 95%;
+        background-color: #08a3f8;
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: block;
+        transition: all .5s ease-in-out;
+        overflow: hidden;
+        color: #FFFFFF;
+
+        .icon {
+            position: relative;
+            background-color: #FFF;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            line-height: 40px;
+            text-align: center;
+            color: #08a3f8;
+            border: 5px solid #FFF;
+            border-radius: 50%;
+            float: left;
+        }
+
+        p {
+            margin: 0px;
+            line-height: 50px;
+            display: block;
+        }
+    }
+
+    .attribute-item {
+        position: relative;
+        width: 80%;
+        font-size: 14px;
+        padding: 0 20px;
+        margin: 0 auto;
+        margin-bottom: 0px;
+        display: block;
+        transition: all .5s ease-in-out;
+        overflow: hidden;
+
+        .icon {
+            position: relative;
+            background-color: #FFFFFF;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 20px;
+            //height: 50px;
+            margin-right: 20px;
+            //line-height: 40px;
+            text-align: center;
+            float: left;
+        }
+    }
+
+    .item-checked {
+        background-color: var(--success);
+        color: #FFFFFF;
+
+        .icon {
+            position: relative;
+            background-color: #FFFFFF;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            line-height: 40px;
+            text-align: center;
+            color: var(--success);
+            border: 5px solid #FFFFFF;
+            border-radius: 50%;
+            float: left;
+        }
+
+        &:hover {
+            background-color: var(--success);
+            opacity: 0.8;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+    }
+
+    .max-width {
+        width: 100%;
+    }
+
+    .button {
+        outline: none;
+        border: none;
+        background: #08a3f8;
+        color: white;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        max-width: 500px;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.5;
+        }
+    }
+}

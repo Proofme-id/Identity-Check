@@ -17,6 +17,7 @@ import { ComponentsModule } from "./components/components.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxSelectModule } from "ngx-select-ex";
+import { MODALS_COMPONENT } from "./modals/modals.module";
 import { StoragePlugin } from "./ngxs-plugins/storage/storage.plugin";
 import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
 import { PopoverModule } from "ngx-bootstrap/popover";
@@ -25,6 +26,7 @@ import { StorageProvider } from "./providers/storage/capacitor-storage.provider"
 import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { UtilsProvider } from "./providers/utils/utils";
+import { AppStateModule } from "./state/app/app.module";
 
 
 // AoT requires an exported function for factories
@@ -37,7 +39,8 @@ const NGXS_MODULES = [
         developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxSelectModule
+    NgxSelectModule,
+    AppStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [
@@ -63,7 +66,8 @@ const NGXS_PROVIDERS: Provider[] = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        ...MODALS_COMPONENT
     ],
     imports: [
         HttpClientModule,
