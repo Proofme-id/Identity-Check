@@ -126,7 +126,7 @@ export class MainPageComponent extends BaseComponent {
 							})
 						}
 
-						this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials, ["0xa6De718CF5031363B40d2756f496E47abBab1515"]);
+						this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials,this.settings.trustedAuthorities);
 						console.log("validCredentials result:", this.validCredentialObj);
 						this.appStateFacade.setShowExternalInstruction(false);
 						if (!this.validCredentialObj.valid) {
@@ -175,7 +175,7 @@ export class MainPageComponent extends BaseComponent {
 			}
 			if (data.action === "shared") {
 				console.log("data.credentialObject:", data.credentialObject);
-				this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, ["0xa6De718CF5031363B40d2756f496E47abBab1515"]);
+				this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities);
 				if (!this.validCredentialObj.valid) {
 					console.error(this.validCredentialObj);
 				} else {

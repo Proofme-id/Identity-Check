@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="settings.action === 'SCAN' && validCredentialObj && !validCredentialObj.valid">
+        <div *ngIf="(settings.action === 'SCAN' || settings.action === 'REQUEST') && validCredentialObj && !validCredentialObj.valid">
             <div class="content justify-content-center d-flex">
                 <div class="col-xl-12 content-div">
                     <div class="card shadow mb-4">
