@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
 import { IValidCredential, ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
 import { ZXingScannerComponent } from "@zxing/ngx-scanner";
-import { BsModalService } from "ngx-bootstrap/modal";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { NgxSpinnerService } from "ngx-spinner";
 import * as QRCode from "qrcode";
 import { filter, skip, take, takeUntil } from "rxjs/operators";
@@ -32,6 +32,8 @@ export class MainPageComponent extends BaseComponent {
 	websocketDisconnected = false;
 
 	mediaDeviceSupported = true;
+
+	modalRef: BsModalRef;
 
 
 	constructor(
@@ -118,24 +120,7 @@ export class MainPageComponent extends BaseComponent {
 					console.log("Identify shared credentials:", data.credentialObject);
 					console.log("Identify requested credentials:", this.requestedData);
 					if (data.credentialObject) {
-						const identifyByCredentials = []
-						for (const credential of this.requestedData.credentials) {
-							identifyByCredentials.push({
-								key: credential.key,
-								provider: credential.provider
-							})
-						}
-
-						this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials,this.settings.trustedAuthorities);
-						console.log("validCredentials result:", this.validCredentialObj);
-						this.appStateFacade.setShowExternalInstruction(false);
-						if (!this.validCredentialObj.valid) {
-							console.error(this.validCredentialObj);
-						} else {
-							this.ngZone.run(() => {
-								this.credentialObject = data.credentialObject.credentials;
-							});
-						}
+						await this.validateIdentifyData(data);
 					} else {
 						console.log("No credentials provided. Probably clicked cancel on the mobile app");
 					}
@@ -146,6 +131,27 @@ export class MainPageComponent extends BaseComponent {
 				}
 			});
 		});
+	}
+
+	async validateIdentifyData(data): Promise<void> {
+		const identifyByCredentials = []
+		for (const credential of this.requestedData.credentials) {
+			identifyByCredentials.push({
+				key: credential.key,
+				provider: credential.provider
+			})
+		}
+
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials,this.settings.trustedAuthorities);
+		console.log("validCredentials result:", this.validCredentialObj);
+		this.appStateFacade.setShowExternalInstruction(false);
+		if (!this.validCredentialObj.valid) {
+			console.error(this.validCredentialObj);
+		} else {
+			this.ngZone.run(() => {
+				this.credentialObject = data.credentialObject.credentials;
+			});
+		}
 	}
 
 	onCodeResult(resultString: string): void {
@@ -166,6 +172,11 @@ export class MainPageComponent extends BaseComponent {
 		}
 	}
 
+	hasDemoData(object, value) {
+		return Object.keys(object).find(key => object[key].issuer.id === value);
+	}
+
+
 	setupWebrtcResponseHandler(): void {
 		this.webRtcProvider.receivedActions$.pipe(skip(1)).subscribe(async (data) => {
 			console.log("Received:", data);
@@ -174,21 +185,7 @@ export class MainPageComponent extends BaseComponent {
 				console.log("P2P Connected!");
 			}
 			if (data.action === "shared") {
-				console.log("data.credentialObject:", data.credentialObject);
-				this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities);
-				if (!this.validCredentialObj.valid) {
-					console.error(this.validCredentialObj);
-				} else {
-					this.ngZone.run(() => {
-						this.credentialObject = data.credentialObject.credentials;
-					});
-				}
-				this.ngZone.run(() => {
-					this.blockResult = false;
-					this.spinner.hide();
-				});
-				console.log("SENDING SHARE SUCCESS!!!");
-				this.webRtcProvider.sendData("share-success", {});
+				await this.validateSharedData(data);
 			}
 		});
 
@@ -199,6 +196,24 @@ export class MainPageComponent extends BaseComponent {
 		this.webRtcProvider.websocketConnectionOpen$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
 			console.log("Websocket open!");
 		});
+	}
+
+	async validateSharedData(data): Promise<void> {
+		console.log("data.credentialObject shared!!!!!!!!!!:", data.credentialObject);
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities);
+		if (!this.validCredentialObj.valid) {
+			console.error(this.validCredentialObj);
+		} else {
+			this.ngZone.run(() => {
+				this.credentialObject = data.credentialObject.credentials;
+			});
+		}
+		this.ngZone.run(() => {
+			this.blockResult = false;
+			this.spinner.hide();
+		});
+		console.log("SENDING SHARE SUCCESS!!!");
+		this.webRtcProvider.sendData("share-success", {});
 	}
 
 	async reScan(): Promise<void> {
@@ -247,12 +262,17 @@ export class MainPageComponent extends BaseComponent {
 	}
 
 	getExpectedValue(key: string): string {
-		const result = this.requestedData.credentials.find(x => x.key === key).expectedValue;
-		if (!result || result === "" ) {
-			return null
+		if (this.requestedData) {
+			const result = this.requestedData.credentials.find(x => x.key === key).expectedValue;
+			if (!result || result === "" ) {
+				return null
+			} else {
+				return result
+			}
 		} else {
-			return result
+			return  null;
 		}
+
 	}
 }
 

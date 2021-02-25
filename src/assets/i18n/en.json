@@ -66,6 +66,9 @@
 			"PHONE_NUMBER_HASHED": "Hashed phone number"
 		}
 	},
+	"INSTRUCTION_OVERLAY": {
+		"message": "Follow the instructions in the app"
+	},
 	"PROFILE": {
 		"disconnected": "Disconnected"
 	},
@@ -75,8 +78,5 @@
 		"HEALTH": "Health",
 		"IDIN": "iDin",
 		"PHONE_NUMBER": "Phonenumber"
-	},
-	"INSTRUCTION_OVERLAY": {
-		"message": "Follow the instructions in the app"
 	}
 }

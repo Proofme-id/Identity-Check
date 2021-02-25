@@ -66,6 +66,9 @@
 			"PHONE_NUMBER_HASHED": "Gehashte telefoonnummer"
 		}
 	},
+	"INSTRUCTION_OVERLAY": {
+		"message": "Volg de instructies in de app."
+	},
 	"PROFILE": {
 		"disconnected": "Disconnected"
 	},
@@ -75,8 +78,5 @@
 		"HEALTH": "Zorg",
 		"IDIN": "iDin",
 		"PHONE_NUMBER": "Telefoonnummer"
-	},
-	"INSTRUCTION_OVERLAY": {
-		"message": "Volg de instructies in de app."
 	}
 }

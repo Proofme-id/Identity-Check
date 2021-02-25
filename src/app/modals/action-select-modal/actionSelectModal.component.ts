@@ -458,7 +458,7 @@ export class ActionSelectModalComponent {
 
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         for (const authority of this.settings.trustedAuthorities) {
             this.consortiumList.find(x => x.key === authority).required = true;
         }
