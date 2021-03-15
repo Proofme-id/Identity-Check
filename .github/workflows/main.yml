@@ -31,7 +31,7 @@ jobs:
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: ${{ env.IMAGE_REPOSITORY }}
           region: ${{ secrets.AWS_REGION }}
-          tags: test,${{ github.run_number }}
+          tags: prod,${{ github.run_number }}
           create_repo: true
         env:
           CI: true

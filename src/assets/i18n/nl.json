@@ -1,0 +1,82 @@
+{
+	"ACTION_SELECT": {
+		"HELP": "Help",
+		"REQUEST": "Instant data verzoek",
+		"SCAN": "QR-code scannen",
+		"SETTINGS": "Instellingen",
+		"attributes": "Attributen",
+		"next": "Volgende",
+		"providers": "Providers",
+		"save": "Opslaan",
+		"settings": "Instellingen",
+		"title": "Kies een actie"
+	},
+	"ATTRIBUTE": {
+		"EMAIL": {
+			"EMAIL": "E-mail",
+			"EMAIL_HASHED": "Gehashte email"
+		},
+		"EPASS": {
+			"BIRTH_DATE": "Geboortedatum",
+			"DOCUMENT_EXPIRY_DATE": "Document verloop datum",
+			"DOCUMENT_NUMBER": "Document nummer",
+			"DOCUMENT_TYPE": "Document type",
+			"FIRST_NAME": "Voornaam",
+			"GENDER": "Geslacht",
+			"ISSUING_AUTHORITY": "Uitgever",
+			"LAST_NAME": "Achternaam",
+			"NATIONALITY": "Nationaliteit",
+			"OLDER_THAN_12": "Ouder dan 12",
+			"OLDER_THAN_16": "Ouder dan 16",
+			"OLDER_THAN_18": "Ouder dan 18",
+			"OLDER_THAN_21": "Ouder dan 21",
+			"PERSONAL_NUMBER": "BSN nummer",
+			"PHOTO": "Foto"
+		},
+		"HEALTH": {
+			"VPASS_COR_MODERNA": "Corona vaccinatie (Moderna)",
+			"VPASS_COR_PFIZER": "Corona vaccinatie (Pfizer)",
+			"VTEST_COR_ANTIGEEN": "Corona test (Antigeen)",
+			"VTEST_COR_LAMP": "Corona test (Lamp)",
+			"VTEST_COR_PCR": "Corona test (PCR)"
+		},
+		"IDIN": {
+			"BIRTH_DATE": "Geboorte datum",
+			"CITY": "Plaats",
+			"COUNTRY_CODE": "Land code",
+			"CUSTOMER_ID": "Klant ID",
+			"GENDER": "Geslacht",
+			"HOUSE_NUMBER": "Huis nummer",
+			"INITIALS": "Initialen",
+			"LAST_NAME": "Achternaam",
+			"LAST_NAME_PREFERRED": "Voorkeur achternaam",
+			"LAST_NAME_PREFERRED_PREFIX": "Voorkeur achternaam prefix",
+			"LAST_NAME_PREFIX": "Achternaam prefix",
+			"OLDER_THAN_12": "Ouder dan 12",
+			"OLDER_THAN_16": "Ouder dan 16",
+			"OLDER_THAN_18": "Ouder dan 18",
+			"OLDER_THAN_21": "Ouder dan 21",
+			"PARTNER_LAST_NAME": "Achternaam partner",
+			"PARTNER_LAST_NAME_PREFIX": "Achternaam partner prefix",
+			"POSTAL_CODE": "Postcode",
+			"STREET": "Straatnaam"
+		},
+		"PHONE_NUMBER": {
+			"PHONE_NUMBER": "Telefoonnummer",
+			"PHONE_NUMBER_HASHED": "Gehashte telefoonnummer"
+		}
+	},
+	"INSTRUCTION_OVERLAY": {
+		"message": "Volg de instructies in de app."
+	},
+	"PROFILE": {
+		"disconnected": "Disconnected"
+	},
+	"PROVIDERS": {
+		"EMAIL": "E-mail",
+		"EPASS": "Paspoort",
+		"HEALTH": "Zorg",
+		"IDIN": "iDin",
+		"PHONE_NUMBER": "Telefoonnummer"
+	}
+}
