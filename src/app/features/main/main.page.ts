@@ -59,13 +59,12 @@ export class MainPageComponent extends BaseComponent implements AfterViewInit {
 			const uuid = resultString.split(":")[1];
 			console.log("uuid:", uuid);
 			this.webRtcProvider.setHostUuid(uuid);
-			this.webRtcProvider.setConfig({
+			this.webRtcProvider.launchWebsocketClient({
 				isHost: false,
 				signalingUrl: null
 				// signalingUrl: "ws://10.1.17.46:4005"
 				// signalingUrl: "ws://192.168.0.125:4005"
 			});
-			this.webRtcProvider.launchWebsocketClient();
 			this.setupWebrtcResponseHandler();
 		} else {
 			console.log("BLOCKED duplicate scan");
