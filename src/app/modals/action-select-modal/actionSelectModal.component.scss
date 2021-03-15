@@ -130,6 +130,10 @@
         transition: all .5s ease-in-out;
         overflow: hidden;
 
+        &:hover {
+            cursor: pointer;
+        }
+
         .icon {
             position: relative;
             background-color: #FFFFFF;

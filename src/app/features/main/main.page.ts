@@ -16,25 +16,19 @@ import { BaseComponent } from "../base-component/base-component";
 })
 export class MainPageComponent extends BaseComponent {
 
+	@ViewChild("scannerView") scannerView: ZXingScannerComponent;
+	@ViewChild("qrCodeCanvas") qrCodeCanvas: ElementRef;
+	objectKeys = Object.keys;
+
 	requestedData: IAttributeRequest = null;
 	settings: ISettings = { action: null, language: "nl", trustedAuthorities: ["0xa6De718CF5031363B40d2756f496E47abBab1515"]};
-
 	web3Url = "https://api.didux.network/";
 	validCredentialObj: IValidatedCredentials;
 	blockResult = false;
 	credentialObject = null;
-
-	@ViewChild("scannerView")
-	scannerView: ZXingScannerComponent;
-
-	@ViewChild("qrCodeCanvas")
-	qrCodeCanvas: ElementRef;
 	websocketDisconnected = false;
-
 	mediaDeviceSupported = true;
-
 	modalRef: BsModalRef;
-
 
 	constructor(
 		private webRtcProvider: WebRtcProvider,
@@ -136,13 +130,13 @@ export class MainPageComponent extends BaseComponent {
 	async validateIdentifyData(data): Promise<void> {
 		const identifyByCredentials = []
 		for (const credential of this.requestedData.credentials) {
-			identifyByCredentials.push({
-				key: credential.key,
-				provider: credential.provider
-			})
+			if (!identifyByCredentials.includes(credential.provider[0])) {
+				identifyByCredentials.push(credential.provider[0]);
+			}
 		}
 
-		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials,this.settings.trustedAuthorities);
+		console.log("identifyByCredentials:", identifyByCredentials);
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials, this.settings.trustedAuthorities);
 		console.log("validCredentials result:", this.validCredentialObj);
 		this.appStateFacade.setShowExternalInstruction(false);
 		if (!this.validCredentialObj.valid) {
@@ -150,6 +144,7 @@ export class MainPageComponent extends BaseComponent {
 		} else {
 			this.ngZone.run(() => {
 				this.credentialObject = data.credentialObject.credentials;
+				console.log("this.credentialObject:", this.credentialObject);
 			});
 		}
 	}
@@ -175,7 +170,6 @@ export class MainPageComponent extends BaseComponent {
 	hasDemoData(object, value) {
 		return Object.keys(object).find(key => object[key].issuer.id === value);
 	}
-
 
 	setupWebrtcResponseHandler(): void {
 		this.webRtcProvider.receivedActions$.pipe(skip(1)).subscribe(async (data) => {
@@ -243,7 +237,7 @@ export class MainPageComponent extends BaseComponent {
 		return Object.keys(object).filter(x => x !== "PHOTO");
 	}
 
-	getFriendlyValue(key: string, value: any) {
+	getFriendlyValue(key: string, value: any): string {
 		if(key === "OLDER_THAN_18") {
 			if(value == true) {
 				return "Yes"
