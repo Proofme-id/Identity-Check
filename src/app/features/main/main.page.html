@@ -43,41 +43,42 @@
                             <div>
                                 <div class="page-content">
                                     <div class="information-div">
-                                        <div *ngIf="credentialObject['PHOTO']" class="information-detail">
-                                            <div class="col-md-12">
-                                                <div class="information-detail-key img-div">
-                                                    <img [src]="credentialObject['PHOTO'].credentialSubject.credential.value | safeHtmlImage" class="epassimg" alt="passport image">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div *ngFor="let credentialKey of objectKeysWithFilter(credentialObject)" class="information-detail">
-                                            <div class="col row d-flex justify-content-between">
-                                                <div class="information-detail-key">
-                                                    <div class="icon">
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'IDIN'" [icon]="['fas', 'university']"></fa-icon>
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'EPASS'" [icon]="['fas', 'passport']"></fa-icon>
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'PHONE_NUMBER'" [icon]="['fas', 'mobile-alt']"></fa-icon>
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'EMAIL'" [icon]="['fas', 'envelope']"></fa-icon>
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'HEALTH'" [icon]="['fas', 'medkit']"></fa-icon>
-                                                        <fa-icon *ngIf="credentialObject[credentialKey].provider === 'CUSTOM'" [icon]="['fas', 'question']"></fa-icon>
+                                        <div *ngFor="let provider of objectKeys(credentialObject)">
+                                            <div *ngIf="credentialObject[provider].credentials['PHOTO']" class="information-detail">
+                                                <div class="col-md-12">
+                                                    <div class="information-detail-key img-div">
+                                                        <img [src]="credentialObject[provider].credentials['PHOTO'].credentialSubject.credential.value | safeHtmlImage" class="epassimg" alt="passport image">
                                                     </div>
-                                                    <p class="type">{{ credentialObject[credentialKey].credentialSubject.credential.type }}</p>
-                                                </div>
-                                                <div class="information-detail-value">
-                                                    <p class="value" *ngIf="getExpectedValue(credentialKey) === null">{{ getFriendlyValue(credentialKey, credentialObject[credentialKey].credentialSubject.credential.value) }}</p>
-                                                    <fa-icon
-                                                            *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) == credentialObject[credentialKey].credentialSubject.credential.value.toString()"
-                                                            [icon]="['fas', 'check']" size="2x" class="success"></fa-icon>
-                                                    <fa-icon
-                                                            *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) != credentialObject[credentialKey].credentialSubject.credential.value.toString()"
-                                                            [icon]="['fas', 'times']" size="2x" class="danger"></fa-icon>
                                                 </div>
                                             </div>
+                                            <div *ngFor="let credentialKey of objectKeysWithFilter(credentialObject[provider].credentials)" class="information-detail">
+                                                <div class="col row d-flex justify-content-between">
+                                                    <div class="information-detail-key">
+                                                        <div class="icon">
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'IDIN'" [icon]="['fas', 'university']"></fa-icon>
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'EPASS'" [icon]="['fas', 'passport']"></fa-icon>
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'PHONE_NUMBER'" [icon]="['fas', 'mobile-alt']"></fa-icon>
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'EMAIL'" [icon]="['fas', 'envelope']"></fa-icon>
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'HEALTH'" [icon]="['fas', 'medkit']"></fa-icon>
+                                                            <fa-icon *ngIf="credentialObject[provider].credentials[credentialKey].provider === 'CUSTOM'" [icon]="['fas', 'question']"></fa-icon>
+                                                        </div>
+                                                        <p class="type">{{ credentialObject[provider].credentials[credentialKey].credentialSubject.credential.type }}</p>
+                                                    </div>
+                                                    <div class="information-detail-value">
+                                                        <p class="value" *ngIf="getExpectedValue(credentialKey) === null">{{ getFriendlyValue(credentialKey, credentialObject[provider].credentials[credentialKey].credentialSubject.credential.value) }}</p>
+                                                        <fa-icon
+                                                                *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) == credentialObject[provider].credentials[credentialKey].credentialSubject.credential.value.toString()"
+                                                                [icon]="['fas', 'check']" size="2x" class="success"></fa-icon>
+                                                        <fa-icon
+                                                                *ngIf="getExpectedValue(credentialKey) !== null && getExpectedValue(credentialKey) != credentialObject[provider].credentials[credentialKey].credentialSubject.credential.value.toString()"
+                                                                [icon]="['fas', 'times']" size="2x" class="danger"></fa-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- EPASS -->
+                                            <button *ngIf="settings.action === 'SCAN'" (click)="reScan()" class="button">RESCAN</button>
+                                            <button *ngIf="settings.action === 'REQUEST'" (click)="reScan()" class="button">OPNIEUW</button>
                                         </div>
-                                        <!-- EPASS -->
-                                        <button *ngIf="settings.action === 'SCAN'" (click)="reScan()" class="button">RESCAN</button>
-                                        <button *ngIf="settings.action === 'REQUEST'" (click)="reScan()" class="button">OPNIEUW</button>
                                     </div>
                                 </div>
                             </div>
