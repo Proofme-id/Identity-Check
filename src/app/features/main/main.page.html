@@ -75,10 +75,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- EPASS -->
-                                            <button *ngIf="settings.action === 'SCAN'" (click)="reScan()" class="button">RESCAN</button>
-                                            <button *ngIf="settings.action === 'REQUEST'" (click)="reScan()" class="button">OPNIEUW</button>
                                         </div>
+                                        <button *ngIf="settings.action === 'SCAN'" (click)="reScan()" class="button">RESCAN</button>
+                                        <button *ngIf="settings.action === 'REQUEST'" (click)="reScan()" class="button">OPNIEUW</button>
                                     </div>
                                 </div>
                             </div>
