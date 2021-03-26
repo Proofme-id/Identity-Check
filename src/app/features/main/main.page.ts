@@ -1,11 +1,11 @@
 import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
-import { IValidatedCredentials, ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
+import { IRequestedCredentials, IRequestedCredentialsCheckResult, IValidatedCredentials, ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
 import { ZXingScannerComponent } from "@zxing/ngx-scanner";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { NgxSpinnerService } from "ngx-spinner";
 import * as QRCode from "qrcode";
 import { filter, skip, take, takeUntil } from "rxjs/operators";
-import { IAttributeRequest, ISettings } from "../../interfaces/attributeRequest.interface";
+import { ISettings } from "../../interfaces/attributeRequest.interface";
 import { ActionSelectModalComponent } from "../../modals/action-select-modal/actionSelectModal.component";
 import { AppStateFacade } from "../../state/app/app.facade";
 import { BaseComponent } from "../base-component/base-component";
@@ -20,10 +20,10 @@ export class MainPageComponent extends BaseComponent {
 	@ViewChild("qrCodeCanvas") qrCodeCanvas: ElementRef;
 	objectKeys = Object.keys;
 
-	requestedData: IAttributeRequest = null;
+	requestedData: IRequestedCredentials = null;
 	settings: ISettings = { action: null, language: "nl", trustedAuthorities: ["0xa6De718CF5031363B40d2756f496E47abBab1515"]};
 	web3Url = "https://api.didux.network/";
-	validCredentialObj: IValidatedCredentials;
+	validCredentialObj: IValidatedCredentials | IRequestedCredentialsCheckResult;
 	blockResult = false;
 	credentialObject = null;
 	websocketDisconnected = false;
@@ -105,8 +105,7 @@ export class MainPageComponent extends BaseComponent {
 					console.log("REquest data:", this.requestedData);
 					const timestamp = new Date();
 					this.webRtcProvider.sendData("identify", {
-						request: JSON.parse(JSON.stringify(this.requestedData)),
-						type: "multiple",
+						request: this.requestedData,
 						timestamp
 					});
 				}
@@ -128,18 +127,11 @@ export class MainPageComponent extends BaseComponent {
 	}
 
 	async validateIdentifyData(data): Promise<void> {
-		const identifyByCredentials = []
-		for (const credential of this.requestedData.credentials) {
-			if (!identifyByCredentials.includes(credential.provider[0])) {
-				identifyByCredentials.push(credential.provider[0]);
-			}
-		}
-
-		console.log("identifyByCredentials:", identifyByCredentials);
-		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, identifyByCredentials, this.settings.trustedAuthorities);
+		console.log("this.requestedData:", this.requestedData);
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, this.requestedData, this.settings.trustedAuthorities);
 		console.log("validCredentials result:", this.validCredentialObj);
 		this.appStateFacade.setShowExternalInstruction(false);
-		if (!this.validCredentialObj.valid) {
+		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
 			console.error(this.validCredentialObj);
 		} else {
 			this.ngZone.run(() => {
@@ -195,7 +187,7 @@ export class MainPageComponent extends BaseComponent {
 	async validateSharedData(data): Promise<void> {
 		console.log("data.credentialObject shared!!!!!!!!!!:", data.credentialObject);
 		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities);
-		if (!this.validCredentialObj.valid) {
+		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
 			console.error(this.validCredentialObj);
 		} else {
 			this.ngZone.run(() => {
@@ -255,7 +247,7 @@ export class MainPageComponent extends BaseComponent {
 		}
 	}
 
-	getExpectedValue(key: string): string {
+	getExpectedValue(key: string): string | number | boolean {
 		if (this.requestedData) {
 			const result = this.requestedData.credentials.find(x => x.key === key).expectedValue;
 			if (!result || result === "" ) {
