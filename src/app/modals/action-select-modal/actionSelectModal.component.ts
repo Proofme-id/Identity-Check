@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { IAttributeRequest, ISettings } from "../../interfaces/attributeRequest.interface";
+import { ISettings } from "../../interfaces/attributeRequest.interface";
 import { marker as _ } from "@biesbjerg/ngx-translate-extract-marker";
+import { IRequestedCredentials } from "@proofmeid/webrtc-web";
 
 _("ACTION_SELECT.SCAN")
 _("ACTION_SELECT.REQUEST")
@@ -70,7 +71,7 @@ _("ATTRIBUTE.HEALTH.VTEST_COR_PCR")
 })
 export class ActionSelectModalComponent {
 
-    @Output() requestedData = new EventEmitter<IAttributeRequest>();
+    @Output() requestedData = new EventEmitter<IRequestedCredentials>();
 
     @Output() newSettings = new EventEmitter<ISettings>()
 
@@ -407,7 +408,7 @@ export class ActionSelectModalComponent {
                     key: "VPASS_COR_PFIZER",
                     required: false,
                     expectedValue: "true",
-                    provider: ["EMAIL"]
+                    provider: ["HEALTH"]
                 },{
                     key: "VTEST_COR_ANTIGEEN",
                     required: false,
@@ -418,7 +419,7 @@ export class ActionSelectModalComponent {
                     key: "VTEST_COR_LAMP",
                     required: false,
                     expectedValue: "false",
-                    provider: ["EMAIL"]
+                    provider: ["HEALTH"]
                 },{
                     key: "VTEST_COR_PCR",
                     required: false,
@@ -501,9 +502,8 @@ export class ActionSelectModalComponent {
         const requestAttributes = {
             by: "A person",
             description: "identification",
-            credentials: [],
-            minimumRequired: []
-        } as IAttributeRequest;
+            credentials: []
+        } as IRequestedCredentials;
         for (const provider of this.providers.filter(x => x.required === true)) {
             const addToMinimumRequired = provider.key === "HEALTH";
             for (const attribute of provider.attributes.filter(x => x.required === true)) {
@@ -511,7 +511,10 @@ export class ActionSelectModalComponent {
                     minimumRequiredObject.data.push(attribute.key);
                 }
                 if (requestAttributes.credentials.find(x => x.key === attribute.key)) {
-                    requestAttributes.credentials.find(x => x.key === attribute.key).provider.push(...attribute.provider)
+                    if (!requestAttributes.credentials.find(x => x.key === attribute.key).provider) {
+                        requestAttributes.credentials.find(x => x.key === attribute.key).provider = [];
+                    }
+                    (requestAttributes.credentials.find(x => x.key === attribute.key).provider as string[]).push(...attribute.provider)
                 } else {
                     requestAttributes.credentials.push(attribute);
                 }
@@ -519,8 +522,9 @@ export class ActionSelectModalComponent {
         }
 
         if (minimumRequiredObject.data.length > 0) {
-            requestAttributes.minimumRequired.push(minimumRequiredObject);
+            requestAttributes.minimumRequired = minimumRequiredObject;
         }
+        console.log("requestAttributes:", requestAttributes);
         this.requestedData.emit(requestAttributes);
         this.settings.action = "REQUEST"
         this.newSettings.emit(this.settings);
