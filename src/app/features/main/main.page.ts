@@ -128,7 +128,7 @@ export class MainPageComponent extends BaseComponent {
 
 	async validateIdentifyData(data): Promise<void> {
 		console.log("this.requestedData:", this.requestedData);
-		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, this.requestedData, this.settings.trustedAuthorities);
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, this.requestedData, this.settings.trustedAuthorities, true);
 		console.log("validCredentials result:", this.validCredentialObj);
 		this.appStateFacade.setShowExternalInstruction(false);
 		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
@@ -185,8 +185,8 @@ export class MainPageComponent extends BaseComponent {
 	}
 
 	async validateSharedData(data): Promise<void> {
-		console.log("data.credentialObject shared!!!!!!!!!!:", data.credentialObject);
-		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities);
+		console.log("data.credentialObject shared:", data.credentialObject);
+		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities, true);
 		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
 			console.error(this.validCredentialObj);
 		} else {
