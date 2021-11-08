@@ -1,0 +1,61 @@
+<div class="main-container background-bouwplaats">
+    <div class="menu-overlay">
+        <nav class="navbar navbar-dark float-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="showMenu()"
+                aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+            </button>
+        </nav>
+    </div>
+
+
+    <!-- <ngx-spinner type="ball-climbing-dot"></ngx-spinner>
+    <div *ngIf="!mediaDeviceSupported" class="container">
+        <div class="content justify-content-center d-flex">
+            <div class="col-xl-12 content-div">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-dark">Oops</h6>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <div class="page-content">
+                                <p>Your browser does not support user media.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <!-- Request QR screen -->
+    <div class="content justify-content-center d-flex">
+        <div class="col-xl-6 content-div">
+            <div class="card shadow mb-4">
+                <div class="logo-div">
+                    <img src="/assets/img/logo-blue.png" class="logo-icon" />
+                </div>
+                <div class="card-body">
+                    <div class="explain-div">
+                        <h1 class="explain-title">Scan de QR code om je aan te melden</h1>
+                        <p class="explain-sub-title">Bij het aanmelden wordt jouw voornaam, achternaam en foto van jouw ID-kaart
+                            of paspoort gevraagd. Dit wordt gebruikt om te checken wie er wanneer was op deze
+                            bouwplaats
+                        </p>
+                        <i class="explain-disclaimer">* Alle gegevens worden na 24 uur permanent verwijdert</i>
+                    </div>
+                    <div class="qr-code-bouwplaats">
+                        <div *ngIf="websocketDisconnected" class="disconnect-overlay margin-left"
+                            (click)="refreshWebsocketDisconnect()">
+                            <p>{{ 'PROFILE.disconnected' | translate }}</p>
+                        </div>
+                        <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''"
+                            #qrCodeCanvas></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,8 @@
   "scripts": {
     "prebuild": "node prebuild.js",
     "ng": "ng",
-    "start": "ng serve --port=4220 --host=0.0.0.0",
+    "start": "ng serve --port=4230 --host=0.0.0.0",
+    "start:test": "ng serve --port=4230 --host=0.0.0.0 --disable-host-check  --ssl true --ssl-key /node_modules/browser-sync/lib/server/certs/server.key --ssl-cert /node_modules/browser-sync/lib/server/certs/server.crt",
     "build": "npm run lint:json && ng version; ng build --prod",
     "lint": "eslint . --ext .ts",
     "lint:json": "eslint . --ext .ts -f json -o coverage/eslint.json",
@@ -126,6 +127,7 @@
     "@types/node": "^14.14.13",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
+    "browser-sync": "^2.27.7",
     "codelyzer": "6.0.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.13.0",

@@ -1,0 +1,219 @@
+:host {
+    .information {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        max-width: 500px;
+
+        h1 {
+            color: #006599;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+    }
+
+    .media-error-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        h1 {
+            color: red;
+            font-weight: 800;
+        }
+
+        p {
+            color: red;
+        }
+    }
+
+    .epassimg {
+        width: 150px;
+    }
+
+    .half-image {
+        width: 30%;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        height: 100%;
+    }
+
+    .information-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 16px;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    .icon {
+        width: 20px;
+        margin-right: 20px;
+    }
+
+    .information-detail-key {
+        display: flex;
+        //width: 100%;
+        //padding-left: 16px;
+        //padding-right: 16px;
+        white-space: nowrap;
+    }
+
+    .information-detail-value {
+        //display: flex;
+        //width: 100%;
+        //padding-left: 16px;
+        //padding-right: 16px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .value {
+        color: #51a351;
+    }
+
+    .img-div {
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .button {
+        outline: none;
+        border: none;
+        background: #006599;
+        color: white;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        max-width: 500px;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.5;
+        }
+    }
+
+    .error {
+        color: red !important;
+    }
+
+    .small-img {
+        width: 25px;
+        margin: 5px;
+    }
+
+    .information-div {
+        overflow: scroll;
+        width: 100%;
+    }
+
+    // Fullscreen camera
+    .fullscreen {
+        display: block;
+        position: absolute;
+        height: auto;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: black;
+    }
+
+    zxing-scanner::ng-deep video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
+
+    .content {
+        z-index: 999;
+    }
+
+    .menu-overlay {
+        height: 100% !important;
+        background: #006599;
+        opacity: 0.7;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 3;
+        height: 5vh;
+        line-height: 10vh;
+    }
+
+    .background-bouwplaats {
+        left: 0;
+        top: 0;
+        background: url(/assets/img/bouwplaats.jpeg) no-repeat;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-body {
+        display: flex;
+        align-items: center;
+        min-height: 256px;
+
+        div {
+            width: 50%;
+        }
+    }
+
+    .explain-title {
+        font-size: 18px;
+    }
+
+    .explain-sub-title {
+        font-size: 12px;
+    }
+
+    .explain-disclaimer {
+        font-size: 8px;
+    }
+
+    .qr-code-bouwplaats {
+        text-align: center;
+
+        img {
+            max-width: 200px;
+        }
+    }
+
+    .logo-icon {
+        width: 200px;
+        position: absolute;
+        background: white;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        padding: 12px;
+        top: -45px;
+        margin-left: 0px;
+        text-align: center;
+    }
+
+    .card {
+        border: none !important;
+    }
+}
