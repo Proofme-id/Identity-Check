@@ -80,6 +80,8 @@
     "@angular/platform-browser": "10.2.1",
     "@angular/platform-browser-dynamic": "10.2.1",
     "@angular/router": "10.2.1",
+    "@biesbjerg/ngx-translate-extract": "^7.0.3",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@fortawesome/angular-fontawesome": "0.7.0",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "1.2.32",
@@ -111,12 +113,11 @@
     "rxjs": "6.6.3",
     "rxjs-compat": "6.6.3",
     "sequelize": "^6.3.5",
+    "tslib": "^2.3.1",
     "web3": "1.2.5",
     "websocket": "1.0.32",
     "wrtc": "0.4.6",
-    "zone.js": "0.11.2",
-    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
-    "@biesbjerg/ngx-translate-extract": "^7.0.3"
+    "zone.js": "0.11.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1002.0",

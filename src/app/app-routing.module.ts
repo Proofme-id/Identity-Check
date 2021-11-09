@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-console.log("HALLO:", window.location);
-
 const routes: Routes = [
     {
         path: "",

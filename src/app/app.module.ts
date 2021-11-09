@@ -27,6 +27,7 @@ import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { UtilsProvider } from "./providers/utils/utils";
 import { AppStateModule } from "./state/app/app.module";
+import { BouwplaatsStateModule } from "./state/bouwplaats/bouwplaats.module";
 
 
 // AoT requires an exported function for factories
@@ -40,7 +41,8 @@ const NGXS_MODULES = [
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxSelectModule,
-    AppStateModule
+    AppStateModule,
+    BouwplaatsStateModule
 ];
 
 const NGXS_PROVIDERS: Provider[] = [

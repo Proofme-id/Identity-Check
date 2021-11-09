@@ -141,7 +141,7 @@
         object-fit: cover;
     }
 
-    .content {
+    .main-container {
         z-index: 999;
     }
 
@@ -177,7 +177,7 @@
         min-height: 256px;
 
         div {
-            width: 50%;
+            width: 100%;
         }
     }
 
@@ -187,14 +187,17 @@
 
     .explain-sub-title {
         font-size: 12px;
+        font-weight: 200;
     }
 
     .explain-disclaimer {
-        font-size: 8px;
+        font-size: 12px;
+        font-weight: 200;
     }
 
     .qr-code-bouwplaats {
         text-align: center;
+        position: relative;
 
         img {
             max-width: 200px;
@@ -215,5 +218,86 @@
 
     .card {
         border: none !important;
+    }
+
+    .credentials {
+        padding-top: 24px;
+        padding-bottom: 8px;
+        display: flex;
+    }
+
+    .button-div {
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 160px;
+        }
+    }
+
+    .btn {
+        background-color: #006599;
+    }
+
+    .credential-name {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .credentials-body {
+        flex-direction: column;
+        max-height: 500px;
+        overflow: scroll;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .credential-photo {
+        width: 250px;
+    }
+
+    .divider {
+        margin-top: 16px;
+        height: 1px;
+        background-color: #eee;
+    }
+
+    .credential-text-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .credential-img-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logged-people {
+        z-index: 999;
+        top: 24px;
+        position: fixed;
+        right: 24px;
+    }
+
+    @media screen and (max-width: 800px) {
+        .card-body {
+            flex-direction: column;
+            margin-top: 50px;
+        }
+
+        .credentials {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .credential-photo {
+            width: 100px;
+        }
     }
 }

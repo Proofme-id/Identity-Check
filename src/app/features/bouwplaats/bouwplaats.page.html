@@ -1,58 +1,126 @@
 <div class="main-container background-bouwplaats">
-    <div class="menu-overlay">
-        <nav class="navbar navbar-dark float-right">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="showMenu()"
-                aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <fa-icon [icon]="['fas', 'bars']"></fa-icon>
-            </button>
-        </nav>
+    <!-- Background overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Logged people toggle button -->
+    <div class="logged-people">
+        <button (click)="toggleLoggedPeople()" class="btn btn-primary">Toon aangemelde personen</button>
     </div>
 
-
-    <!-- <ngx-spinner type="ball-climbing-dot"></ngx-spinner>
-    <div *ngIf="!mediaDeviceSupported" class="container">
+    <!-- Request QR screen -->
+    <div [hidden]="showLoggedPeople || (showExternalInstruction$ | async) || credentialObject" class="main-container">
         <div class="content justify-content-center d-flex">
-            <div class="col-xl-12 content-div">
+            <div class="col-xl-6 content-div">
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-dark">Oops</h6>
+                    <div class="logo-div">
+                        <img src="/assets/img/logo-blue.png" class="logo-icon" />
                     </div>
                     <div class="card-body">
-                        <div>
-                            <div class="page-content">
-                                <p>Your browser does not support user media.</p>
+                        <div class="explain-div">
+                            <h1 class="explain-title">Scan de QR code om je aan te melden</h1>
+                            <p class="explain-sub-title">Bij het aanmelden wordt jouw voornaam, achternaam en foto van
+                                jouw ID-kaart
+                                of paspoort gevraagd. Dit wordt gebruikt om te checken wie er wanneer was op deze
+                                bouwplaats
+                            </p>
+                            <i class="explain-disclaimer">* Alle gegevens worden na 24 uur permanent verwijdert</i>
+                        </div>
+                        <div class="qr-code-bouwplaats">
+                            <div *ngIf="websocketDisconnected" class="disconnect-overlay"
+                                (click)="refreshWebsocketDisconnect()">
+                                <p>{{ 'PROFILE.disconnected' | translate }}</p>
                             </div>
+                            <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''" #qrCodeCanvas></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
-
-
-    <!-- Request QR screen -->
-    <div class="content justify-content-center d-flex">
-        <div class="col-xl-6 content-div">
-            <div class="card shadow mb-4">
-                <div class="logo-div">
-                    <img src="/assets/img/logo-blue.png" class="logo-icon" />
-                </div>
-                <div class="card-body">
-                    <div class="explain-div">
-                        <h1 class="explain-title">Scan de QR code om je aan te melden</h1>
-                        <p class="explain-sub-title">Bij het aanmelden wordt jouw voornaam, achternaam en foto van jouw ID-kaart
-                            of paspoort gevraagd. Dit wordt gebruikt om te checken wie er wanneer was op deze
-                            bouwplaats
-                        </p>
-                        <i class="explain-disclaimer">* Alle gegevens worden na 24 uur permanent verwijdert</i>
+    </div>
+    <!-- Credential result div -->
+    <div *ngIf="!showLoggedPeople && credentialObject" class="main-container">
+        <div class="content justify-content-center d-flex">
+            <div class="col-xl-6 content-div">
+                <div class="card shadow mb-4">
+                    <div class="logo-div">
+                        <img src="/assets/img/logo-blue.png" class="logo-icon" />
                     </div>
-                    <div class="qr-code-bouwplaats">
-                        <div *ngIf="websocketDisconnected" class="disconnect-overlay margin-left"
-                            (click)="refreshWebsocketDisconnect()">
-                            <p>{{ 'PROFILE.disconnected' | translate }}</p>
+                    <div class="card-body credentials-body">
+                        <div class="credentials">
+                            <div class="credential-text-div">
+                                <div class="credential-name">
+                                    <b>
+                                        {{
+                                            credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
+                                        }}
+                                        {{
+                                            credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
+                                        }}
+                                    </b>
+                                </div>
+                                <p class="credential-birth-date">
+                                    {{
+                                        credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
+                                    }}
+                                </p>
+                            </div>
+                            <div class="credential-img-div">
+                                <img [src]="credentialObject.credentials.EPASS.credentials.PHOTO.credentialSubject.credential.value | safeHtmlImage"
+                                    class="credential-photo" />
+                            </div>
                         </div>
-                        <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''"
-                            #qrCodeCanvas></canvas>
+                        <div class="button-div">
+                            <button (click)="reset()" class="btn btn-primary">Volgende</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Logged people -->
+    <!-- Credential result div -->
+    <div *ngIf="showLoggedPeople" class="main-container">
+        <div class="content justify-content-center d-flex">
+            <div class="col-xl-6 content-div">
+                <div class="card shadow mb-4">
+                    <div class="logo-div">
+                        <img src="/assets/img/logo-blue.png" class="logo-icon" />
+                    </div>
+                    <div class="card-body credentials-body">
+                        <p *ngIf="(loggedPeople$ | async).length === 0">Geen aangemelde personen gevonden</p>
+                        <p *ngIf="(loggedPeople$ | async).length > 0">Totaal aantal: {{ (loggedPeople$ | async).length }}</p>
+                        <div *ngFor="let person of loggedPeople$ | async; let i = index">
+                            <div class="credentials">
+                                <div class="credential-text-div">
+                                    <div class="credential-name">
+                                        <b>
+                                            {{
+                                                person.credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
+                                            }} 
+                                            {{
+                                                person.credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
+                                            }}
+                                        </b>
+                                    </div>
+                                    <p class="credential-birth-date">
+                                        {{
+                                            person.credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
+                                        }}
+                                    </p>
+                                    <p>
+                                        Aangemeld op {{ person.date | date:'d MMM, y, H:mm' }}
+                                    </p>
+                                </div>
+                                <div class="credential-img-div">
+                                    <img [src]="person.credentialObject.credentials.EPASS.credentials.PHOTO.credentialSubject.credential.value | safeHtmlImage"
+                                        class="credential-photo" />
+                                </div>
+                            </div>
+                            <div *ngIf="i < (loggedPeople$ | async).length - 1" class="divider"></div>
+                        </div>
+                        <div class="button-div">
+                            <button (click)="toggleLoggedPeople()" class="btn btn-primary">Terug</button>
+                        </div>
                     </div>
                 </div>
             </div>
