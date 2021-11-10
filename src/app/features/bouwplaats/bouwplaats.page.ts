@@ -192,7 +192,6 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		this.ngZone.run(() => {
 			this.credentialObject = credentialObject;
 		});
-		this.bouwplaatsStateFacade.addToLoggedPeople(credentialObject);
 	}
 
 	async reScan(): Promise<void> {
@@ -206,7 +205,10 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		this.setupIdentifyWebRtc();
 	}
 
-	reset(): void {
+	reset(approved: boolean): void {
+		if(approved) {
+			this.bouwplaatsStateFacade.addToLoggedPeople(this.credentialObject);
+		}
 		this.credentialObject = null;
 		this.reScan();
 	}
