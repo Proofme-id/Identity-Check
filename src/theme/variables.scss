@@ -55,15 +55,16 @@
         z-index: 1;
         height: 210px;
         width: 210px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
             cursor: pointer;
         }
 
         p {
-            padding-top: 85px;
-            margin-left: 30px;
-            margin-right: 25px;
+            margin-bottom: 0;
         }
     }
 

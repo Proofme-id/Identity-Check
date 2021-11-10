@@ -4,12 +4,16 @@ import { Routes, RouterModule } from "@angular/router";
 const routes: Routes = [
     {
         path: "",
-        redirectTo: "main",
+        redirectTo: window.location.hostname === "bouw.proofme.id" ? "bouwplaats" :"main",
         pathMatch: "full",
     },
     {
         path: "main",
         loadChildren: "./features/main/main.module#MainPageModule"
+    },
+    {
+        path: "bouwplaats",
+        loadChildren: "./features/bouwplaats/bouwplaats.module#BouwplaatsPageModule"
     },
 ];
 

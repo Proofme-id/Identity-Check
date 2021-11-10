@@ -1,0 +1,119 @@
+
+<div class="background-bouwplaats"> </div>
+<div class="menu-overlay"></div>
+<div class="header">
+    <div class="logged-people" (click)="toggleLoggedPeople()">
+        <fa-icon [icon]="['far','list-alt']" class="show-list"></fa-icon>
+    </div>
+</div>
+
+<!-- Background + overlay -->
+<div class="main-container d-flex justify-content-center">
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-6 align-content-center align-content-between">
+            <div [hidden]="showLoggedPeople || (showExternalInstruction$ | async) || credentialObject">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="explain-div">
+                            <h1 class="title">Scan de QR code om je aan te melden</h1>
+                            <p class="sub-title">Bij het aanmelden wordt jouw voornaam, achternaam en foto van
+                                jouw ID-kaart of paspoort gevraagd.
+                                Dit wordt gebruikt om te controleren wie aanwezig zijn.
+                            </p>
+                            <i class="disclaimer">* Alle gegevens worden na 24 uur permanent verwijdert</i>
+                        </div>
+                        <div class="qr-code-bouwplaats">
+                            <div *ngIf="websocketDisconnected" class="disconnect-overlay"
+                                 (click)="refreshWebsocketDisconnect()">
+                                <p>{{ 'PROFILE.disconnected' | translate }}</p>
+                            </div>
+                            <canvas [ngClass]="websocketDisconnected ? 'disconnected-qr' : ''" #qrCodeCanvas></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="showLoggedPeople">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 *ngIf="(loggedPeople$ | async).length === 0" class="title text-center">Geen aanmeldingen gevonden</h1>
+                        <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }}</h1>
+                        <div *ngFor="let person of loggedPeople$ | async; let i = index" class="row justify-content-center">
+                            <div class="divider"></div>
+                            <div class="col-10 col-md-4 justify-content-center">
+                                <img [src]="person.credentialObject.credentials.EPASS.credentials.PHOTO.credentialSubject.credential.value | safeHtmlImage"
+                                         class="credential-photo" />
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="credential-name">
+                                    <h1 class="title text-center text-md-left">
+                                        {{
+                                        person.credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
+                                        }}
+                                        {{
+                                        person.credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
+                                        }}
+                                    </h1>
+                                    <h1 class="title text-center text-md-left">
+                                        {{
+                                        person.credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
+                                        }}
+                                    </h1>
+                                    <p class="sub-title text-center text-md-left">
+                                        {{ person.date | date:'d MMM, y, H:mm' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-div">
+                            <button (click)="toggleLoggedPeople()" class="btn btn-primary">Terug</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!showLoggedPeople && credentialObject">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-10 col-md-4 justify-content-center">
+                                <img [src]="credentialObject.credentials.EPASS.credentials.PHOTO.credentialSubject.credential.value | safeHtmlImage"
+                                     class="credential-photo" />
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="credential-name">
+                                    <h1 class="title text-center text-md-left">
+                                        {{
+                                        credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
+                                        }}
+                                        {{
+                                        credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
+                                        }}
+                                    </h1>
+                                    <h1 class="title text-center text-md-left">
+                                        {{
+                                        credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
+                                        }}
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="button-div justify-content-between">
+                                <button (click)="reset(false)" class="btn btn-danger">Afkeuren</button>
+                                <button (click)="reset(true)" class="btn btn-success">Goedkeuren</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="w-100 justify-content-center align-bottom d-flex footer">
+                <p class="poweredBy m-auto">Powered by ProofMe</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
