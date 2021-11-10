@@ -1,18 +1,17 @@
-import { NgModule } from "@angular/core";
-import { MainPageComponent } from "./main.page";
-import { RouterModule, Routes } from "@angular/router";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule, Routes } from "@angular/router";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { ComponentsModule } from "src/app/components/components.module";
-import { NgxSelectModule } from "ngx-select-ex";
-import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
-import { SharedModule } from "../../components/shared-module/shared-module.module";
+import { TranslateModule } from "@ngx-translate/core";
 import { ZXingScannerModule } from "@zxing/ngx-scanner"
+import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
+import { NgxSelectModule } from "ngx-select-ex";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { SafeHtmlPipeImage } from "src/app/pipes/safe-html-pipe-image";
+import { ComponentsModule } from "src/app/components/components.module";
+import { SharedModule } from "../../components/shared-module/shared-module.module";
+import { MainPageComponent } from "./main.page";
 
 const routes: Routes = [
     {
@@ -39,11 +38,9 @@ const routes: Routes = [
     ],
     declarations: [
         MainPageComponent,
-        SafeHtmlPipeImage
     ],
     providers: [
         BsModalService,
-        SafeHtmlPipeImage
     ]
 })
 export class MainPageModule {

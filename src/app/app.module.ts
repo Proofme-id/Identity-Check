@@ -22,6 +22,7 @@ import { StoragePlugin } from "./ngxs-plugins/storage/storage.plugin";
 import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
 import { PopoverModule } from "ngx-bootstrap/popover";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { SafeHtmlPipeImage } from "./pipes/safe-html-pipe-image";
 import { StorageProvider } from "./providers/storage/capacitor-storage.provider";
 import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
 import { ModalModule } from "ngx-bootstrap/modal";
@@ -69,6 +70,7 @@ const NGXS_PROVIDERS: Provider[] = [
 @NgModule({
     declarations: [
         AppComponent,
+        SafeHtmlPipeImage,
         ...MODALS_COMPONENT
     ],
     imports: [
@@ -98,7 +100,8 @@ const NGXS_PROVIDERS: Provider[] = [
         ...NGXS_PROVIDERS,
         WebRtcProvider,
         ProofmeUtilsProvider,
-        UtilsProvider
+        UtilsProvider,
+        SafeHtmlPipeImage
     ],
     bootstrap: [AppComponent]
 })
