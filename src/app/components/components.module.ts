@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { TranslateModule } from "@ngx-translate/core";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 import { InstructionOverlayComponent } from "./instruction-overlay/instruction-overlay.component";
 
 
@@ -22,7 +22,6 @@ import { InstructionOverlayComponent } from "./instruction-overlay/instruction-o
         InstructionOverlayComponent,
     ],
     providers: [
-
     ]
 })
 export class ComponentsModule {}

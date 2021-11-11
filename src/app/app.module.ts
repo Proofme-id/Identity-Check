@@ -1,31 +1,30 @@
-import { NgModule, Provider } from "@angular/core";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { NGXS_PLUGINS, NgxsModule } from "@ngxs/store";
-import { environment } from "src/environments/environment";
-import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NgModule, Provider } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { ToastrModule } from "ngx-toastr";
-import { BrowserModule } from "@angular/platform-browser";
-import { ComponentsModule } from "./components/components.module";
-import { ReactiveFormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { NGXS_PLUGINS, NgxsModule } from "@ngxs/store";
+import { ProofmeUtilsProvider, WebRtcProvider } from "@proofmeid/webrtc-web";
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { ModalModule } from "ngx-bootstrap/modal";
+import { PopoverModule } from "ngx-bootstrap/popover";
 import { NgxSelectModule } from "ngx-select-ex";
+import { ToastrModule } from "ngx-toastr";
+import { environment } from "src/environments/environment";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { ComponentsModule } from "./components/components.module";
 import { MODALS_COMPONENT } from "./modals/modals.module";
 import { StoragePlugin } from "./ngxs-plugins/storage/storage.plugin";
-import { NGXS_STORAGE_PLUGIN_OPTIONS, STORAGE_ENGINE } from "@ngxs-labs/async-storage-plugin";
-import { PopoverModule } from "ngx-bootstrap/popover";
-import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
-import { SafeHtmlPipeImage } from "./pipes/safe-html-pipe-image";
 import { StorageProvider } from "./providers/storage/capacitor-storage.provider";
-import { WebRtcProvider, ProofmeUtilsProvider } from "@proofmeid/webrtc-web";
-import { ModalModule } from "ngx-bootstrap/modal";
 import { UtilsProvider } from "./providers/utils/utils";
 import { AppStateModule } from "./state/app/app.module";
 import { BouwplaatsStateModule } from "./state/bouwplaats/bouwplaats.module";
@@ -70,7 +69,6 @@ const NGXS_PROVIDERS: Provider[] = [
 @NgModule({
     declarations: [
         AppComponent,
-        SafeHtmlPipeImage,
         ...MODALS_COMPONENT
     ],
     imports: [
@@ -101,7 +99,6 @@ const NGXS_PROVIDERS: Provider[] = [
         WebRtcProvider,
         ProofmeUtilsProvider,
         UtilsProvider,
-        SafeHtmlPipeImage
     ],
     bootstrap: [AppComponent]
 })

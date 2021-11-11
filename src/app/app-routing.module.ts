@@ -4,7 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 const routes: Routes = [
     {
         path: "",
-        redirectTo: window.location.hostname === "bouw.proofme.id" ? "bouwplaats" :"main",
+        redirectTo: window.location.hostname === "bouw.proofme.id" || window.location.hostname === "bouw.proofme.local"  ? "bouwplaats" :"main",
         pathMatch: "full",
     },
     {
