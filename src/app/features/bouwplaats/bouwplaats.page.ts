@@ -151,43 +151,6 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		}
 	}
 
-	setupWebrtcResponseHandler(): void {
-		this.webRtcProvider.receivedActions$.pipe(skip(1)).subscribe(async (data) => {
-			console.log("Received:", data);
-			// When the client is connected
-			if (data.action === "p2pConnected" && data.p2pConnected) {
-				console.log("P2P Connected!");
-			}
-			if (data.action === "shared") {
-				await this.validateSharedData(data);
-			}
-		});
-
-		this.webRtcProvider.websocketConnectionClosed$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
-			console.log("Websocket closed!");
-		});
-
-		this.webRtcProvider.websocketConnectionOpen$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
-			console.log("Websocket open!");
-		});
-	}
-
-	async validateSharedData(data: { credentialObject: ICredentialObject, identifyByCredentials: IRequestedCredentials }): Promise<void> {
-		console.log("data.credentialObject shared:", data.credentialObject);
-		this.validCredentialObj = await this.proofmeUtilsProvider.validCredentialsTrustedParties(data.credentialObject, this.web3Url, data.identifyByCredentials, this.settings.trustedAuthorities, true);
-		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
-			console.error(this.validCredentialObj);
-		} else {
-			this.setCredentialObject(data.credentialObject);
-		}
-		this.ngZone.run(() => {
-			this.blockResult = false;
-			this.spinner.hide();
-		});
-		console.log("SENDING SHARE SUCCESS!!!");
-		this.webRtcProvider.sendData("share-success", {});
-	}
-
 	setCredentialObject(credentialObject: ICredentialObject): void {
 		this.ngZone.run(() => {
 			this.credentialObject = credentialObject;
