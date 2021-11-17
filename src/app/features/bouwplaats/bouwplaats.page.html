@@ -38,8 +38,8 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h1 *ngIf="(loggedPeople$ | async).length === 0" class="title text-center">Geen aanmeldingen gevonden</h1>
-                        <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }}</h1>
-                        <div *ngFor="let person of loggedPeople$ | async; let i = index" class="row justify-content-center">
+                        <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }} <span (click)="deleteAllLogEntries()" class="delete-all-log-entries-text">(Click to delete all)</span></h1>
+                        <div *ngFor="let person of loggedPeople$ | async; let i = index" class="row justify-content-center logged-div">
                             <div class="divider"></div>
                             <div class="col-10 col-md-4 justify-content-center">
                                 <img [src]="person.credentialObject.credentials.EPASS.credentials.PHOTO.credentialSubject.credential.value | safeHtmlImage"
@@ -47,7 +47,10 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <div class="credential-name">
-                                    <h1 class="title text-center text-md-left">
+                                    <h1 class="title text-center text-md-left person-info-div">
+                                        <div class="icon-div">
+                                            <fa-icon [icon]="['far','id-card']"></fa-icon>
+                                        </div>
                                         {{
                                         person.credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
                                         }}
@@ -55,18 +58,27 @@
                                         person.credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
                                         }}
                                     </h1>
-                                    <h1 class="title text-center text-md-left">
+                                    <h1 class="title text-center text-md-left person-info-div">
+                                        <div class="icon-div">
+                                            <fa-icon [icon]="['fas','birthday-cake']"></fa-icon>
+                                        </div>
                                         {{
                                         person.credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
                                         }}
                                     </h1>
-                                    <p class="sub-title text-center text-md-left">
+                                    <h1 class="sub-title text-center text-md-left person-info-div">
+                                        <div class="icon-div">
+                                            <fa-icon [icon]="['fas','door-open']"></fa-icon>
+                                        </div>
                                         {{ person.date | date:'d MMM y, HH:mm' }}
-                                    </p>
+                                    </h1>
                                 </div>
                             </div>
+                            <div class="delete-div" (click)="deleteEntry(person, i)">
+                                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+                            </div>
                         </div>
-                        <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }}</h1>
+                        <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }} <span (click)="deleteAllLogEntries()" class="delete-all-log-entries-text">(Click to delete all)</span></h1>
                         <div class="button-div">
                             <button (click)="toggleLoggedPeople()" class="btn btn-primary">Terug</button>
                         </div>
@@ -84,7 +96,10 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <div class="credential-name">
-                                    <h1 class="title text-center text-md-left">
+                                    <h1 class="title text-center text-md-left person-info-div">
+                                        <div class="icon-div">
+                                            <fa-icon [icon]="['far','id-card']"></fa-icon>
+                                        </div>
                                         {{
                                         credentialObject.credentials.EPASS.credentials.FIRST_NAME.credentialSubject.credential.value
                                         }}
@@ -92,7 +107,10 @@
                                         credentialObject.credentials.EPASS.credentials.LAST_NAME.credentialSubject.credential.value
                                         }}
                                     </h1>
-                                    <h1 class="title text-center text-md-left">
+                                    <h1 class="title text-center text-md-left person-info-div">
+                                        <div class="icon-div">
+                                            <fa-icon [icon]="['fas','birthday-cake']"></fa-icon>
+                                        </div>
                                         {{
                                         credentialObject.credentials.EPASS.credentials.BIRTH_DATE.credentialSubject.credential.value
                                         }}
