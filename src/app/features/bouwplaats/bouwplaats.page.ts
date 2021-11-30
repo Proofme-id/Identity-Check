@@ -40,6 +40,8 @@ export class BouwplaatsPageComponent extends BaseComponent {
 	) {
 		super();
 
+		this.checkPeopleToDelete();
+
 		window.onbeforeunload = () => {
 			console.log("WINDOW UNLOAD");
 			this.webRtcProvider.remoteDisconnect();
@@ -51,9 +53,19 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		} else {
 			this.setupIdentifyWebRtc();
 		}
+
+		setInterval(() => {
+			this.checkPeopleToDelete();
+		}, 60000);
+	}
+
+	checkPeopleToDelete(): void {
+		this.bouwplaatsStateFacade.removedLoggedPeopleAfterTime("hours", 24);
 	}
 
 	setupIdentifyWebRtc(): void {
+		this.websocketDisconnected = false;
+		console.log("this.websocketDisconnected false");
 		this.appStateFacade.setAuthWsUrl();
 		this.appStateFacade.authWsUrl$.pipe(takeUntil(this.destroy$), filter(x => !!x), take(1)).subscribe(async (signalingUrl) => {
 			console.log("connecting to:", signalingUrl);
@@ -64,7 +76,6 @@ export class BouwplaatsPageComponent extends BaseComponent {
 			this.webRtcProvider.uuid$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(uuid => {
 				console.log("uuid:", uuid);
 				const canvas = this.qrCodeCanvas.nativeElement as HTMLCanvasElement;
-				this.websocketDisconnected = false;
 				setTimeout(() => {
 					QRCode.toCanvas(canvas, `p2p:${uuid}:${encodeURIComponent(signalingUrl)}`, {
 						width: 210
@@ -74,6 +85,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 			this.webRtcProvider.websocketConnectionClosed$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
 				console.log("User disconnect");
 				this.websocketDisconnected = true;
+				console.log("this.websocketDisconnected true");
 			});
 			this.webRtcProvider.receivedActions$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(async (data) => {
 				console.log("webRtcProvider Received:", data);
@@ -133,6 +145,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 				if (data.action === "disconnect") {
 					this.appStateFacade.setShowExternalInstruction(false);
 					this.websocketDisconnected = true;
+					console.log("this.websocketDisconnected true");
 				}
 			});
 		});
@@ -179,6 +192,17 @@ export class BouwplaatsPageComponent extends BaseComponent {
 	toggleLoggedPeople(): void {
 		this.showLoggedPeople = !this.showLoggedPeople;
 		this.credentialObject = null;
+	}
+
+	deleteEntry(person: { date: Date, credentialObject: ICredentialObject }, index: number): void {
+		console.log("delete person:", person);
+		console.log("delete index:", index);
+		this.bouwplaatsStateFacade.removeLoggedPersonOnIndex(index);
+	}
+
+	deleteAllLogEntries(): void {
+		console.log("deleteAllLogEntries");
+		this.bouwplaatsStateFacade.deleteAllLoggedPeople();
 	}
 }
 
