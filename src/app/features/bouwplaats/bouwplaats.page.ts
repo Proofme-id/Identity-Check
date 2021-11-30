@@ -28,7 +28,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 	showExternalInstruction$ = this.appStateFacade.showExternalInstruction$;
 	loggedPeople$ = this.bouwplaatsStateFacade.loggedPeople$;
 	// IMPORTANT!!
-	allowDemoAttributes = true;
+	allowDemoAttributes = false;
 
 	constructor(
 		private webRtcProvider: WebRtcProvider,
