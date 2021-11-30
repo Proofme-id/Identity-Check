@@ -54,6 +54,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 			this.setupIdentifyWebRtc();
 		}
 
+		this.checkPeopleToDelete();
 		setInterval(() => {
 			this.checkPeopleToDelete();
 		}, 60000);

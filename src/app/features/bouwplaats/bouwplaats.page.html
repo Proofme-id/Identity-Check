@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="delete-div" (click)="deleteEntry(person, i)">
-                                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+                                <fa-icon [icon]="['fas', 'trash']"></fa-icon>
                             </div>
                         </div>
                         <h1 *ngIf="(loggedPeople$ | async).length > 0" class="title text-right">Totaal: {{ (loggedPeople$ | async).length }} <span (click)="deleteAllLogEntries()" class="delete-all-log-entries-text">(Click to delete all)</span></h1>
