@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
 import { IRequestedCredentials, IRequestedCredentialsCheckResult, IValidatedCredentials, ProofmeUtilsProvider, WebRtcProvider, ICredentialObject } from "@proofmeid/webrtc-web";
 import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from "ngx-toastr";
 import * as QRCode from "qrcode";
 import { filter, skip, take, takeUntil } from "rxjs/operators";
 import { BouwplaatsStateFacade } from "src/app/state/bouwplaats/bouwplaats.facade";
@@ -36,7 +37,8 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		private spinner: NgxSpinnerService,
 		private proofmeUtilsProvider: ProofmeUtilsProvider,
 		private appStateFacade: AppStateFacade,
-		private bouwplaatsStateFacade: BouwplaatsStateFacade
+		private bouwplaatsStateFacade: BouwplaatsStateFacade,
+		private toastr: ToastrService,
 	) {
 		super();
 
@@ -158,7 +160,11 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		console.log("validCredentials result:", this.validCredentialObj);
 		this.appStateFacade.setShowExternalInstruction(false);
 		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
-			console.error(this.validCredentialObj);
+			console.error("this.validCredentialObj:", this.validCredentialObj);
+			this.ngZone.run(() => {
+				this.toastr.error("Invalid credentials", "Error");
+			});
+			console.log("TOASTR");
 		} else {
 			this.setCredentialObject(data.credentialObject);
 			console.log("this.credentialObject:", this.credentialObject);

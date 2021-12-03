@@ -79,7 +79,7 @@ const NGXS_PROVIDERS: Provider[] = [
         AppRoutingModule,
         ComponentsModule,
         BrowserModule,
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({}),
         NgbModule,
         FontAwesomeModule,
         TranslateModule.forRoot({
