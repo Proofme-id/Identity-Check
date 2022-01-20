@@ -30,6 +30,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 	loggedPeople$ = this.bouwplaatsStateFacade.loggedPeople$;
 	// IMPORTANT!!
 	allowDemoAttributes = false;
+	interval: NodeJS.Timeout;
 
 	constructor(
 		private webRtcProvider: WebRtcProvider,
@@ -71,13 +72,11 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		console.log("this.websocketDisconnected false");
 		this.appStateFacade.setAuthWsUrl();
 		this.appStateFacade.authWsUrl$.pipe(takeUntil(this.destroy$), filter(x => !!x), take(1)).subscribe(async (signalingUrl) => {
-			console.log("connecting to:", signalingUrl);
 			this.webRtcProvider.launchWebsocketClient({
 				signalingUrl,
 				isHost: true
 			});
 			this.webRtcProvider.uuid$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(uuid => {
-				console.log("uuid:", uuid);
 				const canvas = this.qrCodeCanvas.nativeElement as HTMLCanvasElement;
 				setTimeout(() => {
 					QRCode.toCanvas(canvas, `p2p:${uuid}:${encodeURIComponent(signalingUrl)}`, {
@@ -94,6 +93,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 				console.log("webRtcProvider Received:", data);
 				// When the client is connected
 				if (data.action === "p2pConnected" && data.p2pConnected === true) {
+					clearInterval(this.interval);
 					// Login with mobile
 					this.appStateFacade.setShowExternalInstruction(true);
 					this.requestedData = {
@@ -152,6 +152,14 @@ export class BouwplaatsPageComponent extends BaseComponent {
 				}
 			});
 		});
+		
+		// Refresh the QR every x time so we keep a fresh connection on the websocket
+		// TODO: Ping pong to server? The connection might be lost in this time due to several reasons
+		clearInterval(this.interval);
+		this.interval = setInterval(() => {
+			console.log("Refresh QR");
+			this.setupIdentifyWebRtc();
+		}, 180000);
 	}
 
 	async validateIdentifyData(data: { credentialObject: ICredentialObject }): Promise<void> {
