@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, ViewChild } from "@angular/core";
 import { IRequestedCredentials, IRequestedCredentialsCheckResult, IValidatedCredentials, ProofmeUtilsProvider, WebRtcProvider, ICredentialObject } from "@proofmeid/webrtc-web";
 import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from "ngx-toastr";
 import * as QRCode from "qrcode";
 import { filter, skip, take, takeUntil } from "rxjs/operators";
 import { BouwplaatsStateFacade } from "src/app/state/bouwplaats/bouwplaats.facade";
@@ -28,7 +29,8 @@ export class BouwplaatsPageComponent extends BaseComponent {
 	showExternalInstruction$ = this.appStateFacade.showExternalInstruction$;
 	loggedPeople$ = this.bouwplaatsStateFacade.loggedPeople$;
 	// IMPORTANT!!
-	allowDemoAttributes = true;
+	allowDemoAttributes = false;
+	interval: NodeJS.Timeout;
 
 	constructor(
 		private webRtcProvider: WebRtcProvider,
@@ -36,7 +38,8 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		private spinner: NgxSpinnerService,
 		private proofmeUtilsProvider: ProofmeUtilsProvider,
 		private appStateFacade: AppStateFacade,
-		private bouwplaatsStateFacade: BouwplaatsStateFacade
+		private bouwplaatsStateFacade: BouwplaatsStateFacade,
+		private toastr: ToastrService,
 	) {
 		super();
 
@@ -54,6 +57,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 			this.setupIdentifyWebRtc();
 		}
 
+		this.checkPeopleToDelete();
 		setInterval(() => {
 			this.checkPeopleToDelete();
 		}, 60000);
@@ -68,13 +72,11 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		console.log("this.websocketDisconnected false");
 		this.appStateFacade.setAuthWsUrl();
 		this.appStateFacade.authWsUrl$.pipe(takeUntil(this.destroy$), filter(x => !!x), take(1)).subscribe(async (signalingUrl) => {
-			console.log("connecting to:", signalingUrl);
 			this.webRtcProvider.launchWebsocketClient({
 				signalingUrl,
 				isHost: true
 			});
 			this.webRtcProvider.uuid$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(uuid => {
-				console.log("uuid:", uuid);
 				const canvas = this.qrCodeCanvas.nativeElement as HTMLCanvasElement;
 				setTimeout(() => {
 					QRCode.toCanvas(canvas, `p2p:${uuid}:${encodeURIComponent(signalingUrl)}`, {
@@ -91,6 +93,7 @@ export class BouwplaatsPageComponent extends BaseComponent {
 				console.log("webRtcProvider Received:", data);
 				// When the client is connected
 				if (data.action === "p2pConnected" && data.p2pConnected === true) {
+					clearInterval(this.interval);
 					// Login with mobile
 					this.appStateFacade.setShowExternalInstruction(true);
 					this.requestedData = {
@@ -149,6 +152,14 @@ export class BouwplaatsPageComponent extends BaseComponent {
 				}
 			});
 		});
+		
+		// Refresh the QR every x time so we keep a fresh connection on the websocket
+		// TODO: Ping pong to server? The connection might be lost in this time due to several reasons
+		clearInterval(this.interval);
+		this.interval = setInterval(() => {
+			console.log("Refresh QR");
+			this.setupIdentifyWebRtc();
+		}, 180000);
 	}
 
 	async validateIdentifyData(data: { credentialObject: ICredentialObject }): Promise<void> {
@@ -157,7 +168,11 @@ export class BouwplaatsPageComponent extends BaseComponent {
 		console.log("validCredentials result:", this.validCredentialObj);
 		this.appStateFacade.setShowExternalInstruction(false);
 		if (!(this.validCredentialObj as IValidatedCredentials).valid) {
-			console.error(this.validCredentialObj);
+			console.error("this.validCredentialObj:", this.validCredentialObj);
+			this.ngZone.run(() => {
+				this.toastr.error("Invalid credentials", "Error");
+			});
+			console.log("TOASTR");
 		} else {
 			this.setCredentialObject(data.credentialObject);
 			console.log("this.credentialObject:", this.credentialObject);

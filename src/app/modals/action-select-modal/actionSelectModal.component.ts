@@ -524,7 +524,6 @@ export class ActionSelectModalComponent {
         if (minimumRequiredObject.data.length > 0) {
             requestAttributes.minimumRequired = minimumRequiredObject;
         }
-        console.log("requestAttributes:", requestAttributes);
         this.requestedData.emit(requestAttributes);
         this.settings.action = "REQUEST"
         this.newSettings.emit(this.settings);

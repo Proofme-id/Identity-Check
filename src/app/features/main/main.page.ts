@@ -9,6 +9,7 @@ import { ISettings } from "../../interfaces/attributeRequest.interface";
 import { ActionSelectModalComponent } from "../../modals/action-select-modal/actionSelectModal.component";
 import { AppStateFacade } from "../../state/app/app.facade";
 import { BaseComponent } from "../base-component/base-component";
+import { w3cwebsocket } from "websocket";
 
 @Component({
 	templateUrl: "main.page.html",
@@ -29,6 +30,7 @@ export class MainPageComponent extends BaseComponent {
 	websocketDisconnected = false;
 	mediaDeviceSupported = true;
 	modalRef: BsModalRef;
+	interval: NodeJS.Timeout;
 
 	constructor(
 		private webRtcProvider: WebRtcProvider,
@@ -63,11 +65,11 @@ export class MainPageComponent extends BaseComponent {
 		const modalRef = this.modalService.show(ActionSelectModalComponent, { initialState, class: "modal-md modal-dialog-centered", ignoreBackdropClick: true });
 		modalRef.content.requestedData.pipe(filter(x => !!x)).subscribe(async (requestedData) => {
 			this.requestedData = requestedData;
-			console.log("RequestedData: ", requestedData)
+			console.log("Request this data:", requestedData)
 		})
 		modalRef.content.newSettings.pipe(filter(x => !!x)).subscribe(async (settings) => {
 			this.settings = settings;
-			console.log("Settings: ", settings)
+			console.log("Settings:", settings)
 			if (settings.action === "REQUEST") {
 				this.setupIdentifyWebRtc();
 			}
@@ -77,13 +79,11 @@ export class MainPageComponent extends BaseComponent {
 	setupIdentifyWebRtc(): void {
 		this.appStateFacade.setAuthWsUrl();
 		this.appStateFacade.authWsUrl$.pipe(takeUntil(this.destroy$), filter(x => !!x), take(1)).subscribe(async (signalingUrl) => {
-			console.log("connecting to:", signalingUrl);
 			this.webRtcProvider.launchWebsocketClient({
 				signalingUrl,
 				isHost: true
 			});
 			this.webRtcProvider.uuid$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(uuid => {
-				console.log("uuid:", uuid);
 				const canvas = this.qrCodeCanvas.nativeElement as HTMLCanvasElement;
 				this.websocketDisconnected = false;
 				setTimeout(() => {
@@ -96,10 +96,15 @@ export class MainPageComponent extends BaseComponent {
 				console.log("User disconnect");
 				this.websocketDisconnected = true;
 			});
+			this.webRtcProvider.websocketConnectionError$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(() => {
+				console.log("Websocket disconnect");
+				this.websocketDisconnected = true;
+			});
 			this.webRtcProvider.receivedActions$.pipe(skip(1), takeUntil(this.destroy$), filter(x => !!x)).subscribe(async (data) => {
 				console.log("webRtcProvider Received:", data);
 				// When the client is connected
 				if (data.action === "p2pConnected" && data.p2pConnected === true) {
+					clearInterval(this.interval);
 					// Login with mobile
 					this.appStateFacade.setShowExternalInstruction(true);
 					console.log("REquest data:", this.requestedData);
@@ -124,6 +129,14 @@ export class MainPageComponent extends BaseComponent {
 				}
 			});
 		});
+
+		// Refresh the QR every x time so we keep a fresh connection on the websocket
+		// TODO: Ping pong to server? The connection might be lost in this time due to several reasons
+		clearInterval(this.interval);
+		this.interval = setInterval(() => {
+			console.log("Refresh QR");
+			this.setupIdentifyWebRtc();
+		}, 180000);
 	}
 
 	async validateIdentifyData(data): Promise<void> {
@@ -203,7 +216,7 @@ export class MainPageComponent extends BaseComponent {
 	}
 
 	async reScan(): Promise<void> {
-		await this.webRtcProvider.disconnect();
+		this.webRtcProvider.disconnect();
 		this.spinner.show();
 		const interval = setInterval(() => {
 			if (this.scannerView && this.settings.action === "SCAN") {
